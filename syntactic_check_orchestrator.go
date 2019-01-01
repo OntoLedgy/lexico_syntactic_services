@@ -22,13 +22,13 @@ func main() {
 	if database_open_error != nil {
 		panic(database_open_error)
 	}
-	fmt.Printf("\n+++Loading Config+++\n from %s", configuration_database_filename)
-	//#TODO add a logging function to capture all the log information
+	fmt.Printf( //#TODO add to logger
+		"\n+++Loading Config+++\n from %s",
+		configuration_database_filename)
 
 	load_configurations(configuration_database)
 
 	defer configuration_database.Database.Close()
-
 }
 
 func load_configurations(
@@ -42,6 +42,8 @@ func load_configurations(
 	var in_scope_column_check_configurations [][]interface{}
 	//var check_configurations [][]interface{}  -- NOT NEEDED
 
+	//get checks
+
 	checks_table_name := "non_range_syntactic_checks"
 	checks_table_schema := []string{
 		"uuids",
@@ -54,7 +56,7 @@ func load_configurations(
 		checks_table_name,
 		checks_table_schema)
 
-	checks = utils.Convert_rows_to_2d_slices(
+	checks = utils.Convert_rows_to_2d_slices( //#TODO explore if a differnet data structure can be used (pros and cons of using type - struct or map?)
 		check_types_rows)
 
 	//get names of tables in scope.
@@ -106,15 +108,18 @@ func load_configurations(
 		"check_uuids",
 	}
 
-	in_scope_column_check_configurations_rows := database.ReadMsAccessColumns(
-		accessDatabase,
-		in_scope_column_check_configurations_table_name,
-		in_scope_column_check_configurations_table_schema)
+	in_scope_column_check_configurations_rows :=
+		database.ReadMsAccessColumns(
+			accessDatabase,
+			in_scope_column_check_configurations_table_name,
+			in_scope_column_check_configurations_table_schema)
 
-	in_scope_column_check_configurations = utils.Convert_rows_to_2d_slices(
-		in_scope_column_check_configurations_rows)
+	in_scope_column_check_configurations =
+		utils.Convert_rows_to_2d_slices(
+			in_scope_column_check_configurations_rows)
+	//#TODO move this back into database module - should output interface rather than sql.Rows.
 
-	fmt.Printf("+++++++++++++++++++Loaded config+++++++++\n"+
+	fmt.Printf("+++++++++++++++++++Loaded config+++++++++\n"+ //#TODO add to logger
 		"tables :\n%s\n,"+
 		"columns:\n%s\n, "+
 		"checks:\n%s\n,"+
@@ -146,18 +151,22 @@ func load_data(
 
 	fmt.Printf("+++++++++++++++++++++++++++loading data+++++++++++++++++\n")
 
-	for _, in_scope_table := range in_scope_table_sets { //TODO# check if this should be broken out into two functions (reduce nesting)
+	for _, in_scope_table := range in_scope_table_sets {
+		//TODO# check if this should be broken out into two functions (reduce nesting)
 
 		fmt.Printf(
 			"---------loading data for table: %s (uuid : %s)\n",
 			in_scope_table[1].(string), //table name
 			in_scope_table[0])          //table uuid
+		//#TODO enumerate the indexes, check if there is a better way of making the indexes clearer.  Alternatively, use a clearly named variable.
 
 		for _, in_scope_column := range in_scope_column_sets {
 
-			//fmt.Printf("-------------------checking for parent table of column %s (uuid of parent table: %s)\n", in_scope_column[1], in_scope_column[2])
+			//checking for parent table of (column in_scope_column[1]) matches uuid of parent table (in_scope_table[0])
+
 			if in_scope_column[2] == // parent table uuid
 				in_scope_table[0] { //table uuid
+				// #TODO enumerate the indexes, check if there is a better way of making the indexes clearer.  Alternatively, use a clearly named variable.
 
 				in_scope_column_query_parameters :=
 					[]string{in_scope_table[2].(string)} //Add table identity column to column query
@@ -167,21 +176,26 @@ func load_data(
 						in_scope_column_query_parameters,
 						in_scope_column[1].(string)) //Add column name to column query
 
-				fmt.Printf("-------------------loading data for column : %s\n", in_scope_column[1])
+				fmt.Printf(
+					"-------------------loading data for column : %s\n",
+					in_scope_column[1])
 
-				in_scope_column_dataset_rows := database.ReadMsAccessColumns(
-					accessDatabase,
-					in_scope_table[1].(string),
-					in_scope_column_query_parameters) //row uuid + cell value for column
+				in_scope_column_dataset_rows :=
+					database.ReadMsAccessColumns(
+						accessDatabase,
+						in_scope_table[1].(string),       //in scope table name
+						in_scope_column_query_parameters) //fields: row uuid + in scope column
 
 				in_scope_column_dataset_slice :=
 					utils.Convert_rows_to_2d_slices(
 						in_scope_column_dataset_rows)
 
-				fmt.Printf("\n+++Total number of rows loaded for column: %s+++\n", len(in_scope_column_dataset_slice))
+				fmt.Printf(
+					"\n+++Total number of rows loaded for column: %s+++\n",
+					len(in_scope_column_dataset_slice))
 
 				//add column uuids back to cell data
-				//#TODO explore if there is a more elegant way of doing this (e.g. use dataframe append)
+				//#TODO explore if there is a more elegant way of doing this (e.g. use dataframe append) - or create helper function (utilities)
 
 				for _, in_scope_column_row := range in_scope_column_dataset_slice {
 
@@ -202,22 +216,24 @@ func load_data(
 
 	}
 
-	fmt.Printf(
+	fmt.Printf( //#TODO add to logger
 		"\n+++Starting Syntactic Checking on %s cells +++\n sample row : %s",
 		len(in_scope_column_dataset),
 		in_scope_column_dataset[1])
 
+	// #TODO move to a separate function - not part of loading data scope of responsibility
 	transaction_dataset := process_column_sets(
 		in_scope_column_dataset, //rowguid, cell value, column uuid
 		checks,
 		in_scope_column_check_configurations)
 
-	transaction_dataset_string := utils.Change_2d_interface_slice_to_string(transaction_dataset)
+	transaction_dataset_string :=
+		utils.Change_2d_interface_slice_to_string(
+			transaction_dataset)
 
-	fmt.Println(transaction_dataset_string)
+	//#TODO write to a database
 
 	output_csv := storage.Open_csv_file("sytantic_check_transactions.csv")
-
 	storage.Write_2d_slice_set_to_csv(transaction_dataset_string, output_csv)
 
 }
@@ -227,8 +243,8 @@ func process_column_sets(
 	checks [][]interface{},
 	in_scope_column_check_configurations [][]interface{}) [][]interface{} {
 
-	var in_scope_column_cell_set_including_check_configuration [][]interface{}
-	var in_scope_column_cell_and_check_configuration []interface{} //#TODO split this into column cell set and check configuration
+	var in_scope_column_cell_set_including_check_configuration [][]interface{} //#TODO explore alternative data structures for this.  possibly split this into column cell set and check configuration
+	var in_scope_column_cell_and_check_configuration []interface{}             //#TODO explore alternative data structures for this.  possibly split this into column cell set and check configuration
 
 	var transaction_rowset [][]interface{}
 
@@ -241,19 +257,20 @@ func process_column_sets(
 			if in_scope_column_check_configuration[0] == // check if column uuid in check configuration
 				in_scope_column_row[2] { // matches column uuid in column dataset -- add to cell check dataset
 
-				in_scope_column_cell_and_check_configuration := // create cell data for checks (strip column uuid and add check uuid)
+				in_scope_column_cell_and_check_configuration := // create cell data for checks (strip column uuid and add check uuid) #TODO - chedck if this is the best way to create the slide or alternatives available
 					append(
 						in_scope_column_cell_and_check_configuration, // nil
 						in_scope_column_row[0],                       // row uuid
 						in_scope_column_row[1],                       // cell value
 						in_scope_column_check_configuration[1])       // check uuid
 
-				in_scope_column_cell_set_including_check_configuration =
+				in_scope_column_cell_set_including_check_configuration = // add to cell configuration set (contains a row for each check for the cell value)
 					append(
 						in_scope_column_cell_set_including_check_configuration,
 						in_scope_column_cell_and_check_configuration)
 
-				in_scope_column_cell_and_check_configuration = nil
+				in_scope_column_cell_and_check_configuration =
+					nil
 			}
 
 		}
@@ -265,25 +282,30 @@ func process_column_sets(
 					in_scope_column_cell_set_including_check_configuration,
 					checks)
 
-			for _, transaction_row := range transaction_column_rowset { // for each transaction, append the column uuid
+			for _, transaction_row := range transaction_column_rowset { // for each returned check transaction, append the column uuid
 
 				transaction_row = append(
-					transaction_row,        //check transaction
+					transaction_row,        // check transaction
 					in_scope_column_row[2]) // column uuid
 
-				transaction_rowset = append(
+				transaction_rowset = append( // append the transaction (+ column uuid) to transaction set.
 					transaction_rowset,
 					transaction_row)
 
-				transaction_row = nil
+				transaction_row =
+					nil
 
 			}
-			in_scope_column_cell_set_including_check_configuration = nil
+			in_scope_column_cell_set_including_check_configuration =
+				nil
 		}
 
 	}
 
-	fmt.Printf("\n--Total %s transactions generated.\nSample Transaction : %s", len(transaction_rowset), transaction_rowset[0])
+	fmt.Printf( //#TODO add to logger
+		"\n--Total %s transactions generated.\nSample Transaction : %s",
+		len(transaction_rowset),
+		transaction_rowset[0])
 
 	return transaction_rowset
 
@@ -296,19 +318,38 @@ func process_cell_sets(
 	var check_result_transaction_set [][]interface{}
 	var check_result_transaction []interface{}
 
-	for _, in_scope_cell_row := range in_scope_cell_dataset {
+	for _, in_scope_cell_row := range // for each cell row
+	in_scope_cell_dataset {
 
-		for _, check := range checks {
+		for _, check := range // for each check type in check register
+		checks {
 
-			if check[0] == in_scope_cell_row[2] && in_scope_cell_row[1] != nil {
+			if check[0] == // if check type uuid is included in check configurtation
+				in_scope_cell_row[2] &&
 
-				check_result_transaction = regex_management.Process_regex_check(check[2].(string), in_scope_cell_row[1].(string), check[3].(string))
+				in_scope_cell_row[1] != // AND cell value is not 'null'
+					nil {
 
-				if check_result_transaction != nil {
-					//fmt.Printf("\n-issue found for cell value: %s check type: %s \n ", in_scope_cell_row[1].(string), check[1].(string))
-					check_result_transaction = append(check_result_transaction, in_scope_cell_row[2]) // add check type
-					check_result_transaction = append(check_result_transaction, in_scope_cell_row[0]) // add row uuid
-					check_result_transaction_set = append(check_result_transaction_set, check_result_transaction)
+				check_result_transaction = //#TODO this is has be generalised to include non-regex check types.
+					regex_management.Process_regex_check( // run regex check
+						check[2].(string),             // check regex string
+						in_scope_cell_row[1].(string), // cell value
+						check[3].(string))             // check regex replacement value
+
+				if check_result_transaction != nil { //if issues are found append information to the transaction
+
+					check_result_transaction =
+						append(
+							check_result_transaction,
+							in_scope_cell_row[2]) // add check type
+
+					check_result_transaction =
+						append(check_result_transaction,
+							in_scope_cell_row[0]) // add row uuid
+
+					check_result_transaction_set = //append to transaction register
+						append(check_result_transaction_set,
+							check_result_transaction)
 				}
 				check_result_transaction = nil
 
@@ -316,8 +357,11 @@ func process_cell_sets(
 		}
 
 	}
-	if check_result_transaction_set != nil {
-		fmt.Printf("\n++++++++++++++++++++++++Checks completed: %s issues found.\nExample transaction row: %s ", len(check_result_transaction_set), check_result_transaction_set[0])
+	if check_result_transaction_set != nil { //#TODO add to logger
+		fmt.Printf(
+			"\n++++++++++++++++++++++++Checks completed: %s issues found.\nExample transaction row: %s ",
+			len(check_result_transaction_set),
+			check_result_transaction_set[0])
 	}
 	return check_result_transaction_set
 
