@@ -1,6 +1,7 @@
 package regex_management
 
 import (
+	"database_manager/utils"
 	"regexp"
 )
 
@@ -10,75 +11,73 @@ func Process_regex_check(
 	replacement_string_type string) []interface{} { //#TODO separate replacement process from regex check
 
 	var check_result_transaction []interface{}
-	var mark_string rune
-	var replacement_string rune
+	var mark_string string
+	var replacement_string string
 
-	syntactic_check_regex_object, _ := //#TODO add error handling
-		regexp.Compile(regex_string)
+	mark_string = "~" //#TODO move to general config
+
+	switch replacement_string_type {
+
+	case "STRING.EMPTY":
+		replacement_string = ""
+
+	case "SPACE":
+		replacement_string = " "
+		//#TODO add other replacement string type cases
+	}
+
+	syntactic_check_regex_object := //#TODO add error handling
+		regexp.MustCompile(regex_string)
 
 	regex_find_result :=
 		syntactic_check_regex_object.FindString(
 			check_string.(string))
 
-	regex_find_result_with_index :=
-		syntactic_check_regex_object.FindStringIndex(
-			check_string.(string))
-
-	mark_string = '~'
-
-	switch replacement_string_type {
-
-	case "STRING.EMPTY":
-		replacement_string = 0
-		//#TODO add other replacement string type cases
-	}
-
 	if regex_find_result != "" {
 
-		check_result_transaction =
-			append(check_result_transaction,
-				check_string.(string))
+		check_uuid, _ :=
+			utils.GetUUID(
+				1,
+				"")
+
+		sub_match_indices :=
+			syntactic_check_regex_object.
+				FindAllStringSubmatchIndex(
+					check_string.(string),
+					-1)
 
 		marked_text :=
-			replaceAtIndex(
+			modify_string_by_index(
 				check_string.(string),
 				mark_string,
-				regex_find_result_with_index[0])
-
-		check_result_transaction =
-			append(
-				check_result_transaction,
-				marked_text)
+				sub_match_indices)
 
 		modified_text :=
-			replaceAtIndex(
+			modify_string_by_index(
 				check_string.(string),
 				replacement_string,
-				regex_find_result_with_index[0])
+				sub_match_indices)
 
 		check_result_transaction =
 			append(check_result_transaction,
+				check_uuid.String(),
+				check_string.(string),
+				marked_text,
 				modified_text)
 
 		return check_result_transaction
-
 	}
 
 	return nil
-
 }
 
-func replaceAtIndex(
-	string_to_be_modified string,
-	replacement_rune rune,
-	replacement_index int) string {
+func modify_string_by_index(string_for_replacement string, replacement_string string, indicies [][]int) string {
 
-	modified_string :=
-		[]rune(
-			string_to_be_modified)
+	var modified_string string
 
-	modified_string[replacement_index] =
-		replacement_rune
+	//#TODO this should iterate through the index for multiple matches will require recalculating the resultant string's length for each modification. (shift back (subtract) from the current index by previous range - length of replacement string)
 
-	return string(modified_string)
+	modified_string = string_for_replacement[:indicies[0][2]] + replacement_string + string_for_replacement[indicies[0][3]:]
+
+	return modified_string
 }

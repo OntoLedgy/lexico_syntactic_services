@@ -232,8 +232,10 @@ func load_data(
 			transaction_dataset)
 
 	//#TODO write to a database
+	transactions_header := [][]string{{"check_uuids", "original_cell_values", "marked_cell_values", "modified_cell_values", "check_type_uuids", "row_uuids", "column_uuids"}}
 
 	output_csv := storage.Open_csv_file("sytantic_check_transactions.csv")
+	storage.Write_2d_slice_set_to_csv(transactions_header, output_csv)
 	storage.Write_2d_slice_set_to_csv(transaction_dataset_string, output_csv)
 
 }
@@ -303,7 +305,7 @@ func process_column_sets(
 	}
 
 	fmt.Printf( //#TODO add to logger
-		"\n--Total %s transactions generated.\nSample Transaction : %s",
+		"\n--Total %s transactions generated.\n--------------\nSample Transaction : %s\n-----------\n",
 		len(transaction_rowset),
 		transaction_rowset[0])
 
@@ -324,7 +326,7 @@ func process_cell_sets(
 		for _, check := range // for each check type in check register
 		checks {
 
-			if check[0] == // if check type uuid is included in check configurtation
+			if check[0] == // if check type uuid is included in check configuration
 				in_scope_cell_row[2] &&
 
 				in_scope_cell_row[1] != // AND cell value is not 'null'
@@ -357,12 +359,13 @@ func process_cell_sets(
 		}
 
 	}
-	if check_result_transaction_set != nil { //#TODO add to logger
-		fmt.Printf(
-			"\n++++++++++++++++++++++++Checks completed: %s issues found.\nExample transaction row: %s ",
-			len(check_result_transaction_set),
-			check_result_transaction_set[0])
-	}
+	/*
+		if check_result_transaction_set != nil { //#TODO add to logger
+			fmt.Printf(
+				"\n++++++++++++++++++++++++Checks completed: %s issues found.\nExample transaction row: %s ",
+				len(check_result_transaction_set),
+				check_result_transaction_set[0])
+		}*/
 	return check_result_transaction_set
 
 }
