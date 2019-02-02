@@ -2,6 +2,7 @@ package regex_management
 
 import (
 	"database_manager/utils"
+	"fmt"
 	"regexp"
 )
 
@@ -29,9 +30,11 @@ func Process_regex_check(
 	syntactic_check_regex_object := //#TODO add error handling
 		regexp.MustCompile(regex_string)
 
+	check_string_string_value := check_string.(string)
+
 	regex_find_result :=
 		syntactic_check_regex_object.FindString(
-			check_string.(string))
+			check_string_string_value)
 
 	if regex_find_result != "" {
 
@@ -77,7 +80,25 @@ func modify_string_by_index(string_for_replacement string, replacement_string st
 
 	//#TODO this should iterate through the index for multiple matches will require recalculating the resultant string's length for each modification. (shift back (subtract) from the current index by previous range - length of replacement string)
 
-	modified_string = string_for_replacement[:indicies[0][2]] + replacement_string + string_for_replacement[indicies[0][3]:]
+	fmt.Printf("\nstring_for_repalcement: %s, indicies : %v", string_for_replacement, indicies)
+
+	//for single substring replacement
+	/*modified_string = string_for_replacement[:indicies[0][2]] + replacement_string + string_for_replacement[indicies[0][3]:]*/
+
+	//for main match multiple replacement
+
+	replacement_string_length := len(replacement_string)
+	replacement_offset := 0
+
+	for _, index_value := range indicies {
+
+		change_length := index_value[1] - index_value[0]
+
+		modified_string = string_for_replacement[:index_value[0]+replacement_offset] + replacement_string + string_for_replacement[index_value[1]+replacement_offset:]
+		replacement_offset = replacement_offset + replacement_string_length - change_length
+		string_for_replacement = modified_string
+
+	}
 
 	return modified_string
 }
