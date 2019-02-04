@@ -16,4 +16,5 @@ type Check_Types struct {
 type Non_parameterised_checks struct {
 	check              Checks
 	check_regex_string string
+	check_type_level   string //level of pattern matching (substrings or main pattern)
 }
