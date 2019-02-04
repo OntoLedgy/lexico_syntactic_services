@@ -15,19 +15,20 @@ func Execute_csv_syntactic_checks(csv_file_name string, column_set map[string][]
 	var check []interface{}
 	var checks [][]interface{}
 
-	//special characters check
-	check = append(check,
-		`{DCCD33EC-7443-4666-8626-9C2B60ED82EF}`,
-		`Assai Character Range`,
-		`[\x3B\x40\x5C\x7E\x81\xA0\xB0\xB7\xC2\xC3\xF8\x{2013}\x{201D}\x{2019}\x{2026}]`,
-		`STRING.EMPTY`)
+	//#TODO add check type property for sub-string matching.
 
+	//special characters check
 	/*check = append(check,
-	`{A9C658C8-C304-400E-BEEA-96D0DB809AC8}`,
-	`Trailing Spaces`,
-	`\S{1,}(\s+)$`,
+	`{DCCD33EC-7443-4666-8626-9C2B60ED82EF}`,
+	`Assai Character Range`,
+	`[\x3B\x40\x5C\x7E\x81\xA0\xB0\xB7\xC2\xC3\xF8\x{2013}\x{201D}\x{2019}\x{2026}]`,
 	`STRING.EMPTY`)
 	*/
+	check = append(check,
+		`{A9C658C8-C304-400E-BEEA-96D0DB809AC8}`,
+		`Trailing Spaces`,
+		`\S{1,}(\s+)$`,
+		`STRING.EMPTY`)
 
 	var check_transaction_set [][]string
 	checks = append(checks, check)
@@ -70,7 +71,7 @@ func Execute_csv_syntactic_checks(csv_file_name string, column_set map[string][]
 			extracted_data,
 			check[0].(string))
 
-		fmt.Print("converting cell data to interface\n")
+		fmt.Print("converting cell data to interface %s\n", csv_dataset_including_check)
 		csv_dataset_including_check_interface :=
 			storage_slices.Convert_2d_string_to_interface(
 				csv_dataset_including_check)

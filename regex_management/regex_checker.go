@@ -82,15 +82,23 @@ func modify_string_by_index(string_for_replacement string, replacement_string st
 
 	fmt.Printf("\nstring_for_repalcement: %s, indicies : %v", string_for_replacement, indicies)
 
-	//for single substring replacement
-	/*modified_string = string_for_replacement[:indicies[0][2]] + replacement_string + string_for_replacement[indicies[0][3]:]*/
-
-	//for main match multiple replacement
-
 	replacement_string_length := len(replacement_string)
 	replacement_offset := 0
 
 	for _, index_value := range indicies {
+
+		if len(index_value) > 2 {
+			//For single substring replacement
+
+			modified_string =
+				string_for_replacement[:index_value[2]] +
+					replacement_string +
+					string_for_replacement[index_value[3]:]
+			continue
+		}
+		//#TODO - Add multiple substring replacement.
+
+		//For main match (with multiple replacement)
 
 		change_length := index_value[1] - index_value[0]
 
