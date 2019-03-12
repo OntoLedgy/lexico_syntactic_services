@@ -126,6 +126,7 @@ func process_cell_sets(
 		}
 
 	}
+
 	/*
 		if check_result_transaction_set != nil { //#TODO add to logger
 			fmt.Printf(

@@ -232,7 +232,14 @@ func load_data(
 			transaction_dataset)
 
 	//#TODO write to a database
-	transactions_header := [][]string{{"check_uuids", "original_cell_values", "marked_cell_values", "modified_cell_values", "check_type_uuids", "row_uuids", "column_uuids"}}
+	transactions_header := [][]string{{
+		"check_uuids",
+		"original_cell_values",
+		"marked_cell_values",
+		"modified_cell_values",
+		"check_type_uuids",
+		"row_uuids",
+		"column_uuids"}}
 
 	output_csv, _ := storage_csv.Open_csv_file("sytantic_check_transactions.csv")
 	storage_csv.Write_2d_slice_set_to_csv(transactions_header, output_csv)

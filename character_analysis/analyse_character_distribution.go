@@ -1,4 +1,4 @@
-package syntactic_checks
+package character_analysis
 
 import (
 	"fmt"

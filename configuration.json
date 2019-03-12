@@ -1,13 +1,40 @@
 {
   "csv_configuration" : {
-    "csv_checks_required" : false,
-    "csv_file_name": "C:\\OneDrive - BORO Engineering\\BORO\\Tools\\Syntactic checker\\included_proto_document_version_instances_idocs_extension.csv",
-    "identity_column_number" : 14,
-    "check_column_set" : { "document_titles" : 0, "idocs_doc_proj_numbers" : 3,"idocs_doc_unique_numbers" : 6 }
+    "csv_checks_required" : true,
+    "csv_file_name": "C:\\S\\python\\py_syntactic_checker_wrapper\\projects\\py_sc_1\\a_startup\\output_data\\filtered_data.csv",
+    "identity_column_number" : 0,
+    "check_column_set" : {
+      "document_titles" : 1
+    },
+    "check_column_configuration" : {
+      "document_titles" : [
+        "004ec5a6-5a2e-44f8-8f39-2305a65a2086",
+        "004ec5a6-5a2e-44f8-8f39-2305a65a2086"]
+      },
+    "issue_types" : [
+      {
+        "issue_type_uuid": "004ec5a6-5a2e-44f8-8f39-2305a65a2086",
+        "issue_type_name": "Syntactic Check - Leading Spaces",
+        "issue_check_type": "regex",
+        "check_regex": "\\S{1,}(\\s+)$",
+        "check_replacement_string": "STRING.EMPTY"
+      },
+      {
+        "issue_type_uuid": "004ec5a6-5a2e-44f8-8f39-2305a65axxxx",
+        "issue_type_name": "Assai Character Range",
+        "issue_check_type": "regex",
+        "check_regex": "[\\x3B\\x40\\x5C\\x7E\\x81\\xA0\\xB0\\xB7\\xC2\\xC3\\xF8\\x{2013}\\x{201D}\\x{2019}\\x{2026}]",
+        "check_replacement_string": "STRING.EMPTY"
+      }
+
+    ]
+
   },
   "database_configuration" : {
     "database_checks_required" : false,
     "database_file_name" : "C:\\OneDrive - BORO Engineering\\BORO\\Tools\\Syntactic checker\\SyntacticCheckerConfiguration.accdb"
   }
 
+
 }
+
