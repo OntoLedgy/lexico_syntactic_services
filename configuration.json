@@ -33,8 +33,6 @@
   "database_configuration" : {
     "database_checks_required" : false,
     "database_file_name" : "C:\\OneDrive - BORO Engineering\\BORO\\Tools\\Syntactic checker\\SyntacticCheckerConfiguration.accdb"
-  }
-
-
+  } //TODO - Stage 1 - remove not part of Python API
 }
 

@@ -7,6 +7,9 @@ import (
 	"os"
 )
 
+//TODO - Stage 1 - Clean names
+//TODO - Stage 2 - replace configuration management framework
+
 func Get_configuration() (*Configuration, [][]interface{}) {
 
 	configuration_file, err := os.Open(`configuration.json`)
@@ -18,14 +21,14 @@ func Get_configuration() (*Configuration, [][]interface{}) {
 
 	defer configuration_file.Close()
 
-	// read our opened xmlFile as a byte array.
+	// read opened xmlFile as a byte array.
 	byteValue, _ := ioutil.ReadAll(
 		configuration_file)
 
-	// we initialize our Configuration
+	// initialize our Configuration
 	var configuration Configuration
 
-	// we unmarshal our byteArray into our configuration structure
+	// unmarshal our byteArray into our configuration structure
 	json.Unmarshal(
 		byteValue,
 		&configuration)
