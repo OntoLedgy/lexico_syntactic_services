@@ -6,7 +6,8 @@ type Csv_configuration struct {
 	Csv_checks_required             bool           `json:"csv_checks_required"`
 	Csv_file_name                   string         `json:"csv_file_name"`
 	Identity_column_position        int            `json:"identity_column_number"` //TODO - Stage 1 - change json tag name to identity_column_position
-	In_scope_check_column_positions map[string]int `json:"check_column_set"`       //TODO - Stage 1 - change json tag name to in_scope_column_positions
+	Check_column_name               string         `json:"check_column_name"`
+	In_scope_check_column_positions map[string]int `json:"check_column_set"` //TODO - Stage 1 - change json tag name to in_scope_column_positions
 	Checks                          []Issue_type   `json:"issue_types"`
 }
 

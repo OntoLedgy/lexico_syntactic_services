@@ -4,6 +4,8 @@ import "storage/csv"
 
 func Report_syntactic_check_outputs(syntactic_check_results map[string][][]string) {
 
+	//TODO - Stage N - consider to report the no issues case
+
 	Report_syntactic_check_issues(syntactic_check_results["issues"])
 	Report_syntactic_check_issue_parameters(syntactic_check_results["issue parameters"])
 	Report_syntactic_check_fixes(syntactic_check_results["fixes"])
@@ -45,7 +47,7 @@ func Report_syntactic_check_issue_parameters(issue_parameter_transactions [][]st
 
 func Report_syntactic_check_fixes(fix_transactions [][]string) {
 
-	output_csv_filename := "outputs\\fixes.csv"
+	output_csv_filename := "outputs\\fixes(standard).csv"
 
 	output_header := []string{
 		"issue_uuids",

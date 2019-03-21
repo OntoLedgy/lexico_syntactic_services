@@ -6,7 +6,7 @@ import (
 	storage_csv "storage/csv"
 	//storage_slices "storage/slices"
 	"fmt"
-	"syntactic_checker/syntactic_check_processor"
+	"syntactic_checker/syntactic_check_cell_orchestrator"
 )
 
 func Execute_database_syntactic_checks(configuration_database_filename string) {
@@ -288,7 +288,7 @@ func Process_column_sets(
 		if in_scope_column_cell_set_including_check_configuration != nil { //if the column is marked for checks
 
 			transaction_column_rowset :=
-				syntactic_check_processor.Process_cell_checks( // run check process
+				syntactic_check_cell_orchestrator.Process_cells_checks( // run check process
 					in_scope_column_cell_set_including_check_configuration,
 					checks)
 
