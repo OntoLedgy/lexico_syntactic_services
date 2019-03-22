@@ -1,4 +1,4 @@
-package syntactic_check_cell_orchestrator
+package cell_checks_runner
 
 import (
 	"fmt"
@@ -9,14 +9,14 @@ func Process_cells_checks(
 	in_scope_cells [][]interface{},
 	in_scope_check_types [][]interface{}) [][]interface{} {
 
+	var check_result_transaction_set [][]interface{}
+	var cell_check_result_transaction_set [][]interface{}
+
 	fmt.Printf(
 		"processing checks: %s\n",
 		in_scope_check_types)
 
-	var check_result_transaction_set [][]interface{}
-	var cell_check_result_transaction_set [][]interface{}
-
-	for _, in_scope_cell := range in_scope_cells { // for each cell row
+	for _, in_scope_cell := range in_scope_cells {
 
 		cell_check_result_transaction_set =
 			Process_cell_checks(
@@ -31,7 +31,7 @@ func Process_cells_checks(
 	/*
 		if check_result_transaction_set != nil { //#TODO add to logger
 			fmt.Printf(
-				"\n++++++++++++++++++++++++Checks completed: %s issues found.\nExample transaction row: %s ",
+				"\n++++++++++++++++++++++++Issue_types completed: %s issues found.\nExample transaction row: %s ",
 				len(check_result_transaction_set),
 				check_result_transaction_set[0])
 		}*/
@@ -47,22 +47,22 @@ func Process_cell_checks(
 
 	for _, in_scope_check := range in_scope_checks { // for each in_scope_check type in in_scope_check
 
-		cell_check_result_transaction = Process_cell_check(
-			in_scope_cell,
-			in_scope_check)
+		cell_check_result_transaction =
+			Process_cell_check(
+				in_scope_cell,
+				in_scope_check)
 
-		cell_check_result_transaction_set = Process_cell_check_result_transaction(
-			in_scope_cell,
-			in_scope_check,
-			cell_check_result_transaction,
-			cell_check_result_transaction_set)
+		cell_check_result_transaction_set =
+			Process_cell_check_result_transaction(
+				in_scope_cell,
+				in_scope_check,
+				cell_check_result_transaction,
+				cell_check_result_transaction_set)
 
 		cell_check_result_transaction = nil
-
 	}
 
 	return cell_check_result_transaction_set
-
 }
 
 func Process_cell_check(

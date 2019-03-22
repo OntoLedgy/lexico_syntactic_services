@@ -1,4 +1,4 @@
-package reporter
+package cell_checks_results_finaliser
 
 import "storage/csv"
 
