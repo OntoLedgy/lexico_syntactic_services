@@ -2,6 +2,13 @@ package configuration_handler
 
 import "database_manager/utils"
 
+type Configurations struct {
+	Configuration_cotext string
+
+	Csv_configuration      Csv_configuration
+	Database_configuration Database_configuration
+}
+
 type Csv_configuration struct {
 	Csv_checks_required      bool          `json:"csv_checks_required"`
 	Csv_file_name            string        `json:"csv_file_name"`
@@ -22,11 +29,6 @@ type Columns struct {
 type Database_configuration struct {
 	Database_checks_required bool   `json:"database_checks_required"`
 	Database_file_name       string `json:"csv_file_name"`
-}
-
-type Configurations struct {
-	Csv_configuration      Csv_configuration
-	Database_configuration Database_configuration
 }
 
 type Issue_types struct {

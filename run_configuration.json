@@ -10,7 +10,7 @@
         "issue_type_uuid": "004ec5a6-5a2e-44f8-8f39-2305a65a2086",
         "issue_type_name": "Syntactic Check - Leading Spaces",
         "issue_check_type": "regex",
-        "check_regex": "\\S{1,}(\\s+)$",
+        "check_regex": "^(\\s+)\\S{1,}",
         "check_replacement_string": "STRING.EMPTY"
       },
       {
@@ -19,7 +19,22 @@
         "issue_check_type": "regex",
         "check_regex": "[\\x3B\\x40\\x5C\\x7E\\x81\\xA0\\xB0\\xB7\\xC2\\xC3\\xF8\\x{2013}\\x{201D}\\x{2019}\\x{2026}]",
         "check_replacement_string": "STRING.EMPTY"
+      },
+      {
+        "issue_type_uuid": "004ec5a6-5a2e-44f8-8f39-2305a65ayyyy",
+        "issue_type_name": "Syntactic Check - Trailing Spaces",
+        "issue_check_type": "regex",
+        "check_regex": "\\S{1,}(\\s+)$",
+        "check_replacement_string": "STRING.EMPTY"
+      },
+      {
+        "issue_type_uuid": "004ec5a6-5a2e-44f8-8f39-2305a65azzzz",
+        "issue_type_name": "Syntactic Check - Multiple Embedded Spaces",
+        "issue_check_type": "regex",
+        "check_regex": "\\S{1,}\\s(\\s{1,})\\S{1,}",
+        "check_replacement_string": "STRING.EMPTY"
       }
+
     ]
   }
 }
