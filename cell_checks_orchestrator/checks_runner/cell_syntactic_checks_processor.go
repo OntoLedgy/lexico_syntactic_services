@@ -1,10 +1,10 @@
-package cell_checks_runner
+package checks_runner
 
 import (
 	"fmt"
 	"syntactic_checker/cell_checks_orchestrator/configuration_handler"
+	"syntactic_checker/cell_checks_orchestrator/regex_processor"
 	"syntactic_checker/object_model"
-	"syntactic_checker/regex_processor"
 )
 
 func process_syntactic_checks_for_cells(

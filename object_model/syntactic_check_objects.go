@@ -36,3 +36,11 @@ type Fix_transactions struct {
 	marked_string   string
 	modified_string string
 }
+
+type Regex_check_results struct {
+	Check_uuids         string
+	Original_string     string
+	Mark_string         string
+	Replacement_string  string
+	Regex_match_indices [][]int
+}

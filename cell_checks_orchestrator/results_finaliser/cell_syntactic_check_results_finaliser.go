@@ -1,4 +1,4 @@
-package cell_checks_results_finaliser
+package results_finaliser
 
 import (
 	"fmt"
