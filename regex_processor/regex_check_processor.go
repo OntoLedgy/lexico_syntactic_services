@@ -2,7 +2,7 @@ package regex_processor
 
 import (
 	"database_manager/utils"
-	"fmt"
+	"github.com/satori/go.uuid"
 	"regexp"
 )
 
@@ -26,7 +26,7 @@ func Process_regex_check(
 
 	case "SPACE":
 		replacement_string = " "
-		//#TODO - Stage 2 - add other replacement string type cases
+		//TODO - Stage 2 - add other replacement string type cases
 	}
 
 	syntactic_check_regex_object := //TODO - Stage 2 - add error handling
@@ -48,24 +48,13 @@ func Process_regex_check(
 		//TODO - Stage 2 - 	separate replacement process from regex check, return sub_match_indicies
 		// 					for aggregatation first and then call modification function in one go.
 
-		cell_value_marked :=
-			modify_string_by_index(
-				cell_value_original_string,
-				mark_string,
-				regex_match_indices)
-
-		cell_value_modified :=
-			modify_string_by_index(
+		check_result_transaction =
+			generate_fix_transactions(
+				check_uuid,
 				cell_value_original_string,
 				replacement_string,
+				mark_string,
 				regex_match_indices)
-
-		check_result_transaction =
-			append(check_result_transaction,
-				check_uuid.String(),
-				cell_value_original_string,
-				cell_value_marked,
-				cell_value_modified)
 
 		return check_result_transaction
 
@@ -76,61 +65,33 @@ func Process_regex_check(
 
 }
 
-//TODO - Stage 1 - move out to differnet file/pacakge
-
-func modify_string_by_index(
-	string_for_replacement string,
+func generate_fix_transactions(
+	check_uuid uuid.UUID,
+	cell_value_original_string string,
+	mark_string string,
 	replacement_string string,
-	replacement_indicies [][]int) string {
+	regex_match_indices [][]int) []interface{} {
 
-	var modified_string string
-	var replacement_length int
-	var replacement_start_position int
-	var replacement_end_position int
+	var check_result_transaction []interface{}
 
-	fmt.Printf(
-		"\nstring_for_repalcement: %s, replacement_indicies : %v",
-		string_for_replacement,
-		replacement_indicies)
+	cell_value_marked :=
+		modify_string_by_index(
+			cell_value_original_string,
+			mark_string,
+			regex_match_indices)
 
-	replacement_string_length :=
-		len(replacement_string)
+	cell_value_modified :=
+		modify_string_by_index(
+			cell_value_original_string,
+			replacement_string,
+			regex_match_indices)
 
-	replacement_offset :=
-		0
+	check_result_transaction =
+		append(check_result_transaction,
+			check_uuid.String(),
+			cell_value_original_string,
+			cell_value_marked,
+			cell_value_modified)
 
-	for _, index_value := range replacement_indicies {
-
-		//TODO - Stage 1 - break out the if into separate function
-		if len(index_value) > 2 {
-
-			replacement_start_position = index_value[2]
-			replacement_end_position = index_value[3]
-
-		} else {
-
-			replacement_start_position = index_value[0]
-			replacement_end_position = index_value[1]
-		}
-
-		replacement_length =
-			replacement_end_position -
-				replacement_start_position
-
-		modified_string =
-			string_for_replacement[:replacement_start_position+replacement_offset] +
-				replacement_string +
-				string_for_replacement[replacement_end_position+replacement_offset:]
-
-		replacement_offset =
-			replacement_offset +
-				replacement_string_length -
-				replacement_length
-
-		string_for_replacement =
-			modified_string
-
-	}
-
-	return modified_string
+	return check_result_transaction
 }

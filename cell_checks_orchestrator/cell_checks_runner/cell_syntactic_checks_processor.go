@@ -2,26 +2,28 @@ package cell_checks_runner
 
 import (
 	"fmt"
+	"syntactic_checker/cell_checks_orchestrator/configuration_handler"
+	"syntactic_checker/object_model"
 	"syntactic_checker/regex_processor"
 )
 
 func process_syntactic_checks_for_cells(
 	in_scope_identified_cells [][]interface{},
-	in_scope_check_types [][]interface{}) [][]interface{} {
+	run_configuration *configuration_handler.Configurations) [][]interface{} {
 
 	var check_result_transaction_set [][]interface{}
 	var cell_check_result_transaction_set [][]interface{}
 
 	fmt.Printf(
 		"processing checks: %s\n",
-		in_scope_check_types)
+		run_configuration)
 
 	for _, in_scope_cell := range in_scope_identified_cells {
 
 		cell_check_result_transaction_set =
 			process_syntactic_checks_for_cell(
 				in_scope_cell,
-				in_scope_check_types)
+				run_configuration)
 
 		check_result_transaction_set = append(check_result_transaction_set,
 			cell_check_result_transaction_set...)
@@ -40,10 +42,13 @@ func process_syntactic_checks_for_cells(
 
 func process_syntactic_checks_for_cell(
 	in_scope_identified_cell []interface{},
-	in_scope_checks [][]interface{}) [][]interface{} {
+	run_configuration *configuration_handler.Configurations) [][]interface{} {
 
 	var cell_check_result_transaction_set [][]interface{}
 	var cell_syntactic_check_result_transaction []interface{}
+
+	in_scope_checks :=
+		run_configuration.Csv_configuration.Issue_types
 
 	for _, in_scope_check := range in_scope_checks {
 
@@ -67,29 +72,28 @@ func process_syntactic_checks_for_cell(
 
 func process_syntactic_check_for_cell(
 	in_scope_identified_cell []interface{},
-	in_scope_check []interface{}) []interface{} {
+	in_scope_check object_model.Issue_types) []interface{} {
 
 	var cell_check_result_transaction []interface{}
 
-	if in_scope_identified_cell[1] != nil { // if cell value is not 'null'
+	if in_scope_identified_cell[1] != nil {
 
-		cell_check_result_transaction = //#TODO - Stage 2 - add switch to include non-regex in_scope_check types.
+		cell_check_result_transaction = //TODO - Stage 3 - add switch to include non-regex in_scope_check types.
 			regex_processor.
-				Process_regex_check( // run regex in_scope_check
-					in_scope_check[2].(string),  // in_scope_check regex string
+				Process_regex_check( //TODO - Stage 2 - replace the check interface with the check type object and pass it through
+					in_scope_check.Issue_check_regex,
 					in_scope_identified_cell[1], // cell value
-					in_scope_check[3].(string))  // in_scope_check regex replacement value
+					in_scope_check.Issue_check_replacement_string)
 	} else {
-		cell_check_result_transaction =
+		cell_check_result_transaction = //TODO - Stage 1 - if cell value is null - report cell is null error
 			nil
 	}
-
 	return cell_check_result_transaction
 }
 
 func process_syntactic_check_result_transaction(
 	in_scope_identified_cell []interface{},
-	in_scope_check []interface{},
+	in_scope_check object_model.Issue_types,
 	cell_syntactic_check_result_transaction []interface{},
 	cell_sytactic_check_result_transaction_set [][]interface{}) [][]interface{} {
 
@@ -98,8 +102,8 @@ func process_syntactic_check_result_transaction(
 		cell_syntactic_check_result_transaction =
 			append(
 				cell_syntactic_check_result_transaction,
-				in_scope_check[0],           // add in_scope_check type
-				in_scope_identified_cell[0]) // add row uuid
+				in_scope_check.Issue_type_uuid,
+				in_scope_identified_cell[0]) //TODO - Stage 2 - replace with human readable column name
 
 		cell_sytactic_check_result_transaction_set = //append to transaction register
 			append(cell_sytactic_check_result_transaction_set,

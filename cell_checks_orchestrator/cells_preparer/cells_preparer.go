@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"storage/csv"
 	storage_slices "storage/slices"
-	"syntactic_checker/configuration_handler"
+	"syntactic_checker/cell_checks_orchestrator/configuration_handler"
 )
 
 func Get_in_scope_identified_cells(

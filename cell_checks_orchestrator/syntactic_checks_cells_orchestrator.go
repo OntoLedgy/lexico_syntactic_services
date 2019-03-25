@@ -1,10 +1,10 @@
 package cell_checks_orchestrator
 
 import (
-	"syntactic_checker/cell_checks_results_finaliser"
-	"syntactic_checker/cell_checks_runner"
-	"syntactic_checker/cells_preparer"
-	"syntactic_checker/configuration_handler"
+	"syntactic_checker/cell_checks_orchestrator/cell_checks_results_finaliser"
+	"syntactic_checker/cell_checks_orchestrator/cell_checks_runner"
+	"syntactic_checker/cell_checks_orchestrator/cells_preparer"
+	"syntactic_checker/cell_checks_orchestrator/configuration_handler"
 )
 
 func Orchestrate_csv_cell_syntactic_checks() {
