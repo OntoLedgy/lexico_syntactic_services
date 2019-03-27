@@ -22,5 +22,6 @@ func Orchestrate_csv_cell_syntactic_checks() {
 			run_configuration)
 
 	results_finaliser.Report_syntactic_check_outputs(
-		syntactic_check_result_transaction_set)
+		syntactic_check_result_transaction_set,
+		run_configuration)
 }

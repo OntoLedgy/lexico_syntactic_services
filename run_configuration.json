@@ -36,6 +36,12 @@
       }
 
     ]
+  },
+  "output_configuration" : {
+    "root_folder_path" : "C:\\S\\python\\py_syntactic_checker_wrapper\\projects\\syntactic_checker_wrapper",
+    "fixes_file_relative_path" : "\\py_sc_2_source\\data\\output_data\\fixes.csv",
+    "issues_file_relative_path" : "\\py_sc_2_source\\data\\output_data\\issues.csv",
+    "issue_parameters_file_relative_path" : "\\py_sc_2_source\\data\\output_data\\issue_parameters.csv"
   }
 }
 
