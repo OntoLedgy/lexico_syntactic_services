@@ -2,7 +2,7 @@ package cell_fixer
 
 import "fmt"
 
-func modify_string_by_index(
+func Modify_string_by_index(
 	string_for_replacement string,
 	replacement_string string,
 	replacement_indicies [][]int) string {
@@ -23,7 +23,7 @@ func modify_string_by_index(
 
 	for _, replacement_index := range replacement_indicies {
 
-		replacement_start_position, replacement_end_position :=
+		replacement_start_position, replacement_end_position := //TODO - Stage 2 - using a single variable with two values.
 			get_replacement_positions(replacement_index)
 
 		replacement_length =
@@ -48,7 +48,8 @@ func modify_string_by_index(
 	return modified_string
 }
 
-func get_replacement_positions(replacement_index []int) (int, int) {
+func get_replacement_positions(
+	replacement_index []int) (int, int) {
 
 	var replacement_start_position int
 	var replacement_end_position int

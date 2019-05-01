@@ -4,19 +4,19 @@ import (
 	"syntactic_checker/object_model"
 )
 
-func Generate_fix_transaction(
+func Generate_issue_transaction(
 	regex_check_result object_model.Regex_check_results) []interface{} {
 
 	var check_result_transaction []interface{}
 
 	cell_value_marked :=
-		modify_string_by_index(
+		Modify_string_by_index(
 			regex_check_result.Original_string,
 			regex_check_result.Mark_string,
 			regex_check_result.Regex_match_indices)
 
 	cell_value_modified :=
-		modify_string_by_index(
+		Modify_string_by_index(
 			regex_check_result.Original_string,
 			regex_check_result.Replacement_string,
 			regex_check_result.Regex_match_indices)

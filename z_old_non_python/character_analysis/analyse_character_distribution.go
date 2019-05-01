@@ -8,7 +8,6 @@ import (
 
 func Process_character_distribution(csv_file_name string, column_set map[string][]int) {
 
-	//#TODO Move to Load data
 	var csv_dataset [][]string
 
 	csv_file, csv_file_data := storage_csv.Open_csv_file(csv_file_name)

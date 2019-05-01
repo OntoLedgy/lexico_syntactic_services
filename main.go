@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"syntactic_checker/cell_checks_orchestrator"
 )
 
@@ -15,7 +16,11 @@ func main() {
 	fmt.Println(
 		"Starting cell set syntactic check orchestrator")
 
-	cell_checks_orchestrator.Orchestrate_csv_cell_syntactic_checks()
+	configuration_file_path := os.Args[1]
+
+	cell_checks_orchestrator.
+		Orchestrate_csv_cell_syntactic_checks(
+			configuration_file_path)
 
 	fmt.Println(
 		"Ending cell set syntactic check orchestrator")

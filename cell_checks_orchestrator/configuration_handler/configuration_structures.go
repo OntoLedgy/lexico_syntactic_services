@@ -11,12 +11,12 @@ type Configurations struct {
 }
 
 type Csv_configuration struct {
-	Csv_checks_required      bool                       `json:"csv_checks_required"`
-	Csv_file_name            string                     `json:"csv_file_name"`
-	Identity_column_position int                        `json:"identity_column_number"` //TODO - Stage 1 - change json tag name to identity_column_position
-	Check_column_name        string                     `json:"check_column_name"`
-	Check_column_uuid        string                     `json:"check_column_uuid"`
-	Issue_types              []object_model.Issue_types `json:"issue_types"`
+	Csv_checks_required  bool                       `json:"csv_checks_required"`
+	Csv_file_name        string                     `json:"csv_file_name"`
+	Identity_column_name string                     `json:"identity_column_name"`
+	Check_column_name    string                     `json:"check_column_name"`
+	Check_column_uuid    string                     `json:"check_column_uuid"`
+	Issue_types          []object_model.Issue_types `json:"issue_types"`
 }
 
 type Output_configurations struct {

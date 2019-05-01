@@ -38,8 +38,7 @@ func Report_syntactic_check_issues(
 	output_header := []string{
 		"check_uuids",
 		"check_type_uuids",
-		"object_id",
-		"column_uuids"}
+		"identifiers"}
 
 	storage.Write_slice_with_header_to_csv(
 		issue_transactions,
@@ -69,13 +68,11 @@ func Report_syntactic_check_fixes(
 	output_csv_filename string) {
 
 	output_header := []string{
-		"issue_uuids",
 		"cell_values_original",
 		"cell_values_marked",
-		"cell_values_modified",
-		"check_type_uuids",
-		"row_id",
-		"column_uuids"}
+		"cell_values_fixed",
+		"fix_uuids",
+		"identifiers"}
 
 	storage.Write_slice_with_header_to_csv(
 		fix_transactions,

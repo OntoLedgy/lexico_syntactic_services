@@ -7,10 +7,11 @@ import (
 	"syntactic_checker/cell_checks_orchestrator/results_finaliser"
 )
 
-func Orchestrate_csv_cell_syntactic_checks() {
+func Orchestrate_csv_cell_syntactic_checks(
+	configuration_file_path string) {
 
 	run_configuration :=
-		configuration_handler.Get_configuration()
+		configuration_handler.Get_configuration(configuration_file_path)
 
 	in_scope_identified_cells :=
 		cells_preparer.Get_in_scope_identified_cells(

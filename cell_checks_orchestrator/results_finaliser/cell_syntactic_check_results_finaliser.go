@@ -8,6 +8,7 @@ import (
 
 func Prepare_syntactic_checks_results_transactions(
 	syntactic_checks_results_transactions [][]interface{},
+	cells_syntactic_check_fix_transactions [][]interface{},
 	column_uuid string) map[string][][]string {
 
 	syntactic_checks_results_transaction_map :=
@@ -18,6 +19,7 @@ func Prepare_syntactic_checks_results_transactions(
 		syntactic_checks_results_transaction_map =
 			prepare_syntactic_check_results_transactions(
 				syntactic_checks_results_transactions,
+				cells_syntactic_check_fix_transactions,
 				column_uuid)
 
 	} else {
@@ -31,6 +33,7 @@ func Prepare_syntactic_checks_results_transactions(
 
 func prepare_syntactic_check_results_transactions(
 	check_transactions [][]interface{},
+	cells_syntactic_check_fix_transactions [][]interface{},
 	column_uuid string) map[string][][]string {
 
 	syntactic_checks_results_transaction_map :=
@@ -40,9 +43,13 @@ func prepare_syntactic_check_results_transactions(
 		storage.Convert_2d_interface_to_string(
 			check_transactions)
 
+	cells_syntactic_check_fix_transactions_string :=
+		storage.Convert_2d_interface_to_string(
+			cells_syntactic_check_fix_transactions)
+
 	syntactic_checks_results_transaction_map["syntactic_check_fix_transactions_set"] =
 		prepare_syntactic_check_fixes(
-			syntactic_checks_results_transactions_string,
+			cells_syntactic_check_fix_transactions_string,
 			column_uuid)
 
 	syntactic_checks_results_transaction_map["syntactic_check_issues_set"] =
@@ -66,9 +73,7 @@ func prepare_syntactic_check_fixes(
 	var syntactic_check_fix_transactions_set [][]string
 
 	syntactic_check_fixes_transactions :=
-		storage.Add_single_value_column_to_2d_slice(
-			syntactic_check_result_transactions,
-			column_uuid)
+		syntactic_check_result_transactions
 
 	for _, syntactic_check_fix := range syntactic_check_fixes_transactions {
 
@@ -94,10 +99,10 @@ func prepare_syntactic_checks_issues(
 			syntactic_check_result_transactions,
 			columns_to_extract)
 
-	syntactic_check_issues_transactions =
-		storage.Add_single_value_column_to_2d_slice(
-			syntactic_check_issues_transactions,
-			column_uuid)
+	//syntactic_check_issues_transactions =
+	//	storage.Add_single_value_column_to_2d_slice(
+	//		syntactic_check_issues_transactions,
+	//		column_uuid)
 
 	for _, syntactic_check_issue := range syntactic_check_issues_transactions {
 
