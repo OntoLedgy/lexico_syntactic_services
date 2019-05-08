@@ -37,11 +37,9 @@
     ]
   },
   "output_configuration" : {
-    "root_folder_path": "C:\\S\\Go\\src\\syntactic_checker\\outputs\\",
-    "output_fixes_file_name": "fixes.csv",
-    "output_issues_file_name": "issues.csv",
-    "output_issue_parameter_file_name": "issue_parameters.csv"
-
+    "output_fixes_file_absolute_path": "C:\\S\\Go\\src\\syntactic_checker\\outputs\\fixes.csv",
+    "output_issues_file_absolute_path": "C:\\S\\Go\\src\\syntactic_checker\\outputs\\issues.csv",
+    "output_issue_parameter_file_absolute_path": "C:\\S\\Go\\src\\syntactic_checker\\outputs\\issue_parameters.csv"
   }
 }
 

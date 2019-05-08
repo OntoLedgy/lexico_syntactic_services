@@ -9,11 +9,9 @@ func Report_syntactic_check_outputs(
 	syntactic_check_results map[string][][]string,
 	run_configuration *configuration_handler.Configurations) {
 
-	root_output_folder_name := run_configuration.Output_configuration.Root_folder_path
-
-	issues_file_name := root_output_folder_name + run_configuration.Output_configuration.Output_issues_file_name
-	issue_parameters_file_name := root_output_folder_name + run_configuration.Output_configuration.Output_issue_parameters_file_name
-	fixes_file_name := root_output_folder_name + run_configuration.Output_configuration.Output_fixes_file_name
+	issues_file_name := run_configuration.Output_configuration.Output_issues_file_absolute_path
+	issue_parameters_file_name := run_configuration.Output_configuration.Output_issue_parameters_file_absolute_path
+	fixes_file_name := run_configuration.Output_configuration.Output_fixes_file_absolute_path
 
 	syntactic_check_issues_set :=
 		syntactic_check_results["syntactic_check_issues_set"]
