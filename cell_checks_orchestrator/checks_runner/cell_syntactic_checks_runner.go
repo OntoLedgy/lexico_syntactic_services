@@ -11,11 +11,6 @@ func Run(
 
 	var syntactic_check_result_report map[string][][]string
 
-	column_uuid :=
-		run_configuration.
-			Csv_configuration.
-			Check_column_uuid
-
 	syntactic_check_result_transactions, cells_syntactic_check_fix_transactions :=
 		process_syntactic_checks_for_cells(
 			in_scope_identified_cells,
@@ -24,8 +19,7 @@ func Run(
 	syntactic_check_result_report =
 		results_finaliser.Prepare_syntactic_checks_results_transactions(
 			syntactic_check_result_transactions,
-			cells_syntactic_check_fix_transactions,
-			column_uuid)
+			cells_syntactic_check_fix_transactions)
 
 	return syntactic_check_result_report
 }

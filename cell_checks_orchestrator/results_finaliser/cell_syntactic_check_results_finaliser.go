@@ -1,15 +1,13 @@
 package results_finaliser
 
 import (
-	"fmt"
 	"storage/slices"
 	"strconv"
 )
 
 func Prepare_syntactic_checks_results_transactions(
 	syntactic_checks_results_transactions [][]interface{},
-	cells_syntactic_check_fix_transactions [][]interface{},
-	column_uuid string) map[string][][]string {
+	cells_syntactic_check_fix_transactions [][]interface{}) map[string][][]string {
 
 	syntactic_checks_results_transaction_map :=
 		make(map[string][][]string, 3)
@@ -19,8 +17,7 @@ func Prepare_syntactic_checks_results_transactions(
 		syntactic_checks_results_transaction_map =
 			prepare_syntactic_check_results_transactions(
 				syntactic_checks_results_transactions,
-				cells_syntactic_check_fix_transactions,
-				column_uuid)
+				cells_syntactic_check_fix_transactions)
 
 	} else {
 
@@ -33,8 +30,7 @@ func Prepare_syntactic_checks_results_transactions(
 
 func prepare_syntactic_check_results_transactions(
 	check_transactions [][]interface{},
-	cells_syntactic_check_fix_transactions [][]interface{},
-	column_uuid string) map[string][][]string {
+	cells_syntactic_check_fix_transactions [][]interface{}) map[string][][]string {
 
 	syntactic_checks_results_transaction_map :=
 		make(map[string][][]string, 3)
@@ -48,78 +44,21 @@ func prepare_syntactic_check_results_transactions(
 			cells_syntactic_check_fix_transactions)
 
 	syntactic_checks_results_transaction_map["syntactic_check_fix_transactions_set"] =
-		prepare_syntactic_check_fixes(
-			cells_syntactic_check_fix_transactions_string,
-			column_uuid)
+		cells_syntactic_check_fix_transactions_string
 
 	syntactic_checks_results_transaction_map["syntactic_check_issues_set"] =
-		prepare_syntactic_checks_issues(
-			syntactic_checks_results_transactions_string,
-			column_uuid)
+		syntactic_checks_results_transactions_string
 
 	syntactic_checks_results_transaction_map["syntactic_check_issue_parameters_set"] =
 		prepare_syntactic_checks_issue_parameters(
-			syntactic_checks_results_transactions_string,
-			column_uuid)
+			syntactic_checks_results_transactions_string)
 
 	return syntactic_checks_results_transaction_map
 
 }
 
-func prepare_syntactic_check_fixes(
-	syntactic_check_result_transactions [][]string,
-	column_uuid string) [][]string {
-
-	var syntactic_check_fix_transactions_set [][]string
-
-	syntactic_check_fixes_transactions :=
-		syntactic_check_result_transactions
-
-	for _, syntactic_check_fix := range syntactic_check_fixes_transactions {
-
-		syntactic_check_fix_transactions_set =
-			append(
-				syntactic_check_fix_transactions_set,
-				syntactic_check_fix)
-	}
-
-	return syntactic_check_fix_transactions_set
-}
-
-func prepare_syntactic_checks_issues(
-	syntactic_check_result_transactions [][]string,
-	column_uuid string) [][]string {
-
-	var syntactic_check_issues_set [][]string
-
-	columns_to_extract := []int{0, 4, 5} //get 0 - check_uuid, 4 - check_type_uuid, 5 - row_id
-
-	syntactic_check_issues_transactions :=
-		storage.Extract_columns_from_2d_slices(
-			syntactic_check_result_transactions,
-			columns_to_extract)
-
-	//syntactic_check_issues_transactions =
-	//	storage.Add_single_value_column_to_2d_slice(
-	//		syntactic_check_issues_transactions,
-	//		column_uuid)
-
-	for _, syntactic_check_issue := range syntactic_check_issues_transactions {
-
-		syntactic_check_issues_set =
-			append(
-				syntactic_check_issues_set,
-				syntactic_check_issue)
-	}
-	fmt.Printf("issues:%s", syntactic_check_issues_set)
-
-	return syntactic_check_issues_set
-
-}
-
 func prepare_syntactic_checks_issue_parameters(
-	syntactic_check_result_transactions [][]string,
-	column_uuid string) [][]string {
+	syntactic_check_result_transactions [][]string) [][]string {
 
 	var syntactic_check_issue_parameters_set [][]string
 

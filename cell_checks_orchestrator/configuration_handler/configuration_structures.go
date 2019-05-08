@@ -20,10 +20,10 @@ type Csv_configuration struct {
 }
 
 type Output_configurations struct {
-	Root_folder_path                           string `json:"root_folder_path"`
-	Output_fixes_file_relative_path            string `json:"fixes_file_relative_path"`
-	Output_issues_file_relative_path           string `json:"issues_file_relative_path"`
-	Output_issue_parameters_file_relative_path string `json:"issue_parameters_file_relative_path"`
+	Root_folder_path                  string `json:"root_folder_path"`
+	Output_fixes_file_name            string `json:"output_fixes_file_name"`
+	Output_issues_file_name           string `json:"output_issues_file_name"`
+	Output_issue_parameters_file_name string `json:"output_issue_parameter_file_name"`
 }
 
 type Database_configuration struct {
