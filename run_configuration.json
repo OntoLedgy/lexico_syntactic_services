@@ -1,10 +1,10 @@
 {
-  "csv_configuration" : {
+  "check_configuration": {
     "csv_checks_required" : true,
-    "csv_file_name": "C:\\S\\python\\py_syntactic_checker_wrapper\\projects\\py_sc_1\\a_startup\\output_data\\filtered_data.csv",
+    "csv_file_name": "C:\\S\\python\\py_syntactic_checker_wrapper\\projects\\syntactic_checker_wrapper\\py_sc_2_source\\data\\input_data\\filtered_data.csv",
     "identity_column_name" : "uuids",
     "check_column_name" : "document_titles",
-    "check_column_uuid" : "xxxxx",
+    "modification_marker" : "~",
     "issue_types" : [
       {
         "issue_type_uuid": "004ec5a6-5a2e-44f8-8f39-2305a65a2086",

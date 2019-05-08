@@ -11,7 +11,7 @@ func Get_in_scope_identified_cells(
 	run_configuration *configuration_handler.Configurations) []map[string]interface{} {
 
 	csv_filename :=
-		run_configuration.Csv_configuration.Csv_file_name
+		run_configuration.Check_configuration.Csv_file_name
 
 	in_scope_identified_cells :=
 		prepare_in_scope_identified_cells_data(

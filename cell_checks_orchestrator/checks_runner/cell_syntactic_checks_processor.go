@@ -65,15 +65,15 @@ func process_syntactic_checks_for_cell(
 	var cell_syntactic_check_issue_results []object_model.Regex_check_results
 
 	in_scope_syntactic_check_types :=
-		run_configuration.Csv_configuration.Issue_types
+		run_configuration.Check_configuration.Issue_types
 
 	cell_syntactic_check_issue_transactions, cell_syntactic_check_issue_results =
 		process_syntactic_check_issues_for_cell(
 			in_scope_syntactic_check_types,
 			cell_syntactic_check_issue_transactions,
 			in_scope_identified_cell,
-			run_configuration.Csv_configuration.Check_column_name,
-			run_configuration.Csv_configuration.Identity_column_name)
+			run_configuration.Check_configuration.Check_column_name,
+			run_configuration.Check_configuration.Identity_column_name)
 
 	// TODO - Stage 2 - move the if out to separate function (process cell syntactic check fixes)
 
@@ -91,7 +91,7 @@ func process_syntactic_checks_for_cell(
 		cell_syntactic_check_aggregated_fixes_transaction =
 			append(
 				cell_syntactic_check_aggregated_fixes_transaction,
-				in_scope_identified_cell[run_configuration.Csv_configuration.Identity_column_name].(string),
+				in_scope_identified_cell[run_configuration.Check_configuration.Identity_column_name].(string),
 				fix_uuid.String())
 
 		fmt.Printf("\ncell fix transaction: %v \n", cell_syntactic_check_aggregated_fixes_transaction)

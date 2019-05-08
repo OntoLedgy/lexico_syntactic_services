@@ -31,5 +31,5 @@ func Generate_issue_transaction(
 	return check_result_transaction
 }
 
-//TODO - Stage 2 - 	separate replacement process from regex check, return sub_match_indicies
-// 					for aggregatation first and then call modification function in one go.
+//		TODO - Stage 2 - 	separate replacement process from regex check, return sub_match_indicies
+// 		for aggregatation first and then call modification function in one go.

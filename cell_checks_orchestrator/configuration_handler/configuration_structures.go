@@ -3,14 +3,13 @@ package configuration_handler
 import "syntactic_checker/object_model"
 
 type Configurations struct {
-	Configuration_cotext string
-
-	Csv_configuration      Csv_configuration
+	Configuration_cotext   string
+	Check_configuration    Check_configuration
 	Database_configuration Database_configuration
 	Output_configuration   Output_configurations
 }
 
-type Csv_configuration struct {
+type Check_configuration struct {
 	Csv_checks_required  bool                       `json:"csv_checks_required"`
 	Csv_file_name        string                     `json:"csv_file_name"`
 	Identity_column_name string                     `json:"identity_column_name"`
