@@ -3,6 +3,7 @@ package checks_runner
 import (
 	"database_manager/utils"
 	"fmt"
+	"syntactic_checker/cell_checks_orchestrator/cell_fixer"
 	"syntactic_checker/cell_checks_orchestrator/configuration_handler"
 	"syntactic_checker/cell_checks_orchestrator/regex_processor"
 	"syntactic_checker/object_model"
@@ -75,28 +76,13 @@ func process_syntactic_checks_for_cell(
 			run_configuration.Check_configuration.Check_column_name,
 			run_configuration.Check_configuration.Identity_column_name)
 
-	// TODO - Stage 2 - move the if out to separate function (process cell syntactic check fixes)
-
-	if cell_syntactic_check_issue_results != nil {
-
-		fix_uuid, _ :=
-			utils.GetUUID(
-				1,
-				"")
-
-		cell_syntactic_check_aggregated_fixes_transaction =
-			aggregate_cell_syntactic_check_fixes(
-				cell_syntactic_check_issue_results)
-
-		cell_syntactic_check_aggregated_fixes_transaction =
-			append(
-				cell_syntactic_check_aggregated_fixes_transaction,
-				in_scope_identified_cell[run_configuration.Check_configuration.Identity_column_name].(string),
-				fix_uuid.String())
-
-		fmt.Printf("\ncell fix transaction: %v \n", cell_syntactic_check_aggregated_fixes_transaction)
-
-	}
+	cell_syntactic_check_aggregated_fixes_transaction =
+		process_syntactic_check_fixes_transaction_for_cell(
+			in_scope_syntactic_check_types,
+			in_scope_identified_cell,
+			run_configuration.Check_configuration.Check_column_name,
+			run_configuration.Check_configuration.Identity_column_name,
+			cell_syntactic_check_issue_results)
 
 	return cell_syntactic_check_issue_transactions, cell_syntactic_check_aggregated_fixes_transaction
 }
@@ -155,4 +141,87 @@ func process_syntactic_check_issue_for_cell(
 
 	}
 	return regex_check_result
+}
+
+func process_syntactic_check_fixes_transaction_for_cell(
+	in_scope_syntactic_check_types []object_model.Issue_types,
+	in_scope_identified_cell map[string]interface{},
+	check_column_name string,
+	identity_column_name string,
+	cell_syntactic_check_issue_results []object_model.Regex_check_results) []interface{} {
+
+	var cell_syntactic_check_aggregated_fixes_transaction []interface{}
+	var interim_cell_value_modified, interim_cell_value_marked map[string]interface{}
+
+	if cell_syntactic_check_issue_results != nil {
+
+		fmt.Printf(
+			"\nprocessing fixes...\n")
+
+		fix_uuid, _ :=
+			utils.GetUUID(
+				1,
+				"")
+
+		interim_cell_value_modified = CopyMap(in_scope_identified_cell)
+		interim_cell_value_marked = CopyMap(in_scope_identified_cell)
+
+		for _, in_scope_syntactic_check_type := range in_scope_syntactic_check_types {
+
+			cell_syntactic_check_issue_result :=
+				process_syntactic_check_issue_for_cell(
+					interim_cell_value_modified,
+					check_column_name,
+					in_scope_syntactic_check_type)
+
+			if cell_syntactic_check_issue_result != nil {
+
+				interim_cell_value_modified[check_column_name] =
+					cell_fixer.Modify_string_by_index(
+						interim_cell_value_modified[check_column_name].(string),
+						cell_syntactic_check_issue_result.Replacement_string,
+						cell_syntactic_check_issue_result.Regex_match_indices)
+
+				interim_cell_value_marked[check_column_name] =
+					cell_fixer.Modify_string_by_index(
+						interim_cell_value_marked[check_column_name].(string),
+						cell_syntactic_check_issue_result.Mark_string,
+						cell_syntactic_check_issue_result.Regex_match_indices)
+
+			}
+
+		}
+
+		cell_syntactic_check_aggregated_fixes_transaction =
+			append(
+				cell_syntactic_check_aggregated_fixes_transaction,
+				in_scope_identified_cell[check_column_name],
+				interim_cell_value_marked[check_column_name],
+				interim_cell_value_modified[check_column_name])
+
+		cell_syntactic_check_aggregated_fixes_transaction =
+			append(
+				cell_syntactic_check_aggregated_fixes_transaction,
+				in_scope_identified_cell[identity_column_name],
+				fix_uuid.String())
+
+		fmt.Printf("\ncell fix transaction: %v \n", cell_syntactic_check_aggregated_fixes_transaction)
+
+	}
+
+	return cell_syntactic_check_aggregated_fixes_transaction
+}
+
+func CopyMap(m map[string]interface{}) map[string]interface{} {
+	cp := make(map[string]interface{})
+	for k, v := range m {
+		vm, ok := v.(map[string]interface{})
+		if ok {
+			cp[k] = CopyMap(vm)
+		} else {
+			cp[k] = v
+		}
+	}
+
+	return cp
 }

@@ -1,6 +1,7 @@
 package checks_runner
 
 import (
+	"fmt"
 	"syntactic_checker/cell_checks_orchestrator/configuration_handler"
 	"syntactic_checker/cell_checks_orchestrator/results_finaliser"
 )
@@ -15,6 +16,8 @@ func Run(
 		process_syntactic_checks_for_cells(
 			in_scope_identified_cells,
 			run_configuration)
+
+	fmt.Println("\npreparing report..")
 
 	syntactic_check_result_report =
 		results_finaliser.Prepare_syntactic_checks_results_transactions(

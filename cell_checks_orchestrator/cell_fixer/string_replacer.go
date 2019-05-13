@@ -11,8 +11,9 @@ func Modify_string_by_index(
 	var replacement_length int
 
 	fmt.Printf(
-		"\nstring_for_repalcement: %s, replacement_indicies : %v",
+		"\nstring_for_repalcement: %s, replacement_char(s): [%s], replacement_indicies : %v",
 		string_for_replacement,
+		replacement_string,
 		replacement_indicies)
 
 	replacement_string_length :=

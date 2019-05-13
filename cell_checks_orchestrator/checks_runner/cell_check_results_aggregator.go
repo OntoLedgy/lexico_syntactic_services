@@ -18,6 +18,9 @@ func aggregate_syntactic_check_issues(
 
 	if regex_check_issue_result != nil {
 
+		fmt.Printf(
+			"\nprocessing issues...\n")
+
 		cell_syntactic_check_issue_transaction =
 			cell_fixer.Generate_issue_transaction(
 				*regex_check_issue_result)
