@@ -202,8 +202,8 @@ func process_syntactic_check_fixes_transaction_for_cell(
 		cell_syntactic_check_aggregated_fixes_transaction =
 			append(
 				cell_syntactic_check_aggregated_fixes_transaction,
-				in_scope_identified_cell[identity_column_name],
-				fix_uuid.String())
+				fix_uuid.String(),
+				in_scope_identified_cell[identity_column_name])
 
 		fmt.Printf("\ncell fix transaction: %v \n", cell_syntactic_check_aggregated_fixes_transaction)
 
