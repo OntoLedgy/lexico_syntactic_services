@@ -1,11 +1,11 @@
 package cell_fixer
 
 import (
-	"syntactic_checker/object_model"
+	"syntactic_checker/cell_checkers/regex_checkers"
 )
 
 func Generate_issue_transaction(
-	regex_check_result object_model.Regex_check_results) []interface{} {
+	regex_check_result regex_checkers.RegexCheckResults) []interface{} {
 
 	var check_result_transaction []interface{}
 

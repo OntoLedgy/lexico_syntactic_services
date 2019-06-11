@@ -1,15 +1,14 @@
-package regex_processor
+package regex_checkers
 
 import (
 	"database_manager/utils"
 	"regexp"
-	"syntactic_checker/object_model"
 )
 
 func Process_regex_check(
 	regex_string string,
-	cell_value_original interface{},
-	replacement_string_type string) *object_model.Regex_check_results {
+	in_scope_cell string,
+	replacement_string_type string) *RegexCheckResults {
 
 	//var check_result_transaction []interface{}
 	var replacement_string string
@@ -17,7 +16,7 @@ func Process_regex_check(
 	mark_string := "~" //TODO - Stage 2 - move to general config
 
 	cell_value_original_string :=
-		cell_value_original.(string)
+		in_scope_cell
 
 	switch replacement_string_type {
 
@@ -45,7 +44,7 @@ func Process_regex_check(
 				1,
 				"")
 
-		regex_check_result := object_model.Regex_check_results{
+		regex_check_result := RegexCheckResults{
 			check_uuid.String(),
 			cell_value_original_string,
 			mark_string,

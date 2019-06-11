@@ -1,22 +1,20 @@
-package main
+package testing
 
 import (
 	"fmt"
 	"os"
 	"syntactic_checker/orchestrators"
+	"testing"
 )
 
-//TODO - Stage 2 - add commandline tools
-//TODO - Stage 2 - add configuration_handler management tools
-//TODO - Stage 2 - record import dependencies
-//TODO - Stage 2 - add logger and error handling
-
-func main() {
+func TestStandard(t *testing.T) {
 
 	fmt.Println(
 		"Starting cell set syntactic check orchestrator")
 
-	configuration_file_path := os.Args[1]
+	configuration_file_path := os.Args[3]
+
+	fmt.Printf("configuration file path:%s\n", os.Args[3])
 
 	orchestrators.
 		Orchestrate_syntactic_checks(

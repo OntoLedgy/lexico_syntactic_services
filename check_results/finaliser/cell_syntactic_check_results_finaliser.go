@@ -1,4 +1,4 @@
-package results_finaliser
+package finaliser
 
 import (
 	"storage/slices"
@@ -47,13 +47,27 @@ func prepare_syntactic_check_results_transactions(
 		cells_syntactic_check_fix_transactions_string
 
 	syntactic_checks_results_transaction_map["syntactic_check_issues_set"] =
-		syntactic_checks_results_transactions_string
+		prepare_syntactic_check_issues(
+			syntactic_checks_results_transactions_string)
 
 	syntactic_checks_results_transaction_map["syntactic_check_issue_parameters_set"] =
 		prepare_syntactic_checks_issue_parameters(
 			syntactic_checks_results_transactions_string)
 
 	return syntactic_checks_results_transaction_map
+
+}
+
+func prepare_syntactic_check_issues(
+	syntactic_check_result_transactions [][]string) [][]string {
+
+	var syntactic_check_issues_set [][]string
+
+	issue_columns := []int{0, 4, 5}
+
+	syntactic_check_issues_set = storage.Extract_columns_from_2d_slices(syntactic_check_result_transactions, issue_columns)
+
+	return syntactic_check_issues_set
 
 }
 

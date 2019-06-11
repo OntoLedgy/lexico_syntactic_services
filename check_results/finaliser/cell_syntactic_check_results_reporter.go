@@ -1,8 +1,8 @@
-package results_finaliser
+package finaliser
 
 import (
 	"storage/csv"
-	"syntactic_checker/cell_checks_orchestrator/configuration_handler"
+	"syntactic_checker/helpers/configuration_handler"
 )
 
 func Report_syntactic_check_outputs(
