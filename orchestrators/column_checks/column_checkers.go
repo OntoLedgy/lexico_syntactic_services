@@ -3,25 +3,25 @@ package column_checks
 import (
 	"fmt"
 	"syntactic_checker/check_results_processor/finaliser"
-	"syntactic_checker/helpers/configuration_handler"
 	"syntactic_checker/object_model"
 	"syntactic_checker/object_model/issues"
 	"syntactic_checker/orchestrators/cell_checks"
 )
 
 type ColumnCheckers struct {
-	Run_configuration *configuration_handler.Configurations
-	In_scope_cells    object_model.InScopeCells
+	Issue_types    []issues.IssueTypes
+	In_scope_cells object_model.InScopeCells
 }
 
-func (cells_checks_orchestrator *ColumnCheckers) RunColumnChecks() map[string][][]string {
+func (
+	cells_checks_orchestrator *ColumnCheckers) RunColumnChecks() map[string][][]string {
 
 	var syntactic_check_result_report map[string][][]string
 
 	cells_syntactic_check_issues_transactions, cells_syntactic_check_fix_transactions :=
 		process_syntactic_checks_for_cells(
 			cells_checks_orchestrator.In_scope_cells,
-			cells_checks_orchestrator.Run_configuration.Check_configuration.Issue_types)
+			cells_checks_orchestrator.Issue_types)
 
 	fmt.Println("\nPreparing report..")
 
@@ -58,25 +58,12 @@ func process_syntactic_checks_for_cells(
 			cell_checks_orchestrator.
 				RunCellChecks()
 
-		//TODO - Stage 2 - move to separate function (Record Issue Transactions)
-
-		cells_syntactic_check_issues_transactions =
-			append(
+		cells_syntactic_check_issues_transactions, cells_syntactic_check_fix_transactions =
+			process_syntactic_check_results_transactions(
 				cells_syntactic_check_issues_transactions,
-				cell_syntactic_check_issues_transactions...)
-
-		//TODO - Stage 2 - move to separate function (Record Fix Transactions)
-
-		if cell_syntactic_check_fix_transaction != nil {
-
-			cells_syntactic_check_fix_transactions =
-				append(
-					cells_syntactic_check_fix_transactions,
-					cell_syntactic_check_fix_transaction)
-
-			cell_syntactic_check_fix_transaction = nil
-
-		}
+				cell_syntactic_check_issues_transactions,
+				cell_syntactic_check_fix_transaction,
+				cells_syntactic_check_fix_transactions)
 
 	}
 
@@ -87,5 +74,30 @@ func process_syntactic_checks_for_cells(
 				len(cells_syntactic_check_issues_transactions),
 				cells_syntactic_check_issues_transactions[0])
 		}*/
+	return cells_syntactic_check_issues_transactions, cells_syntactic_check_fix_transactions
+}
+
+func process_syntactic_check_results_transactions(
+	cells_syntactic_check_issues_transactions [][]interface{},
+	cell_syntactic_check_issues_transactions [][]interface{},
+	cell_syntactic_check_fix_transaction []interface{},
+	cells_syntactic_check_fix_transactions [][]interface{}) ([][]interface{}, [][]interface{}) {
+
+	//TODO - Stage 2 - move to separate function (Record Issue Transactions)
+	cells_syntactic_check_issues_transactions =
+		append(
+			cells_syntactic_check_issues_transactions,
+			cell_syntactic_check_issues_transactions...)
+	//TODO - Stage 2 - move to separate function (Record Fix Transactions)
+	if cell_syntactic_check_fix_transaction != nil {
+
+		cells_syntactic_check_fix_transactions =
+			append(
+				cells_syntactic_check_fix_transactions,
+				cell_syntactic_check_fix_transaction)
+
+		cell_syntactic_check_fix_transaction = nil
+
+	}
 	return cells_syntactic_check_issues_transactions, cells_syntactic_check_fix_transactions
 }
