@@ -52,14 +52,18 @@ func prepare_in_scope_identified_cells_data(
 		storage.Get_csv_with_headers(
 			in_scope_identified_cells_interface)
 
-	//TODO - Stage 2 - convert to Cells data structure
-
-	in_scope_cells.Cells = make([]object_model.InScopeCell, len(in_scope_identified_cells_interface))
+	in_scope_cells.Cells =
+		make(
+			[]object_model.InScopeCell,
+			len(in_scope_identified_cells_interface))
 
 	for index, value := range in_scope_identified_cells_with_headers {
 
-		in_scope_cells.Cells[index].Cell_identifier = value[identity_colunmn_name].(string)
-		in_scope_cells.Cells[index].Cell_value = value[cell_value_column_name].(string)
+		in_scope_cells.Cells[index].Cell_identifier =
+			value[identity_colunmn_name].(string)
+
+		in_scope_cells.Cells[index].Cell_value =
+			value[cell_value_column_name].(string)
 
 	}
 

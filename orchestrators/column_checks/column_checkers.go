@@ -2,9 +2,10 @@ package column_checks
 
 import (
 	"fmt"
-	"syntactic_checker/check_results/finaliser"
+	"syntactic_checker/check_results_processor/finaliser"
 	"syntactic_checker/helpers/configuration_handler"
 	"syntactic_checker/object_model"
+	"syntactic_checker/object_model/issues"
 	"syntactic_checker/orchestrators/cell_checks"
 )
 
@@ -35,7 +36,7 @@ func (cells_checks_orchestrator *ColumnCheckers) RunColumnChecks() map[string][]
 
 func process_syntactic_checks_for_cells(
 	in_scope_cells object_model.InScopeCells,
-	issue_types []object_model.IssueTypes) ([][]interface{}, [][]interface{}) {
+	issue_types []issues.IssueTypes) ([][]interface{}, [][]interface{}) {
 
 	var cells_syntactic_check_issues_transactions [][]interface{}
 	var cell_syntactic_check_issues_transactions [][]interface{}

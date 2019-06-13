@@ -19,5 +19,7 @@ func Get_configuration(configuration_file_path string) *Configurations {
 		run_configuration_byte_array,
 		&run_configuration)
 
+	Modification_marker = run_configuration.Check_configuration.Modification_marker
+
 	return &run_configuration
 }

@@ -1,7 +1,7 @@
 package orchestrators
 
 import (
-	"syntactic_checker/check_results/finaliser"
+	"syntactic_checker/check_results_processor/finaliser"
 	"syntactic_checker/helpers/cells_preparer"
 	"syntactic_checker/helpers/configuration_handler"
 	"syntactic_checker/orchestrators/column_checks"

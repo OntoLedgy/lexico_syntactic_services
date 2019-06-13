@@ -1,19 +1,22 @@
 package cell_checks
 
 import (
+	"syntactic_checker/check_results_processor/transactions/fixes_processor"
+	"syntactic_checker/check_results_processor/transactions/issues_processor"
 	"syntactic_checker/object_model"
+	"syntactic_checker/object_model/issues"
 )
 
 type CellChecksOrchestrators struct {
 	In_scope_cell object_model.InScopeCell
-	Issue_types   []object_model.IssueTypes
+	Issue_types   []issues.IssueTypes
 }
 
 func (
 	cell_checks_orchestrator CellChecksOrchestrators) RunCellChecks() ([][]interface{}, []interface{}) {
 
 	cell_syntactic_check_issue_transactions, cell_syntactic_check_aggregated_fixes_transaction :=
-		process_syntactic_checks_for_cell(
+		get_cell_check_issues_and_fixes(
 			cell_checks_orchestrator.In_scope_cell,
 			cell_checks_orchestrator.Issue_types)
 
@@ -21,25 +24,22 @@ func (
 
 }
 
-func process_syntactic_checks_for_cell(
+func get_cell_check_issues_and_fixes(
 	in_scope_cell object_model.InScopeCell,
-	in_scope_syntactic_check_types []object_model.IssueTypes) ([][]interface{}, []interface{}) {
+	in_scope_syntactic_check_types []issues.IssueTypes) ([][]interface{}, []interface{}) {
 
-	var cell_syntactic_check_issue_transactions [][]interface{}
-	var cell_syntactic_check_aggregated_fixes_transaction []interface{}
-	//var cell_syntactic_check_issue_results []regex_checkers.RegexCheckResults
+	cell_syntactic_check_issue_transactions :=
+		issues_processor.
+			Get_cell_check_issue_transactions(
+				in_scope_syntactic_check_types,
+				in_scope_cell)
 
-	cell_syntactic_check_issue_transactions =
-		Process_syntactic_check_issues_for_cell(
-			in_scope_syntactic_check_types,
-			cell_syntactic_check_issue_transactions,
-			in_scope_cell)
-
-	cell_syntactic_check_aggregated_fixes_transaction =
-		Process_syntactic_check_fixes_for_cell(
-			in_scope_syntactic_check_types,
-			in_scope_cell,
-			cell_syntactic_check_issue_transactions)
+	cell_syntactic_check_aggregated_fixes_transaction :=
+		fixes_processor.
+			Process_cell_check_fixes(
+				in_scope_syntactic_check_types,
+				in_scope_cell,
+				cell_syntactic_check_issue_transactions)
 
 	return cell_syntactic_check_issue_transactions, cell_syntactic_check_aggregated_fixes_transaction
 }

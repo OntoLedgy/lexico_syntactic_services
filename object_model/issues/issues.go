@@ -1,4 +1,4 @@
-package object_model
+package issues
 
 type Issues struct {
 	issue_uuid      string

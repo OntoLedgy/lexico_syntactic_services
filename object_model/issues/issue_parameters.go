@@ -1,4 +1,4 @@
-package object_model
+package issues
 
 type IssueParameters struct {
 	issue                  *Issues

@@ -1,4 +1,4 @@
-package object_model
+package issues
 
 type IssueTypes struct {
 	Issue_type_uuid                string `json:"issue_type_uuid"`

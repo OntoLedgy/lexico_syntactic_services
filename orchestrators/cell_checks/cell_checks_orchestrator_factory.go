@@ -2,11 +2,12 @@ package cell_checks
 
 import (
 	"syntactic_checker/object_model"
+	"syntactic_checker/object_model/issues"
 )
 
 func Create_cell_checks_orchestrator(
 	cell_value object_model.InScopeCell,
-	check_types []object_model.IssueTypes) ICellCheckOrchestrators {
+	check_types []issues.IssueTypes) ICellCheckOrchestrators {
 
 	cell_check_orchestrator :=
 		new(
