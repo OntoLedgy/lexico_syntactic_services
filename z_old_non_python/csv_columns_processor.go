@@ -3,7 +3,7 @@ package z_old_non_python
 import (
 	"fmt"
 	storage_slices "storage/slices"
-	"syntactic_checker/orchestrators"
+	"syntactic_checker/code/services/syntactic_check_service"
 )
 
 func Prepare_csv_check_column_set(
@@ -44,7 +44,7 @@ func Process_csv_columns(
 				column_set[column_name])
 
 		checked_column_transaction_set :=
-			orchestrators.get_syntactic_checks_results(
+			syntactic_check_service.get_syntactic_checks_results(
 				extracted_data,
 				column_name,
 				in_scope_checks)

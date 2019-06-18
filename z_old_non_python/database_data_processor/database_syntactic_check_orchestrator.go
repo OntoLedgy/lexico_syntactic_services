@@ -6,7 +6,7 @@ import (
 	storage_csv "storage/csv"
 	//storage_slices "storage/slices"
 	"fmt"
-	"syntactic_checker/orchestrators"
+	"syntactic_checker/code/services/syntactic_check_service"
 )
 
 func Execute_database_syntactic_checks(configuration_database_filename string) {
@@ -288,7 +288,7 @@ func Process_column_sets(
 		if in_scope_column_cell_set_including_check_configuration != nil { //if the column is marked for checks
 
 			transaction_column_rowset :=
-				orchestrators.Process_cells_checks( // run check process
+				syntactic_check_service.Process_cells_checks( // run check process
 					in_scope_column_cell_set_including_check_configuration,
 					checks)
 
@@ -312,7 +312,7 @@ func Process_column_sets(
 	}
 
 	fmt.Printf( //#TODO add to logger
-		"\n--Total %s transactions generated.\n--------------\nSample Transaction : %s\n-----------\n",
+		"\n--Total %s transaction_processor generated.\n--------------\nSample Transaction : %s\n-----------\n",
 		len(transaction_rowset),
 		transaction_rowset[0])
 
