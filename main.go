@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
-	"syntactic_checker/code/services/syntactic_check_service"
+	"syntactic_checker/code/services/syntactic_check_services"
 )
 
 //TODO - Stage 2 - add commandline tools
@@ -19,7 +19,7 @@ func main() {
 	configuration_file_path := os.Args[1]
 
 	syntactic_check_orchestrator :=
-		syntactic_check_service.
+		syntactic_check_services.
 			Create_syntactic_check_orchestrator(
 				configuration_file_path)
 

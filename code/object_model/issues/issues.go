@@ -8,7 +8,9 @@ import (
 type Issues struct {
 	core_object_model.Objects
 	Issue_type          IssueTypes
-	Cell                object_model.InScopeCells
+	Cell                object_model.Cells
 	Marked_cell_value   string
 	Modified_cell_value string
 }
+
+//TODO - Stage 3 - add Cell level issue set (set of issues for a cell)
