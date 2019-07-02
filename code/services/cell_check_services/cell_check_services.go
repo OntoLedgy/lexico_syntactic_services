@@ -105,7 +105,8 @@ func (
 
 	check_results.Check_result_edit_string_ranges = string_edit_ranges
 
-	cell_check_service.Check_results =
+	cell_check_service.
+		Check_results =
 		check_results
 
 	cell_check_service.

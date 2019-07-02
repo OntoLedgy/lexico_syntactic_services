@@ -35,7 +35,10 @@ func (
 	issues_processor *issuesProcessors) generate_issue_transaction(
 	cell_check_service cell_check_services.ICellCheckService) issues.Issues {
 
-	cell_check_issue := new(issues.Issues)
+	cell_check_issue :=
+		new(
+			issues.
+				Issues)
 
 	cell_check_issue.
 		Object_uuid =
@@ -43,7 +46,10 @@ func (
 			Objects.
 			Set_object_uuid()
 
-	check_result_processor := new(check_result_processors.CheckResultProcessors)
+	check_result_processor :=
+		new(
+			check_result_processors.
+				CheckResultProcessors)
 
 	check_result_processor.
 		Check_results =
@@ -68,8 +74,5 @@ func (
 		*check_result_processor.
 			Cell_edit_history
 
-		/*			*cell_check_service.
-					Get_cell_edit_history()
-		*/
 	return *cell_check_issue
 }
