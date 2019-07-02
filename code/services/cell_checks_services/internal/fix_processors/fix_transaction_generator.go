@@ -82,10 +82,10 @@ func update_modified_cell_and_string_edit_history(
 
 	cell_check_result :=
 		cell_check_service.
-			Get_cell_regex_check_result()
+			Get_check_result()
 
 	there_is_a_cell_check_result :=
-		cell_check_result != nil
+		cell_check_result.Check_result_string_edit_ranges != nil
 
 	if there_is_a_cell_check_result {
 
@@ -114,7 +114,8 @@ func update_modified_cell_and_string_edit_history(
 			check_result_processor.
 				Cell_edit_history
 
-		interim_cell_modified.Cell_value =
+		interim_cell_modified.
+			Cell_value =
 			string_edit_history.
 				Get_modified_string()
 

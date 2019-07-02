@@ -28,7 +28,9 @@ func (
 				cell_value_original_string,
 				-1)
 
-	if len(regex_match_indices) > 0 {
+	regex_pattern_found := len(regex_match_indices) > 0
+
+	if regex_pattern_found {
 
 		check_uuid, _ :=
 			utils.GetUUID(
@@ -46,7 +48,7 @@ func (
 			regex_check_result
 
 		regex_checker.
-			convert_regex_result_to_string_edit_ranges()
+			append_replacement_indicies_to_string_edit_range()
 
 		return &regex_checker.regex_check_result
 
@@ -57,48 +59,95 @@ func (
 
 }
 
-func (regex_checker *regexCheckers) convert_regex_result_to_string_edit_ranges() {
+//TODO - Stage 2 - move to a separate type (adaptor / convertor from regex results to string edit ranges)
+func (
+	regex_checker *regexCheckers) append_replacement_indicies_to_string_edit_range() {
 
 	replacement_indicies :=
 		regex_checker.
 			regex_check_result.
 			Regex_match_indices
 
-	regex_checker.
-		String_edit_ranges =
-		make([]object_model.StringEditRanges, len(replacement_indicies))
-
-	for index, replacement_index := range replacement_indicies {
-
-		replacement_start_position, replacement_end_position :=
-			regex_checker.get_replacement_positions(replacement_index)
+	for _, replacement_index := range replacement_indicies {
 
 		regex_checker.
-			String_edit_ranges[index].
-			Constructor(
-				replacement_start_position,
-				replacement_end_position-replacement_start_position)
+			append_replacement_index_to_string_edit_range(
+				replacement_index)
+
 	}
 
 }
 
-func (regex_checker *regexCheckers) get_replacement_positions(
-	replacement_index []int) (int, int) {
+func (
+	regex_checker *regexCheckers) append_replacement_index_to_string_edit_range(
+	replacement_index []int) {
+
+	var replacement_index_position int
+
+	if len(replacement_index) > 2 {
+
+		replacement_index_position = 2
+
+		regex_checker.append_replacement_index(
+			replacement_index,
+			replacement_index_position)
+
+	} else {
+
+		replacement_index_position = 0
+
+		regex_checker.append_replacement_index(
+			replacement_index,
+			replacement_index_position)
+
+	}
+}
+
+func (
+	regex_checker *regexCheckers) append_replacement_index(
+	replacement_index []int,
+	replacement_index_position int) {
 
 	var replacement_start_position int
 	var replacement_end_position int
 
-	if len(replacement_index) > 2 {
+	for {
 
-		replacement_start_position = replacement_index[2]
-		replacement_end_position = replacement_index[3]
+		replacement_start_position =
+			replacement_index[replacement_index_position]
 
-	} else {
+		replacement_end_position =
+			replacement_index[replacement_index_position+1]
 
-		replacement_start_position = replacement_index[0]
-		replacement_end_position = replacement_index[1]
+		regex_checker.
+			append_string_edit_range(
+				replacement_start_position,
+				replacement_end_position)
+
+		replacement_index_position += 2
+
+		if replacement_index_position >= len(replacement_index) {
+
+			break
+		}
 	}
 
-	return replacement_start_position, replacement_end_position
+}
 
+func (
+	regex_checker *regexCheckers) append_string_edit_range(
+	replacement_start_position int,
+	replacement_end_position int) {
+
+	var string_edit_range object_model.StringEditRanges
+
+	string_edit_range.
+		Constructor(
+			replacement_start_position,
+			replacement_end_position-replacement_start_position)
+
+	regex_checker.String_edit_ranges =
+		append(
+			regex_checker.String_edit_ranges,
+			string_edit_range)
 }

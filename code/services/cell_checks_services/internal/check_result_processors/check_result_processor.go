@@ -22,19 +22,31 @@ func (check_result_processor *CheckResultProcessors) Process_regex_result() {
 
 	if there_is_a_regex_result {
 
-		cell_editor := cell_editors.
-			Create(
-				check_result_processor.In_scope_cell,
-				check_result_processor.In_scope_issue_type,
-				check_result_processor.Check_results)
-
-		cell_value_edit_history :=
-			cell_editor.
-				Edit_cell()
-
 		check_result_processor.
-			Cell_edit_history =
-			cell_value_edit_history
+			set_string_edit_history()
 
 	}
+}
+
+func (
+	check_result_processor *CheckResultProcessors) set_string_edit_history() {
+
+	replacement_string :=
+		check_result_processor.
+			In_scope_issue_type.
+			Get_replacement_string()
+
+	cell_editor := cell_editors.
+		Create(
+			check_result_processor.In_scope_cell,
+			check_result_processor.Check_results,
+			replacement_string)
+
+	cell_value_edit_history :=
+		cell_editor.
+			Edit_cell()
+
+	check_result_processor.
+		Cell_edit_history =
+		cell_value_edit_history
 }

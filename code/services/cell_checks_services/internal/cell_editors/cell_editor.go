@@ -3,22 +3,16 @@ package cell_editors
 import (
 	"fmt"
 	"string_editor/factories"
-	"string_editor/interfaces"
 	string_editor_object_model "string_editor/object_model"
 	"syntactic_checker/code/object_model/cells"
 	"syntactic_checker/code/object_model/check_results"
-	"syntactic_checker/code/object_model/issues"
-	//"syntactic_checker/code/services/cell_check_services/internal/regex_checkers"
 	"syntactic_checker/code/services/syntactic_checking_services/configuration_getters"
-	//"syntactic_checker/code/services/syntactic_checking_services/internal/configuration_getters"
 )
 
 //TODO - Stage 3 - replace with String Editor functionality
-//TODO - Stage 2 - remove dependence on issue type and use replacement string value instead
 
 type cellEditor struct {
 	cell_to_edit       cells.Cells
-	issue_type         issues.IssueTypes
 	replacement_string string
 	check_results      *check_results.CheckResults
 }
@@ -34,38 +28,12 @@ func (
 			cell_to_edit.
 			Cell_value
 
-	issue_type :=
-		cell_editor.
-			issue_type
-
-	// extract as a function
-	check_results :=
-		cell_editor.
-			check_results.
-			Check_result_edit_string_ranges
-
-	replacement_indicies :=
-		make(
-			[][]int,
-			len(check_results))
-
-	for index, check_result := range check_results {
-
-		replacement_indicies[index] = make([]int, 2)
-		replacement_indicies[index][0] = check_result.Start_position
-		replacement_indicies[index][1] = check_result.Start_position + check_result.Range_length
-
-	}
-
-	replacement_string :=
-		Get_replacement_string(
-			issue_type)
-
 	fmt.Printf(
 		"\nString_for_repalcement: %s, replacement_char(s): [%s], replacement_indicies: %v",
 		string_to_edit,
-		replacement_string,
-		replacement_indicies)
+		cell_editor.
+			replacement_string,
+		cell_editor.check_results)
 
 	string_editor :=
 		string_editor_factory.
@@ -83,20 +51,16 @@ func (
 	modified_string =
 		cell_editor.
 			modify_string_using_indicies(
-				replacement_string,
-				replacement_indicies,
-				modified_string,
-				string_editor,
-				issue_type)
+				cell_editor.
+					replacement_string,
+				modified_string)
 
 	marked_string =
 		cell_editor.
 			modify_string_using_indicies(
-				configuration_getters.Modification_marker,
-				replacement_indicies,
-				marked_string,
-				string_editor,
-				issue_type)
+				configuration_getters.
+					Modification_marker,
+				marked_string)
 
 	string_edit_history :=
 		string_editor.
@@ -111,41 +75,44 @@ func (
 }
 
 func (cell_editor *cellEditor) modify_string_using_indicies(
-	replacement_string string, //remove
-	replacement_indicies [][]int,
-	string_to_modify string,
-	string_editor interfaces.IStringEditors,
-	issue_type issues.IssueTypes, //remove
-) string {
+	replacement_string string,
+	string_to_modify string) string {
 
 	replacement_offset :=
 		0
-	for _, replacement_index := range replacement_indicies {
+
+	string_edit_ranges := cell_editor.check_results.Check_result_string_edit_ranges
+
+	for _, edit_range := range string_edit_ranges {
 
 		string_to_modify, replacement_offset =
-			modify_string_using_index(
-				replacement_index,
-				string_editor,
-				issue_type,
-				string_to_modify,
-				replacement_offset,
-				replacement_string)
+			cell_editor.
+				modify_string_using_index(
+					edit_range,
+					string_to_modify,
+					replacement_offset,
+					replacement_string)
 
 	}
 	return string_to_modify
 }
 
-func modify_string_using_index(
-	replacement_index []int,
-	string_editor interfaces.IStringEditors,
-	issue_type issues.IssueTypes, //remove
+func (
+	cell_editor *cellEditor) modify_string_using_index(
+	edit_range string_editor_object_model.StringEditRanges,
 	original_string string,
 	replacement_offset int,
-	replacement_string string, //remove
-) (string, int) {
+	replacement_string string) (
+	string,
+	int) {
 
-	edit_start_position, edit_end_position := //TODO - Stage 2 - using a single variable with two values.
-		get_replacement_positions(replacement_index)
+	edit_start_position :=
+		edit_range.
+			Start_position
+
+	edit_end_position :=
+		edit_start_position +
+			edit_range.Range_length
 
 	replacement_length :=
 		edit_end_position -
@@ -153,17 +120,6 @@ func modify_string_using_index(
 
 	replacement_string_length :=
 		len(replacement_string)
-
-	edit_range :=
-		factories.
-			CreateStringEditRange(
-				edit_start_position,
-				replacement_length)
-
-	execute_string_edit_transaction(
-		string_editor,
-		issue_type.Issue_check_replacement_string,
-		edit_range.(*string_editor_object_model.StringEditRanges))
 
 	modified_string :=
 		original_string[:edit_start_position+replacement_offset] +
@@ -176,43 +132,4 @@ func modify_string_using_index(
 			replacement_length
 
 	return modified_string, replacement_offset
-}
-
-//TODO - Stage 3 - replace with String Editor Range functionality
-
-func get_replacement_positions(
-	replacement_index []int) (int, int) {
-
-	var replacement_start_position int
-	var replacement_end_position int
-
-	if len(replacement_index) > 2 {
-
-		replacement_start_position = replacement_index[2]
-		replacement_end_position = replacement_index[3]
-
-	} else {
-
-		replacement_start_position = replacement_index[0]
-		replacement_end_position = replacement_index[1]
-	}
-
-	return replacement_start_position, replacement_end_position
-
-}
-
-func execute_string_edit_transaction(
-	string_editor interfaces.IStringEditors,
-	operation_type string,
-	edit_range *string_editor_object_model.StringEditRanges) {
-
-	switch operation_type {
-
-	case "STRING.EMPTY":
-		string_editor.Delete(*edit_range)
-
-	case "SPACE":
-		string_editor.Insert(*edit_range, " ")
-	}
-
 }

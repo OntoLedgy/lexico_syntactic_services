@@ -19,7 +19,8 @@ func (
 		Set_cell_check_issues()
 
 	cell_checks_issues :=
-		issues_processor.Get_cell_checks_issues()
+		issues_processor.
+			Get_cell_checks_issues()
 
 	return cell_checks_issues
 }

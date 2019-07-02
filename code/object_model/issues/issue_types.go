@@ -8,3 +8,28 @@ type IssueTypes struct {
 	Issue_check_replacement_string string `json:"check_replacement_string"` //
 
 }
+
+func (issue_type *IssueTypes) Get_replacement_string() string {
+
+	replacement_string :=
+		issue_type.
+			get_replacement_string()
+
+	return replacement_string
+}
+
+func (issue_type *IssueTypes) get_replacement_string() string {
+
+	var replacement_string string
+
+	switch issue_type.Issue_check_replacement_string {
+
+	case "STRING.EMPTY":
+		replacement_string = ""
+
+	case "SPACE":
+		replacement_string = " "
+		//TODO - Stage 2 - add other replacement string type cases
+	}
+	return replacement_string
+}

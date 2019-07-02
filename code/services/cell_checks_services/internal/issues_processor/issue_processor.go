@@ -45,6 +45,7 @@ func (
 				cell_check_service)
 
 	return cell_check_issue
+
 }
 
 func (

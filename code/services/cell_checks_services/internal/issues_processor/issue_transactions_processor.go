@@ -11,11 +11,9 @@ func (
 	issues_processor *issuesProcessors) process_issue_transactions(
 	cell_check_service cell_check_services.ICellCheckService) *issues.Issues {
 
-	regex_result :=
-		cell_check_service.
-			Get_cell_regex_check_result()
+	issues_found := cell_check_service.Get_check_result() != nil && cell_check_service.Get_check_result().Check_result_string_edit_ranges != nil
 
-	if regex_result != nil {
+	if issues_found {
 
 		fmt.Printf(
 			"\nprocessing issues...\n")
@@ -26,8 +24,8 @@ func (
 					cell_check_service)
 
 		return &cell_check_issue
-	}
 
+	}
 	return nil
 }
 
