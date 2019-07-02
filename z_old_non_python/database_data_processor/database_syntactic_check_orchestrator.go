@@ -6,7 +6,7 @@ import (
 	storage_csv "storage/csv"
 	//storage_slices "storage/slices"
 	"fmt"
-	"syntactic_checker/code/services/syntactic_check_services"
+	"syntactic_checker/code/services/syntactic_checking_services"
 )
 
 func Execute_database_syntactic_checks(configuration_database_filename string) {
@@ -253,8 +253,8 @@ func Process_column_sets(
 	checks [][]interface{},
 	in_scope_column_check_configurations [][]interface{}) [][]interface{} {
 
-	var in_scope_column_cell_set_including_check_configuration [][]interface{} //#TODO explore alternative data structures for this.  possibly split this into column cell set and check configuration_handler
-	var in_scope_column_cell_and_check_configuration []interface{}             //#TODO explore alternative data structures for this.  possibly split this into column cell set and check configuration_handler
+	var in_scope_column_cell_set_including_check_configuration [][]interface{} //#TODO explore alternative data structures for this.  possibly split this into column cell set and check configuration_getters
+	var in_scope_column_cell_and_check_configuration []interface{}             //#TODO explore alternative data structures for this.  possibly split this into column cell set and check configuration_getters
 
 	var transaction_rowset [][]interface{}
 
@@ -264,7 +264,7 @@ func Process_column_sets(
 		for _, in_scope_column_check_configuration := range // for each entry in check configurations
 		in_scope_column_check_configurations {
 
-			if in_scope_column_check_configuration[0] == // check if column uuid in check configuration_handler
+			if in_scope_column_check_configuration[0] == // check if column uuid in check configuration_getters
 				in_scope_column_row[2] { // matches column uuid in column dataset -- add to cell check dataset
 
 				in_scope_column_cell_and_check_configuration := // create cell data for checks (strip column uuid and add check uuid) #TODO - chedck if this is the best way to create the slide or alternatives available
@@ -274,7 +274,7 @@ func Process_column_sets(
 						in_scope_column_row[1],                       // cell value
 						in_scope_column_check_configuration[1])       // check uuid
 
-				in_scope_column_cell_set_including_check_configuration = // add to cell configuration_handler set (contains a row for each check for the cell value)
+				in_scope_column_cell_set_including_check_configuration = // add to cell configuration_getters set (contains a row for each check for the cell value)
 					append(
 						in_scope_column_cell_set_including_check_configuration,
 						in_scope_column_cell_and_check_configuration)
@@ -288,7 +288,7 @@ func Process_column_sets(
 		if in_scope_column_cell_set_including_check_configuration != nil { //if the column is marked for checks
 
 			transaction_column_rowset :=
-				syntactic_check_services.Process_cells_checks( // run check process
+				syntactic_checking_services.Process_cells_checks( // run check process
 					in_scope_column_cell_set_including_check_configuration,
 					checks)
 
@@ -312,7 +312,7 @@ func Process_column_sets(
 	}
 
 	fmt.Printf( //#TODO add to logger
-		"\n--Total %s transaction_processor generated.\n--------------\nSample Transaction : %s\n-----------\n",
+		"\n--Total %s internal generated.\n--------------\nSample Transaction : %s\n-----------\n",
 		len(transaction_rowset),
 		transaction_rowset[0])
 

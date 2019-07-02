@@ -3,30 +3,35 @@ package main
 import (
 	"fmt"
 	"os"
-	"syntactic_checker/code/services/syntactic_check_services"
+	"syntactic_checker/code/services/syntactic_checking_services"
 )
 
 //TODO - Stage 2 - add commandline tools
-//TODO - Stage 2 - add configuration_handler management tools
 //TODO - Stage 2 - record import dependencies
 //TODO - Stage 2 - add logger and error handling
 
 func main() {
 
 	fmt.Println(
-		"Starting cell set syntactic check orchestrator")
+		"Starting syntactic checking service")
 
-	configuration_file_path := os.Args[1]
+	configuration_file_path :=
+		os.
+			Args[1]
 
-	syntactic_check_orchestrator :=
-		syntactic_check_services.
-			Create_syntactic_check_orchestrator(
+	syntactic_checking_service_factory :=
+		new(
+			syntactic_checking_services.
+				SyntacticCheckingServiceFactory)
+
+	syntactic_checking_service :=
+		syntactic_checking_service_factory.
+			Create(
 				configuration_file_path)
 
-	syntactic_check_orchestrator.
-		Orchestrate_syntactic_checks(
-			configuration_file_path)
+	syntactic_checking_service.
+		Run_syntactic_checking_service()
 
 	fmt.Println(
-		"Ending cell set syntactic check orchestrator")
+		"Ending syntactic checking service")
 }

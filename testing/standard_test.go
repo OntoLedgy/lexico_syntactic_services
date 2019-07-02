@@ -3,7 +3,7 @@ package testing
 import (
 	"fmt"
 	"os"
-	"syntactic_checker/code/services/syntactic_check_services"
+	"syntactic_checker/code/services/syntactic_checking_services"
 	"testing"
 )
 
@@ -16,7 +16,7 @@ func TestStandard(t *testing.T) {
 
 	fmt.Printf("configuration file path:%s\n", os.Args[3])
 
-	syntactic_check_services.
+	syntactic_checking_services.
 		Orchestrate_syntactic_checks(
 			configuration_file_path)
 

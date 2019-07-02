@@ -1,21 +1,23 @@
 package cell_check_services
 
 import (
-	"syntactic_checker/code/object_model"
-	"syntactic_checker/code/object_model/issues"
+	"syntactic_checker/code/object_model/service_parameters"
 )
 
-func Create_cell_check_service(
-	cell object_model.Cells,
-	in_scope_syntactic_check_type issues.IssueTypes) ICellCheckService {
+type CellCheckServiceFactory struct{}
 
-	cell_checker := new(
-		CellCheckService)
+func (
+	CellCheckServiceFactory) Create(
+	cell_check_parameter service_parameters.CellCheckParameters) ICellCheckService {
 
-	//TODO should be a constructor (internal)
-	cell_checker.In_scope_cell = cell
-	cell_checker.Issue_type = in_scope_syntactic_check_type
+	cell_check_service :=
+		new(
+			cellCheckService)
 
-	return cell_checker
+	cell_check_service.
+		Cell_check_parameter =
+		cell_check_parameter
+
+	return cell_check_service
 
 }
