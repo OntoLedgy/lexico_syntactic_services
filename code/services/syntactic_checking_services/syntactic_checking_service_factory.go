@@ -1,19 +1,23 @@
 package syntactic_checking_services
 
 import (
-	"syntactic_checker/code/services/syntactic_checking_services/configuration_getters"
+	"logger/goinggo_services"
+	"syntactic_checker/code/services/syntactic_checking_services/contract"
+	"syntactic_checker/code/services/syntactic_checking_services/internal"
 	"syntactic_checker/code/services/syntactic_checking_services/internal/cells_preparers"
+	"syntactic_checker/code/services/syntactic_checking_services/internal/configuration_getters"
 )
 
 type SyntacticCheckingServiceFactory struct{}
 
 func (
 	factory SyntacticCheckingServiceFactory) Create(
-	configuration_file_path string) ISyntacticCheckingService {
+	configuration_file_path string,
+	logger *goinggo_services.Logger) contract.ISyntacticCheckingServices {
 
 	syntactic_checking_service :=
 		new(
-			syntacticCheckingServices)
+			internal.SyntacticCheckingServices)
 
 	configuration_getter_factory :=
 		new(
@@ -25,7 +29,7 @@ func (
 			Create()
 
 	syntactic_checking_service.
-		run_configuration =
+		Run_configuration =
 		*configuration_getter.
 			Get_configuration(
 				configuration_file_path)
@@ -34,16 +38,20 @@ func (
 		load_in_scope_cell_list(
 			syntactic_checking_service)
 
+	syntactic_checking_service.
+		Logger =
+		logger
+
 	return syntactic_checking_service
 }
 
 func (
 	SyntacticCheckingServiceFactory) load_in_scope_cell_list(
-	syntactic_checking_service *syntacticCheckingServices) {
+	syntactic_checking_service *internal.SyntacticCheckingServices) {
 
 	check_configuration :=
 		syntactic_checking_service.
-			run_configuration.
+			Run_configuration.
 			Check_configuration
 
 	identity_column_name :=
@@ -70,7 +78,7 @@ func (
 				identity_column_name)
 
 	syntactic_checking_service.
-		in_scope_cell_list =
+		In_scope_cell_list =
 		cells_preparer.
 			Get_in_scope_identified_cells()
 

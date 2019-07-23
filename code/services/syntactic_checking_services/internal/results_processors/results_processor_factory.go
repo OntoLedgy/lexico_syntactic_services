@@ -2,7 +2,7 @@ package results_processors
 
 import (
 	"syntactic_checker/code/object_model/service_results"
-	"syntactic_checker/code/services/syntactic_checking_services/configuration_getters"
+	"syntactic_checker/code/services/syntactic_checking_services/internal/configuration_getters"
 )
 
 type ResultsProcessorFactory struct{}

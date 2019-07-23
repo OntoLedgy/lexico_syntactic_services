@@ -15,7 +15,8 @@ type CheckResultProcessors struct {
 	Cell_edit_history   *object_model.StringEditHistory
 }
 
-func (check_result_processor *CheckResultProcessors) Process_regex_result() {
+func (
+	check_result_processor *CheckResultProcessors) Process_regex_result() {
 
 	there_is_a_regex_result :=
 		check_result_processor.Check_results != nil

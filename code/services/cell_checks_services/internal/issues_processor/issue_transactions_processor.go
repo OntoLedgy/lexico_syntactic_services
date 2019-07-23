@@ -3,13 +3,13 @@ package issues_processor
 import (
 	"fmt"
 	"syntactic_checker/code/object_model/issues"
-	"syntactic_checker/code/services/cell_check_services"
+	"syntactic_checker/code/services/cell_check_services/contract"
 	"syntactic_checker/code/services/cell_checks_services/internal/check_result_processors"
 )
 
 func (
 	issues_processor *issuesProcessors) process_issue_transactions(
-	cell_check_service cell_check_services.ICellCheckService) *issues.Issues {
+	cell_check_service contract.ICellCheckServices) *issues.Issues {
 
 	issues_found := cell_check_service.Get_check_result() != nil && cell_check_service.Get_check_result().Check_result_string_edit_ranges != nil
 
@@ -31,7 +31,7 @@ func (
 
 func (
 	issues_processor *issuesProcessors) generate_issue_transaction(
-	cell_check_service cell_check_services.ICellCheckService) issues.Issues {
+	cell_check_service contract.ICellCheckServices) issues.Issues {
 
 	cell_check_issue :=
 		new(

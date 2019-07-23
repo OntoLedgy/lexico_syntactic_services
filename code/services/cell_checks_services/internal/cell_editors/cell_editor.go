@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"string_editor/factories"
 	string_editor_object_model "string_editor/object_model"
+	"syntactic_checker/code/object_model"
 	"syntactic_checker/code/object_model/cells"
 	"syntactic_checker/code/object_model/check_results"
-	"syntactic_checker/code/services/syntactic_checking_services/configuration_getters"
 )
 
 //TODO - Stage 3 - replace with String Editor functionality
@@ -58,7 +58,7 @@ func (
 	marked_string =
 		cell_editor.
 			modify_string_using_indicies(
-				configuration_getters.
+				object_model.
 					Modification_marker,
 				marked_string)
 

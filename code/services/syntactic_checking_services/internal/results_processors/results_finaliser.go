@@ -4,6 +4,8 @@ import (
 	"syntactic_checker/code/object_model/service_results"
 )
 
+//TODO - Add type structure
+
 func prepare_syntactic_checks_results_transactions(
 	cell_list_checks_result service_results.CellListChecksResults) map[string][][]string {
 

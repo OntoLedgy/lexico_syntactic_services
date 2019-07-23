@@ -51,7 +51,7 @@ func prepare_in_scope_identified_cells_data(
 
 	in_scope_identified_cells_raw :=
 		storage.Read_csv_data(
-			csv_filename)
+			csv_filename, "")
 
 	fmt.Printf(
 		"Preparing extracted data for checks (converting to interface)")

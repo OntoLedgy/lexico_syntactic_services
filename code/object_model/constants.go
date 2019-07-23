@@ -1,3 +1,3 @@
-package configuration_getters
+package object_model
 
 var Modification_marker string

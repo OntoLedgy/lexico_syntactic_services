@@ -7,6 +7,7 @@ import (
 	"syntactic_checker/code/object_model/issues"
 	"syntactic_checker/code/object_model/service_parameters"
 	"syntactic_checker/code/services/cell_check_services"
+	"syntactic_checker/code/services/cell_check_services/contract"
 	"syntactic_checker/code/services/cell_checks_services/internal/check_result_processors"
 )
 
@@ -74,7 +75,7 @@ func Generate_fix_transaction(
 
 func update_modified_cell_and_string_edit_history(
 	issue_type issues.IssueTypes,
-	cell_check_service cell_check_services.ICellCheckService,
+	cell_check_service contract.ICellCheckServices,
 	string_edit_history *string_editor_object_model.StringEditHistory,
 	interim_cell_modified cells.Cells) (
 	cells.Cells,
