@@ -33,7 +33,8 @@ func Orchestrate_services() {
 
 }
 
-func end_logger(logger *log.Logger) {
+func end_logger(
+	logger *log.Logger) {
 
 	logger.Info(
 		"Ending syntactic checking service")
