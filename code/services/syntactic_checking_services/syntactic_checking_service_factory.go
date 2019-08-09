@@ -4,8 +4,9 @@ import (
 	"logger/goinggo_services"
 	"syntactic_checker/code/services/syntactic_checking_services/contract"
 	"syntactic_checker/code/services/syntactic_checking_services/internal"
-	"syntactic_checker/code/services/syntactic_checking_services/internal/cells_preparers"
 	"syntactic_checker/code/services/syntactic_checking_services/internal/configuration_getters"
+	"syntactic_checker/code/services/syntactic_checking_services/internal/configuration_getters/cells_preparers"
+	"syntactic_checker/code/services/syntactic_checking_services/internal/configuration_getters/object_model"
 )
 
 type SyntacticCheckingServiceFactory struct{}
@@ -15,24 +16,19 @@ func (
 	configuration_file_path string,
 	logger *goinggo_services.Logger) contract.ISyntacticCheckingServices {
 
+	run_configuration :=
+		factory.
+			get_current_run_configuration(
+				configuration_file_path)
+
 	syntactic_checking_service :=
 		new(
-			internal.SyntacticCheckingServices)
-
-	configuration_getter_factory :=
-		new(
-			configuration_getters.
-				ConfigurationGetterFactories)
-
-	configuration_getter :=
-		configuration_getter_factory.
-			Create()
+			internal.
+				SyntacticCheckingServices)
 
 	syntactic_checking_service.
 		Run_configuration =
-		*configuration_getter.
-			Get_configuration(
-				configuration_file_path)
+		run_configuration
 
 	factory.
 		load_in_scope_cell_list(
@@ -43,6 +39,25 @@ func (
 		logger
 
 	return syntactic_checking_service
+}
+
+func (
+	factory SyntacticCheckingServiceFactory) get_current_run_configuration(
+	configuration_file_path string) object_model.RunConfigurations {
+
+	configuration_getter_factory :=
+		new(
+			configuration_getters.
+				ConfigurationGetterFactories)
+
+	configuration_getter :=
+		configuration_getter_factory.
+			Create()
+	run_configuration :=
+		*configuration_getter.
+			Get_configuration(
+				configuration_file_path)
+	return run_configuration
 }
 
 func (

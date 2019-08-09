@@ -1,4 +1,4 @@
-package fix_processors
+package cell_fix_getters
 
 import (
 	string_editor_object_model "string_editor/object_model"
@@ -32,9 +32,12 @@ func Generate_fix_transaction(
 			Set_object_uuid()
 
 	for _, issue_type := range issue_types {
-		//TODO - Stage 3 - improve fix generation process (too wet).  should just process the fix object rather than the modified and marked cells.
+		//TODO - Stage 3 - improve fix generation process (too wet).
+		// should just process the fix object rather than the modified and marked cells.
 
-		cell_check_parameter := new(service_parameters.CellCheckParameters)
+		cell_check_parameter :=
+			new(
+				service_parameters.CellCheckParameters)
 
 		cell_check_parameter.
 			In_scope_cell =

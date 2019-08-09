@@ -4,7 +4,12 @@ import (
 	"syntactic_checker/code/services/syntactic_checking_services/contract"
 )
 
-func Create(syntactic_checking_service contract.ISyntacticCheckingServices) *SyntacticCheckingServiceOrchestrators {
+type SyntacticCheckingServiceOrchestratorFactory struct {
+}
+
+func (
+	factory SyntacticCheckingServiceOrchestratorFactory) Create(
+	syntactic_checking_service contract.ISyntacticCheckingServices) *SyntacticCheckingServiceOrchestrators {
 
 	syntactic_checking_service_orchestrator :=
 		new(

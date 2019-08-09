@@ -19,7 +19,8 @@ func (
 	check_result_processor *CheckResultProcessors) Process_regex_result() {
 
 	there_is_a_regex_result :=
-		check_result_processor.Check_results != nil
+		check_result_processor.
+			Check_results != nil
 
 	if there_is_a_regex_result {
 
@@ -37,11 +38,12 @@ func (
 			In_scope_issue_type.
 			Get_replacement_string()
 
-	cell_editor := cell_editors.
-		Create(
-			check_result_processor.In_scope_cell,
-			check_result_processor.Check_results,
-			replacement_string)
+	cell_editor :=
+		cell_editors.
+			Create(
+				check_result_processor.In_scope_cell,
+				check_result_processor.Check_results,
+				replacement_string)
 
 	cell_value_edit_history :=
 		cell_editor.

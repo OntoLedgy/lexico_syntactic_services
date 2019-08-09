@@ -11,6 +11,9 @@ func Orchestrate_services() {
 	logger :=
 		start_logger()
 
+	logger.Info(
+		"Starting syntactic checking service")
+
 	configuration_file_path :=
 		os.
 			Args[1]
@@ -29,8 +32,25 @@ func Orchestrate_services() {
 	syntactic_checking_service.
 		Run_syntactic_checking_service()
 
-	end_logger(logger)
+	end_logger(
+		logger)
 
+}
+
+//TODO - Stage 3 - move this out to logger service
+
+func start_logger() *log.Logger {
+
+	logger :=
+		log.
+			Create_logger(
+				"./outputs/logs",
+				log.Info_Level)
+
+	logger.
+		Started()
+
+	return logger
 }
 
 func end_logger(
@@ -43,18 +63,4 @@ func end_logger(
 
 	logger.Stop()
 
-}
-
-func start_logger() *log.Logger {
-	logger :=
-		log.
-			Create_logger(
-				"./outputs/logs",
-				log.Info_Level)
-	logger.
-		Started()
-	//logger startup
-	logger.Info(
-		"Starting syntactic checking service")
-	return logger
 }

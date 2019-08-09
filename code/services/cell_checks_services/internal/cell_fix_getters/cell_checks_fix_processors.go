@@ -1,4 +1,4 @@
-package fix_processors
+package cell_fix_getters
 
 import (
 	"fmt"

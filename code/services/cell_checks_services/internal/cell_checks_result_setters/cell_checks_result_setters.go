@@ -6,16 +6,16 @@ import (
 	"syntactic_checker/code/object_model/issues"
 	"syntactic_checker/code/object_model/service_parameters"
 	"syntactic_checker/code/services/cell_checks_services/contract"
+	"syntactic_checker/code/services/cell_checks_services/internal/cell_fix_getters"
 	"syntactic_checker/code/services/cell_checks_services/internal/cell_issues_getters"
-	"syntactic_checker/code/services/cell_checks_services/internal/fix_processors"
 )
-
-//split 2: set cell check result (issues and fix)
 
 type CellChecksResultSetters struct {
 	in_scope_cell                cells.Cells
 	list_of_in_scope_issue_types []issues.IssueTypes
 }
+
+//TODO - convert this to method
 
 func Set_cell_issues_and_fix(
 	cell_checks_service contract.ICellChecksServices) {
@@ -38,11 +38,16 @@ func Set_cell_issues_and_fix(
 	if there_are_issues {
 
 		cell_checks_service.
-			Set_issues_result(cell_checks_issues)
+			Set_issues_result(
+				cell_checks_issues)
 
-		cell_check_fix := get_cell_fix(cell_checks_parameters)
+		cell_check_fix :=
+			get_cell_fix(
+				cell_checks_parameters)
 
-		cell_checks_service.Set_fixes_result(cell_check_fix)
+		cell_checks_service.
+			Set_fixes_result(
+				cell_check_fix)
 
 	}
 }
@@ -51,10 +56,11 @@ func get_cell_fix(cell_checks_parameter service_parameters.CellChecksParameters)
 
 	fix_processor_factory :=
 		new(
-			fix_processors.FixProcessorsFactory)
+			cell_fix_getters.FixProcessorsFactory)
 
 	fix_processor :=
-		fix_processor_factory.Create()
+		fix_processor_factory.
+			Create()
 
 	cell_check_fix :=
 		fix_processor.

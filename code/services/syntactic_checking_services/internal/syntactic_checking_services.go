@@ -5,12 +5,12 @@ import (
 	"syntactic_checker/code/object_model/cells"
 	"syntactic_checker/code/object_model/service_results"
 	"syntactic_checker/code/services/syntactic_checking_services/internal/checking_orchestrators"
-	"syntactic_checker/code/services/syntactic_checking_services/internal/configuration_getters"
+	"syntactic_checker/code/services/syntactic_checking_services/internal/configuration_getters/object_model"
 )
 
 type SyntacticCheckingServices struct {
-	Run_configuration         configuration_getters.RunConfigurations
 	syntactic_checking_result service_results.CellListChecksResults //should this be wrapped into another structure?
+	Run_configuration         object_model.RunConfigurations
 	In_scope_cell_list        cells.ListOfCells
 	Logger                    *goinggo_services.Logger //use global logging service
 }
@@ -23,9 +23,15 @@ func (
 		Info(
 			"Starting run checking service")
 
+	syntactic_checking_service_orchestrator_factory :=
+		new(
+			checking_orchestrators.
+				SyntacticCheckingServiceOrchestratorFactory)
+
 	syntactic_checking_service_orchestrator :=
-		checking_orchestrators.
-			Create(syntactic_checking_service)
+		syntactic_checking_service_orchestrator_factory.
+			Create(
+				syntactic_checking_service)
 
 	syntactic_checking_service_orchestrator.
 		Orchestrate_syntactic_checking()
@@ -37,7 +43,7 @@ func (
 }
 
 func (
-	syntactic_checking_service *SyntacticCheckingServices) Get_run_configuration() configuration_getters.RunConfigurations {
+	syntactic_checking_service *SyntacticCheckingServices) Get_run_configuration() object_model.RunConfigurations {
 
 	return syntactic_checking_service.Run_configuration
 }

@@ -21,7 +21,8 @@ func (
 			get_cell_list_checks_result()
 
 	syntactic_checking_service_setter.
-		Set_syntactic_check_results(cell_list_checks_result)
+		Set_syntactic_check_results(
+			cell_list_checks_result)
 
 }
 

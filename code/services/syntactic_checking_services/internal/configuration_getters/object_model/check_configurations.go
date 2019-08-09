@@ -1,4 +1,4 @@
-package configuration_getters
+package object_model
 
 import "syntactic_checker/code/object_model/issues"
 

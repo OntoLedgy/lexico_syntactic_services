@@ -75,9 +75,10 @@ func (
 	if cell_check_issue != nil {
 
 		issues_processor.
-			cell_checks_issues = append(
-			issues_processor.cell_checks_issues,
-			*cell_check_issue)
+			cell_checks_issues =
+			append(
+				issues_processor.cell_checks_issues,
+				*cell_check_issue)
 
 	}
 

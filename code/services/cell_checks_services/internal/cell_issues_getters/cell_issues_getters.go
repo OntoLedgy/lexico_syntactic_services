@@ -3,14 +3,13 @@ package cell_issues_getters
 import (
 	"syntactic_checker/code/object_model/cells"
 	"syntactic_checker/code/object_model/issues"
-	"syntactic_checker/code/services/cell_checks_services/internal/issues_processor"
+	"syntactic_checker/code/services/cell_checks_services/internal/cell_issues_getters/issues_processor"
 )
-
-//push this to internal types
-//split 1: check cell for issues
 
 type CellIssuesGetters struct {
 }
+
+//TODO - make this a method for the type
 
 func Get_cell_issues(
 	in_scope_cell cells.Cells,

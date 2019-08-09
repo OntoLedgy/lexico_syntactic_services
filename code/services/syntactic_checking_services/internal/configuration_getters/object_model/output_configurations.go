@@ -1,4 +1,4 @@
-package configuration_getters
+package object_model
 
 type OutputConfigurations struct {
 	Output_fixes_file_absolute_path            string `json:"output_fixes_file_absolute_path"`
