@@ -7,5 +7,5 @@ import (
 
 type Fixes struct {
 	core_object_model.Objects
-	Cell_value_edit_history object_model.StringEditHistory
+	String_value_edit_history object_model.StringEditHistory
 }

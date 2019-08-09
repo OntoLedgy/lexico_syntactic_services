@@ -10,7 +10,8 @@ func write_syntactic_checking_result_to_csvs(
 	syntactic_check_result_report map[string][][]string,
 	issues_file_name string,
 	issue_parameters_file_name string,
-	fixes_file_name string) {
+	fixes_file_name string,
+	issue_details_file_name string) {
 
 	report_syntactic_check_issues(
 		syntactic_check_result_report["syntactic_check_issues_set"],
@@ -23,6 +24,10 @@ func write_syntactic_checking_result_to_csvs(
 	report_syntactic_check_fixes(
 		syntactic_check_result_report["syntactic_check_fix_transactions_set"],
 		fixes_file_name)
+
+	report_syntactic_check_issue_details(
+		syntactic_check_result_report["syntactic_check_issue_details_set"],
+		issue_details_file_name)
 }
 
 func report_syntactic_check_issues(
@@ -70,6 +75,24 @@ func report_syntactic_check_fixes(
 
 	storage.Write_slice_with_header_to_csv(
 		fix_transactions,
+		output_header,
+		output_csv_filename)
+
+}
+
+func report_syntactic_check_issue_details(
+	issue_transactions [][]string,
+	output_csv_filename string) {
+
+	output_header := []string{
+		"cell_values_original",
+		"cell_values_marked",
+		"cell_values_fixed",
+		"check_type_uuids",
+		"identifiers"}
+
+	storage.Write_slice_with_header_to_csv(
+		issue_transactions,
 		output_header,
 		output_csv_filename)
 

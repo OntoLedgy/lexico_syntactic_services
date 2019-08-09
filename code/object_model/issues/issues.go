@@ -7,6 +7,6 @@ import (
 
 type Issues struct {
 	core_object_model.Objects
-	Issue_type        IssueTypes
-	Cell_edit_history object_model.StringEditHistory
+	Issue_type          IssueTypes
+	String_edit_history object_model.StringEditHistory
 }

@@ -20,7 +20,7 @@ func (
 		run_configuration.
 			Output_configuration
 
-	cell_list_checks_result :=
+	identified_string_list_checks_result :=
 		syntactic_checking_results_reporter.
 			Get_syntactic_checking_result()
 
@@ -32,7 +32,7 @@ func (
 	results_processor :=
 		results_processor_factory.
 			Create(
-				cell_list_checks_result,
+				identified_string_list_checks_result,
 				output_configuration)
 
 	syntactic_check_result_report :=
@@ -65,9 +65,14 @@ func (
 		output_configuration.
 			Output_fixes_file_absolute_path
 
+	issue_details_file_name :=
+		output_configuration.
+			Output_issues_details_absolute_path
+
 	write_syntactic_checking_result_to_csvs(
 		syntactic_check_result_report,
 		issues_file_name,
 		issue_parameters_file_name,
-		fixes_file_name)
+		fixes_file_name,
+		issue_details_file_name)
 }

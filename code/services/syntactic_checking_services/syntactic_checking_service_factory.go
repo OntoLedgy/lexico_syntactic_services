@@ -5,7 +5,7 @@ import (
 	"syntactic_checker/code/services/syntactic_checking_services/contract"
 	"syntactic_checker/code/services/syntactic_checking_services/internal"
 	"syntactic_checker/code/services/syntactic_checking_services/internal/configuration_getters"
-	"syntactic_checker/code/services/syntactic_checking_services/internal/configuration_getters/cells_preparers"
+	"syntactic_checker/code/services/syntactic_checking_services/internal/configuration_getters/identified_string_list_preparers"
 	"syntactic_checker/code/services/syntactic_checking_services/internal/configuration_getters/object_model"
 )
 
@@ -31,7 +31,7 @@ func (
 		run_configuration
 
 	factory.
-		load_in_scope_cell_list(
+		load_identified_string_list(
 			syntactic_checking_service)
 
 	syntactic_checking_service.
@@ -61,7 +61,7 @@ func (
 }
 
 func (
-	SyntacticCheckingServiceFactory) load_in_scope_cell_list(
+	SyntacticCheckingServiceFactory) load_identified_string_list(
 	syntactic_checking_service *internal.SyntacticCheckingServices) {
 
 	check_configuration :=
@@ -81,20 +81,20 @@ func (
 		check_configuration.
 			Input_csv_file_name
 
-	cells_preparer_factory :=
+	identified_string_list_preparer_factory :=
 		new(
-			cells_preparers.CellsPreparerFactory)
+			identified_string_list_preparers.IdentifiedStringListPreparerFactory)
 
-	cells_preparer :=
-		cells_preparer_factory.
+	identified_string_list_preparer :=
+		identified_string_list_preparer_factory.
 			Create(
 				csv_filename,
 				check_column_name,
 				identity_column_name)
 
 	syntactic_checking_service.
-		In_scope_cell_list =
-		cells_preparer.
-			Get_in_scope_identified_cells()
+		Identified_string_list =
+		identified_string_list_preparer.
+			Get_in_scope_identified_identified_string()
 
 }

@@ -2,16 +2,16 @@ package internal
 
 import (
 	"logger/goinggo_services"
-	"syntactic_checker/code/object_model/cells"
+	"syntactic_checker/code/object_model/identified_strings"
 	"syntactic_checker/code/object_model/service_results"
 	"syntactic_checker/code/services/syntactic_checking_services/internal/checking_orchestrators"
 	"syntactic_checker/code/services/syntactic_checking_services/internal/configuration_getters/object_model"
 )
 
 type SyntacticCheckingServices struct {
-	syntactic_checking_result service_results.CellListChecksResults //should this be wrapped into another structure?
+	syntactic_checking_result service_results.IdentifiedStringListChecksResults //should this be wrapped into another structure?
 	Run_configuration         object_model.RunConfigurations
-	In_scope_cell_list        cells.ListOfCells
+	Identified_string_list    identified_strings.IdentifiedStringLists
 	Logger                    *goinggo_services.Logger //use global logging service
 }
 
@@ -49,14 +49,14 @@ func (
 }
 
 func (
-	syntactic_checking_service *SyntacticCheckingServices) Get_in_scope_cell_list() cells.ListOfCells {
+	syntactic_checking_service *SyntacticCheckingServices) Get_identified_string_list() identified_strings.IdentifiedStringLists {
 
-	return syntactic_checking_service.In_scope_cell_list
+	return syntactic_checking_service.Identified_string_list
 }
 
 func (
 	syntactic_checking_service *SyntacticCheckingServices) Set_syntactic_check_results(
-	syntactic_checking_result service_results.CellListChecksResults) {
+	syntactic_checking_result service_results.IdentifiedStringListChecksResults) {
 
 	syntactic_checking_service.
 		syntactic_checking_result =
@@ -64,6 +64,6 @@ func (
 }
 
 func (
-	syntactic_checking_service *SyntacticCheckingServices) Get_syntactic_checking_result() service_results.CellListChecksResults {
+	syntactic_checking_service *SyntacticCheckingServices) Get_syntactic_checking_result() service_results.IdentifiedStringListChecksResults {
 	return syntactic_checking_service.syntactic_checking_result
 }

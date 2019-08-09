@@ -9,7 +9,7 @@ type ResultsProcessorFactory struct{}
 
 func (
 	ResultsProcessorFactory) Create(
-	cell_list_checks_result service_results.CellListChecksResults,
+	identified_string_list_checks_result service_results.IdentifiedStringListChecksResults,
 	output_configuration object_model.OutputConfigurations,
 ) *resultsProcessors {
 
@@ -23,7 +23,7 @@ func (
 
 	results_processor.
 		syntactic_checking_results =
-		cell_list_checks_result
+		identified_string_list_checks_result
 
 	return results_processor
 
