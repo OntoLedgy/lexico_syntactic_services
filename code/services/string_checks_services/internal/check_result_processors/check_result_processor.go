@@ -2,26 +2,24 @@ package check_result_processors
 
 import (
 	"string_editor/object_model"
-	"syntactic_checker/code/object_model/check_results"
-	"syntactic_checker/code/object_model/identified_strings"
 	"syntactic_checker/code/object_model/issues"
-	"syntactic_checker/code/services/string_checks_services/internal/string_editors"
+	"syntactic_checker/code/object_model/service_results"
+	"syntactic_checker/code/services/string_checks_services/internal/check_result_processors/string_editors"
 )
 
-type CheckResultProcessors struct {
-	Check_results       *check_results.CheckResults
-	Identified_string   identified_strings.IdentifiedStrings
-	String_value        string
-	In_scope_issue_type issues.IssueTypes
-	String_edit_history *object_model.StringEditHistory
+type checkResultProcessors struct {
+	check_results *service_results.StringCheckResults
+	//string_value        string
+	in_scope_issue_type issues.IssueTypes
+	String_edit_history *object_model.StringEditHistories
 }
 
 func (
-	check_result_processor *CheckResultProcessors) Process_regex_result() {
+	check_result_processor *checkResultProcessors) Process_regex_result() {
 
 	there_is_a_regex_result :=
 		check_result_processor.
-			Check_results != nil
+			check_results != nil
 
 	if there_is_a_regex_result {
 
@@ -32,26 +30,22 @@ func (
 }
 
 func (
-	check_result_processor *CheckResultProcessors) set_string_edit_history() {
+	check_result_processor *checkResultProcessors) set_string_edit_history() {
 
 	replacement_string :=
 		check_result_processor.
-			In_scope_issue_type.
+			in_scope_issue_type.
 			Get_replacement_string()
 
 	string_editor :=
 		string_editors.
 			Create(
-				check_result_processor.Identified_string,
-				check_result_processor.String_value,
-				check_result_processor.Check_results,
+				check_result_processor.String_edit_history.GetCurrentString(),
+				check_result_processor.check_results,
 				replacement_string)
 
-	string_edit_history :=
+	check_result_processor.String_edit_history =
 		string_editor.
-			Edit_string()
+			Edit_string(check_result_processor.String_edit_history)
 
-	check_result_processor.
-		String_edit_history =
-		string_edit_history
 }

@@ -1,4 +1,4 @@
-package regex_checkers
+package service_results
 
 type RegexCheckResults struct {
 	Check_uuids         string

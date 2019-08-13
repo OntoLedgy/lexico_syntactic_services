@@ -64,17 +64,17 @@ func prepare_identified_string_data(
 		storage.Get_csv_with_headers(
 			identified_string_list_interface)
 
-	identified_string_list.Identified_strings =
+	identified_string_list.Identified_string_list =
 		make(
 			[]identified_strings.IdentifiedStrings,
 			len(identified_string_list_interface))
 
 	for index, value := range identified_string_list_with_headers {
 
-		identified_string_list.Identified_strings[index].String_identifier =
+		identified_string_list.Identified_string_list[index].String_identifier =
 			value[identity_colunmn_name].(string)
 
-		identified_string_list.Identified_strings[index].String_value =
+		identified_string_list.Identified_string_list[index].String_value =
 			value[string_value_column_name].(string)
 
 	}

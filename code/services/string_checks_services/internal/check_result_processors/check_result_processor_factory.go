@@ -1,37 +1,32 @@
 package check_result_processors
 
 import (
-	"syntactic_checker/code/object_model/identified_strings"
+	"string_editor/object_model"
 	"syntactic_checker/code/object_model/issues"
 	"syntactic_checker/code/services/string_check_services/contract"
 )
 
 func Create(
+	string_edit_history *object_model.StringEditHistories,
 	string_check_service contract.IStringCheckServices,
-	issue_type issues.IssueTypes,
-	identified_string identified_strings.IdentifiedStrings,
-	string_value string) *CheckResultProcessors {
+	issue_type issues.IssueTypes) *checkResultProcessors {
 
 	check_result_processor :=
 		new(
-			CheckResultProcessors)
+			checkResultProcessors)
 
 	check_result_processor.
-		Check_results =
+		check_results =
 		string_check_service.
-			Get_check_result()
+			Get_string_check_result()
 
 	check_result_processor.
-		In_scope_issue_type =
+		in_scope_issue_type =
 		issue_type
 
 	check_result_processor.
-		Identified_string =
-		identified_string
-
-	check_result_processor.
-		String_value =
-		string_value
+		String_edit_history =
+		string_edit_history
 
 	return check_result_processor
 }

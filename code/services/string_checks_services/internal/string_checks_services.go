@@ -16,9 +16,13 @@ type StringChecksService struct {
 func (
 	string_checks_service *StringChecksService) Set_string_checks_result() {
 
-	string_checks_result_setters.
-		Set_string_issues_and_fix(
-			string_checks_service)
+	string_checks_result_setter :=
+		string_checks_result_setters.
+			Create(
+				string_checks_service)
+
+	string_checks_result_setter.
+		Set_string_issues_and_fix()
 
 }
 
@@ -28,21 +32,23 @@ func (
 	return string_checks_service.String_checks_result
 }
 
-func (string_checks_service *StringChecksService) Get_string_checks_parameter() service_parameters.StringChecksParameters {
+func (
+	string_checks_service *StringChecksService) Get_string_checks_parameter() service_parameters.StringChecksParameters {
 
 	return string_checks_service.String_checks_parameter
 }
 
-func (string_checks_service *StringChecksService) Set_issues_result(
+func (
+	string_checks_service *StringChecksService) Set_issues_result(
 	string_checks_issues []issues.Issues) {
 
-	string_checks_service.String_checks_result.Identified_string_checks_issues = string_checks_issues
+	string_checks_service.String_checks_result.String_checks_issues = string_checks_issues
 
 }
 
 func (string_checks_service *StringChecksService) Set_string_fixes_result(
 	string_checks_fix fixes.Fixes) {
 
-	string_checks_service.String_checks_result.Identified_string_checks_fix = string_checks_fix
+	string_checks_service.String_checks_result.String_checks_fix = string_checks_fix
 
 }

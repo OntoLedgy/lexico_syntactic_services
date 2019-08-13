@@ -68,9 +68,9 @@ func prepare_syntactic_check_fixes(
 		identified_string_fix_slice := make([]string, 5)
 
 		identified_string_fix_slice[0] = identified_string_checks_result.Identified_string.String_value
-		identified_string_fix_slice[1] = identified_string_checks_result.Identified_string_checks_fix.String_value_edit_history.Get_marked_string()
-		identified_string_fix_slice[2] = identified_string_checks_result.Identified_string_checks_fix.String_value_edit_history.Get_modified_string()
-		identified_string_fix_slice[3] = identified_string_checks_result.Identified_string_checks_fix.Object_uuid.String()
+		identified_string_fix_slice[1] = identified_string_checks_result.String_checks_result.String_checks_fix.String_value_edit_history.Get_marked_string()
+		identified_string_fix_slice[2] = identified_string_checks_result.String_checks_result.String_checks_fix.String_value_edit_history.Get_modified_string()
+		identified_string_fix_slice[3] = identified_string_checks_result.String_checks_result.String_checks_fix.Object_uuid.String()
 		identified_string_fix_slice[4] = identified_string_checks_result.Identified_string.String_identifier
 
 		fix_transaction_string = append(fix_transaction_string, identified_string_fix_slice)
@@ -89,7 +89,7 @@ func prepare_syntactic_check_issues(
 
 	for _, identified_string_checks_result := range identified_string_list_checks_result_set {
 
-		for _, identified_string_issue := range identified_string_checks_result.Identified_string_checks_issues {
+		for _, identified_string_issue := range identified_string_checks_result.String_checks_result.String_checks_issues {
 
 			identified_string_issue_slice := make([]string, 3)
 
@@ -114,7 +114,7 @@ func prepare_syntactic_checks_issue_parameters(
 
 	for _, identified_string_checks_result := range identified_string_list_checks_result_set {
 
-		for _, identified_string_issue := range identified_string_checks_result.Identified_string_checks_issues {
+		for _, identified_string_issue := range identified_string_checks_result.String_checks_result.String_checks_issues {
 
 			syntactic_check_issue_parameters_set = append_issue_parameter_slice(
 				identified_string_issue.Object_uuid.String(),
@@ -177,7 +177,7 @@ func prepare_syntactic_checks_issue_details(
 
 	for _, identified_string_checks_result := range identified_string_list_checks_result_set {
 
-		for _, identified_string_issue := range identified_string_checks_result.Identified_string_checks_issues {
+		for _, identified_string_issue := range identified_string_checks_result.String_checks_result.String_checks_issues {
 
 			identified_string_issue_slice := make([]string, 5)
 

@@ -4,26 +4,28 @@ import (
 	"database_manager/utils"
 	"regexp"
 	"string_editor/object_model"
+	"syntactic_checker/code/object_model/service_results"
 )
 
 type regexCheckers struct {
-	regex_check_result RegexCheckResults
-	String_edit_ranges []object_model.StringEditRanges
+	check_regex_pattern string
+	string_value        string
+	regex_check_result  service_results.RegexCheckResults
+	String_edit_ranges  []object_model.StringEditRanges
 }
 
 func (
-	regex_checker *regexCheckers) Process_regex_check(
-	regex_string string,
-	string_value string) *RegexCheckResults {
+	regex_checker *regexCheckers) Process_regex_check() *service_results.RegexCheckResults {
 
 	string_value_original_string :=
-		string_value
+		regex_checker.string_value
 
-	syntactic_check_regex_object :=
-		regexp.MustCompile(regex_string)
+	regex_object :=
+		regexp.MustCompile(
+			regex_checker.check_regex_pattern)
 
 	regex_match_indices :=
-		syntactic_check_regex_object.
+		regex_object.
 			FindAllStringSubmatchIndex(
 				string_value_original_string,
 				-1)
@@ -37,7 +39,7 @@ func (
 				1,
 				"")
 
-		regex_check_result := RegexCheckResults{
+		regex_check_result := service_results.RegexCheckResults{
 			check_uuid.String(),
 			string_value_original_string,
 			regex_match_indices,

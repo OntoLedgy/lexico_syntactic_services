@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"syntactic_checker/code/object_model/identified_strings"
 	"syntactic_checker/code/services/identified_string_list_checks_services/contract"
+	"syntactic_checker/code/services/identified_string_list_checks_services/internal/identified_string_list_checks_processors/identified_string_checks_processors"
 )
 
 type IdentifiedStringListChecksProcessors struct {
@@ -27,12 +28,12 @@ func (identified_string_list_checks_processor *IdentifiedStringListChecksProcess
 		identified_string_list_checks_parameter.
 			List_of_in_scope_issue_types)
 
-	identified_strings :=
+	identified_string_list :=
 		identified_string_list_checks_parameter.
 			Identified_string_list.
-			Identified_strings
+			Identified_string_list
 
-	for _, identified_string := range identified_strings {
+	for _, identified_string := range identified_string_list {
 
 		identified_string_list_checks_processor.
 			process_and_set_identified_string_checks_result(
@@ -53,13 +54,16 @@ func (
 		identified_string_list_checks_parameter.
 			List_of_in_scope_issue_types
 
-	identified_string_checks_result :=
-		strip_identified_string_identifier_and_run_string_checks(
-			identified_string,
-			issue_types)
+	identified_string_check_processor := identified_string_checks_processors.Create(
+		identified_string,
+		issue_types)
+
+	string_checks_result :=
+		identified_string_check_processor.
+			Get_string_checks_result()
 
 	identified_string_list_checks_processor.
 		Set_identified_string_checks_result(
 			identified_string,
-			identified_string_checks_result)
+			string_checks_result)
 }

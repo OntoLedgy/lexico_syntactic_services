@@ -1,4 +1,4 @@
-package issues_processor
+package issues_processors
 
 import (
 	"syntactic_checker/code/object_model/issues"
@@ -6,23 +6,15 @@ import (
 	"syntactic_checker/code/services/string_check_services"
 )
 
+//TODO - add separate type for this
+
 func (
 	issues_processor *issuesProcessors) get_string_check_issue(
 	in_scope_issue_type issues.IssueTypes) *issues.Issues {
 
-	identified_string :=
-		issues_processor.
-			identified_string
-
 	string_check_parameter := new(
 		service_parameters.
 			StringCheckParameters)
-
-	//TODO - Deprecate
-	string_check_parameter.
-		Identified_string =
-		identified_string
-	//-----
 
 	string_check_parameter.
 		In_scope_issue_type =
@@ -31,7 +23,8 @@ func (
 	string_check_parameter.
 		String_value =
 		issues_processor.
-			string_value
+			string_checks_parameter.
+			String_value
 
 	String_check_service_factory :=
 		new(
@@ -65,28 +58,27 @@ func (
 
 	if there_is_an_issue {
 
-		string_check_issue.
-			Issue_type =
-			in_scope_issue_type
-
 		issues_processor.
 			append_string_check_issue(
-				string_check_issue)
+				string_check_issue,
+				in_scope_issue_type)
+
 	}
 }
 
 func (
 	issues_processor *issuesProcessors) append_string_check_issue(
-	string_check_issue *issues.Issues) {
+	string_check_issue *issues.Issues,
+	in_scope_issue_type issues.IssueTypes) {
 
-	if string_check_issue != nil {
+	string_check_issue.
+		Issue_type =
+		in_scope_issue_type
 
-		issues_processor.
-			string_checks_issues =
-			append(
-				issues_processor.string_checks_issues,
-				*string_check_issue)
-
-	}
+	issues_processor.
+		string_checks_issues =
+		append(
+			issues_processor.string_checks_issues,
+			*string_check_issue)
 
 }

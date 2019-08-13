@@ -1,5 +1,5 @@
 package identified_strings
 
 type IdentifiedStringLists struct {
-	Identified_strings []IdentifiedStrings
+	Identified_string_list []IdentifiedStrings
 }

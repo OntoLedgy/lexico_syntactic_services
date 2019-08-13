@@ -1,7 +1,7 @@
-package check_results
+package service_results
 
 import "string_editor/object_model"
 
-type CheckResults struct {
+type StringCheckResults struct {
 	Check_result_string_edit_ranges []object_model.StringEditRanges
 }

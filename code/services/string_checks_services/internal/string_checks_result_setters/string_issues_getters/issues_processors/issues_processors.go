@@ -1,15 +1,13 @@
-package issues_processor
+package issues_processors
 
 import (
-	"syntactic_checker/code/object_model/identified_strings"
 	"syntactic_checker/code/object_model/issues"
+	"syntactic_checker/code/object_model/service_parameters"
 )
 
 type issuesProcessors struct {
-	in_scope_issue_types []issues.IssueTypes
-	identified_string    identified_strings.IdentifiedStrings
-	string_value         string
-	string_checks_issues []issues.Issues
+	string_checks_parameter service_parameters.StringChecksParameters
+	string_checks_issues    []issues.Issues
 }
 
 func (
@@ -17,7 +15,8 @@ func (
 
 	in_scope_issue_types :=
 		issues_processor.
-			in_scope_issue_types
+			string_checks_parameter.
+			In_scope_issue_types
 
 	for _, in_scope_issue_type := range in_scope_issue_types {
 

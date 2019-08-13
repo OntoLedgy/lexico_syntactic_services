@@ -2,37 +2,30 @@ package string_editors
 
 import (
 	"fmt"
-	"string_editor/factories"
 	string_editor_object_model "string_editor/object_model"
 	"syntactic_checker/code/object_model"
-	"syntactic_checker/code/object_model/check_results"
-	"syntactic_checker/code/object_model/identified_strings"
+	"syntactic_checker/code/object_model/service_results"
 )
 
 //TODO - Stage 3 - replace with String Editor functionality
 
 type stringEditors struct {
-	identified_string_to_edit identified_strings.IdentifiedStrings //TODO - deprecate
-	string_value              string
-	replacement_string        string
-	check_results             *check_results.CheckResults
+	string_value       string
+	replacement_string string
+	check_results      *service_results.StringCheckResults
 }
 
 func (
-	string_value_editor *stringEditors) Edit_string() *string_editor_object_model.StringEditHistory {
+	string_value_editor *stringEditors) Edit_string(
+	string_edit_history *string_editor_object_model.StringEditHistories) *string_editor_object_model.StringEditHistories {
 
 	var modified_string, marked_string string
-	var string_editor_factory factories.StringEditorFactory
 
 	string_to_edit :=
-		string_value_editor.
-			string_value
+		string_edit_history.
+			GetCurrentString()
 
-	//TODO Deprecate
-	string_to_edit =
-		string_value_editor.
-			identified_string_to_edit.
-			String_value
+	string_to_edit = string_edit_history.GetCurrentString()
 
 	fmt.Printf(
 		"\nString_for_repalcement: %s, replacement_char(s): [%s], replacement_indicies: %v",
@@ -40,11 +33,6 @@ func (
 		string_value_editor.
 			replacement_string,
 		string_value_editor.check_results)
-
-	string_editor :=
-		string_editor_factory.
-			CreateStringEditor(
-				string_to_edit)
 
 	modified_string =
 		string_to_edit
@@ -56,21 +44,17 @@ func (
 
 	modified_string =
 		string_value_editor.
-			modify_string_using_indicies(
+			edit_string_using_indicies(
 				string_value_editor.
 					replacement_string,
 				modified_string)
 
 	marked_string =
 		string_value_editor.
-			modify_string_using_indicies(
+			edit_string_using_indicies(
 				object_model.
 					Modification_marker,
 				marked_string)
-
-	string_edit_history :=
-		string_editor.
-			Get_string_edit_history()
 
 	string_edit_history.
 		Set_string_changes(
@@ -80,9 +64,10 @@ func (
 	return string_edit_history
 }
 
-func (string_value_editor *stringEditors) modify_string_using_indicies(
+func (
+	string_value_editor *stringEditors) edit_string_using_indicies(
 	replacement_string string,
-	string_to_modify string) string {
+	string_to_edit string) string {
 
 	replacement_offset :=
 		0
@@ -91,20 +76,20 @@ func (string_value_editor *stringEditors) modify_string_using_indicies(
 
 	for _, edit_range := range string_edit_ranges {
 
-		string_to_modify, replacement_offset =
+		string_to_edit, replacement_offset =
 			string_value_editor.
-				modify_string_using_index(
+				edit_string_using_index(
 					edit_range,
-					string_to_modify,
+					string_to_edit,
 					replacement_offset,
 					replacement_string)
 
 	}
-	return string_to_modify
+	return string_to_edit
 }
 
 func (
-	string_value_editor *stringEditors) modify_string_using_index(
+	string_value_editor *stringEditors) edit_string_using_index(
 	edit_range string_editor_object_model.StringEditRanges,
 	original_string string,
 	replacement_offset int,
