@@ -1,7 +1,8 @@
 package string_check_result_setters
 
 import (
-	"fmt"
+	//"fmt"
+	"logger/standard_global_logger"
 	"syntactic_checker/code/services/string_check_services/contract"
 	"syntactic_checker/code/services/string_check_services/internal/string_check_result_setters/regex_check_result_getter"
 )
@@ -19,14 +20,14 @@ func (
 
 	string_value :=
 		string_check_parameter.
-			String_value
+			String_to_check
 
 	check_regex :=
 		string_check_parameter.
 			In_scope_issue_type.
 			Issue_check_regex
 
-	if string_check_parameter.In_scope_issue_type.Issue_check_type == "regex" {
+	if string_check_parameter.In_scope_issue_type.Issue_check_type == "regex-re2" {
 
 		regex_checker :=
 			regex_check_result_getter.
@@ -43,7 +44,12 @@ func (
 				string_check_result)
 
 	} else {
-		fmt.Println("running non-regex checks")
+		logger := standard_global_logger.Global_logger
+
+		logger.Printf("running non-regex-re2 checks: %s \n",
+			string_check_parameter.
+				In_scope_issue_type.
+				Issue_check_type)
 	}
 
 }

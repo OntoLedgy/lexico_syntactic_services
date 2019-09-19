@@ -1,8 +1,8 @@
 package results_processors
 
 import (
-	"syntactic_checker/code/object_model/service_results"
-	"syntactic_checker/code/services/syntactic_checking_services/internal/configuration_getters/object_model"
+	"syntactic_checker/code/object_model/configurations"
+	"syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
 )
 
 type ResultsProcessorFactory struct{}
@@ -10,7 +10,7 @@ type ResultsProcessorFactory struct{}
 func (
 	ResultsProcessorFactory) Create(
 	identified_string_list_checks_result service_results.IdentifiedStringListChecksResults,
-	output_configuration object_model.OutputConfigurations,
+	output_configuration configurations.OutputConfigurations,
 ) *resultsProcessors {
 
 	results_processor :=

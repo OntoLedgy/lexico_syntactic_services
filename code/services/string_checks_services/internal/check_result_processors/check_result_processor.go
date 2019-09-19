@@ -2,14 +2,13 @@ package check_result_processors
 
 import (
 	"string_editor/object_model"
+	"syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
 	"syntactic_checker/code/object_model/issues"
-	"syntactic_checker/code/object_model/service_results"
 	"syntactic_checker/code/services/string_checks_services/internal/check_result_processors/string_editors"
 )
 
 type checkResultProcessors struct {
-	check_results *service_results.StringCheckResults
-	//string_value        string
+	check_results       *service_results.StringCheckResults
 	in_scope_issue_type issues.IssueTypes
 	String_edit_history *object_model.StringEditHistories
 }
@@ -32,20 +31,26 @@ func (
 func (
 	check_result_processor *checkResultProcessors) set_string_edit_history() {
 
-	replacement_string :=
+	if check_result_processor.in_scope_issue_type.Issue_replacement_parameters.Is_replaceable == "TRUE" {
+
+		replacement_string :=
+			check_result_processor.
+				in_scope_issue_type.
+				Get_replacement_string()
+
+		string_editor :=
+			string_editors.
+				Create(
+					check_result_processor.String_edit_history.GetCurrentString(),
+					check_result_processor.check_results,
+					replacement_string)
+
+		check_result_processor.String_edit_history =
+			string_editor.
+				Edit_string(check_result_processor.String_edit_history)
+	} else {
 		check_result_processor.
-			in_scope_issue_type.
-			Get_replacement_string()
-
-	string_editor :=
-		string_editors.
-			Create(
-				check_result_processor.String_edit_history.GetCurrentString(),
-				check_result_processor.check_results,
-				replacement_string)
-
-	check_result_processor.String_edit_history =
-		string_editor.
-			Edit_string(check_result_processor.String_edit_history)
-
+			String_edit_history.
+			Set_string_changes("Not Applicable", "Not Applicable")
+	}
 }

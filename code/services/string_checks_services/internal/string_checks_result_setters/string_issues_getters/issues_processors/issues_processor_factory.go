@@ -1,11 +1,11 @@
 package issues_processors
 
 import (
-	"syntactic_checker/code/object_model/service_parameters"
+	"syntactic_checker/code/object_model/interservice_i_o_objects/service_inputs"
 )
 
 func Create(
-	string_checks_parameter service_parameters.StringChecksParameters) *issuesProcessors {
+	string_checks_parameter service_inputs.StringChecksInputs) *issuesProcessors {
 
 	issues_processor :=
 		new(

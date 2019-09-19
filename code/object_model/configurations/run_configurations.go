@@ -1,4 +1,4 @@
-package object_model
+package configurations
 
 type RunConfigurations struct {
 	Configuration_cotext string

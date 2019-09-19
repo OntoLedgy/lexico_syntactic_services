@@ -4,7 +4,7 @@ import (
 	"database_manager/utils"
 	"regexp"
 	"string_editor/object_model"
-	"syntactic_checker/code/object_model/service_results"
+	"syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
 )
 
 type regexCheckers struct {

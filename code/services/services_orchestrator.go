@@ -1,22 +1,30 @@
 package services
 
 import (
-	log "logger/goinggo_services"
+	"fmt"
+	"logger/standard_global_logger"
 	"os"
+	"syntactic_checker/code/services/service_run_preparers"
 	"syntactic_checker/code/services/syntactic_checking_services"
 )
 
 func Orchestrate_services() {
 
-	logger :=
-		start_logger()
-
-	logger.Info(
-		"Starting syntactic checking service")
+	fmt.Print(
+		"Starting syntactic checking service\n")
 
 	configuration_file_path :=
 		os.
 			Args[1]
+
+	service_run_preparer :=
+		new(
+			service_run_preparers.ServiceRunPreparers)
+
+	service_run_data :=
+		service_run_preparer.
+			Get_service_run_data(
+				configuration_file_path)
 
 	syntactic_checking_service_factory :=
 		new(
@@ -26,41 +34,14 @@ func Orchestrate_services() {
 	syntactic_checking_service :=
 		syntactic_checking_service_factory.
 			Create(
-				configuration_file_path,
-				logger)
+				service_run_data)
 
 	syntactic_checking_service.
 		Run_syntactic_checking_service()
 
-	end_logger(
-		logger)
-
-}
-
-//TODO - Stage 3 - move this out to logger service
-
-func start_logger() *log.Logger {
-
-	logger :=
-		log.
-			Create_logger(
-				"./outputs/logs",
-				log.Info_Level)
-
-	logger.
-		Started()
-
-	return logger
-}
-
-func end_logger(
-	logger *log.Logger) {
-
-	logger.Info(
+	fmt.Print(
 		"Ending syntactic checking service")
 
-	logger.Completed()
-
-	logger.Stop()
-
+	standard_global_logger.
+		End_logger()
 }

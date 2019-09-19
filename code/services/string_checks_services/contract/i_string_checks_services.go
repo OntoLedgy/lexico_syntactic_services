@@ -1,16 +1,14 @@
 package contract
 
 import (
-	"syntactic_checker/code/object_model/fixes"
-	"syntactic_checker/code/object_model/issues"
-	"syntactic_checker/code/object_model/service_parameters"
-	"syntactic_checker/code/object_model/service_results"
+	"syntactic_checker/code/object_model/interservice_i_o_objects/service_inputs"
+	"syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
 )
 
 type IStringChecksServices interface {
 	Set_string_checks_result()
-	Get_string_checks_result() service_results.StringChecksResults
-	Get_string_checks_parameter() service_parameters.StringChecksParameters
-	Set_issues_result([]issues.Issues)
-	Set_string_fixes_result(fixes.Fixes)
+	Get_string_checks_result() *service_results.StringChecksResults
+	Get_string_checks_input() *service_inputs.StringChecksInputs
+	Set_string_issues_result(*service_results.IssueChecksResultLists)
+	Set_string_fixes_result(service_results.FixChecksResults)
 }

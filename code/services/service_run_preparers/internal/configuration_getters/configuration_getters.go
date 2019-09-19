@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	storage_json "storage/json"
 	"syntactic_checker/code/object_model"
-	configueation_object_model "syntactic_checker/code/services/syntactic_checking_services/internal/configuration_getters/object_model"
+	"syntactic_checker/code/object_model/configurations"
 )
 
 //TODO - Stage 3 - replace with configuration_getters management framework
@@ -12,9 +12,9 @@ import (
 type configurationGetters struct{}
 
 func (configuraiton_getter *configurationGetters) Get_configuration(
-	configuration_file_path string) *configueation_object_model.RunConfigurations {
+	configuration_file_path string) *configurations.RunConfigurations {
 
-	var run_configuration configueation_object_model.RunConfigurations
+	var run_configuration configurations.RunConfigurations
 
 	run_configuration_byte_array :=
 		storage_json.

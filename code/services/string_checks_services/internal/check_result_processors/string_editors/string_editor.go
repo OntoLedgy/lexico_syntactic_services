@@ -1,10 +1,10 @@
 package string_editors
 
 import (
-	"fmt"
+	"logger/standard_global_logger"
 	string_editor_object_model "string_editor/object_model"
 	"syntactic_checker/code/object_model"
-	"syntactic_checker/code/object_model/service_results"
+	"syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
 )
 
 //TODO - Stage 3 - replace with String Editor functionality
@@ -27,7 +27,7 @@ func (
 
 	string_to_edit = string_edit_history.GetCurrentString()
 
-	fmt.Printf(
+	standard_global_logger.Global_logger.Printf(
 		"\nString_for_repalcement: %s, replacement_char(s): [%s], replacement_indicies: %v",
 		string_to_edit,
 		string_value_editor.

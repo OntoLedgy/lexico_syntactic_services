@@ -1,7 +1,7 @@
 package string_editors
 
 import (
-	"syntactic_checker/code/object_model/service_results"
+	"syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
 )
 
 func Create(
