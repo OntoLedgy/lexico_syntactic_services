@@ -3,7 +3,7 @@ module github.com/OntoLedgy/syntactic_checker
 go 1.18
 
 require (
-	github.com/OntoLedgy/core_ontology v0.0.0-20211227224040-c2982233c081
+	github.com/OntoLedgy/core_ontology v0.0.0-20211227230952-c50024689bde
 	github.com/OntoLedgy/logging_services v0.0.0-20211227212339-f142c5eb1c3d
 	github.com/OntoLedgy/storage_interop_services v0.0.0-20211227224953-a276eeb0b814
 	github.com/OntoLedgy/string_editing_services v0.0.0-20211227223153-1a99e3bd76d1

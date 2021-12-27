@@ -1,6 +1,6 @@
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
-github.com/OntoLedgy/core_ontology v0.0.0-20211227224040-c2982233c081 h1:Rehwak2fGsbZq0cloUbmaQKZJNRBzEIYezc4iIkD6dM=
-github.com/OntoLedgy/core_ontology v0.0.0-20211227224040-c2982233c081/go.mod h1:tY0RQM6NvxC2gYlMDNOEwrsjtnJ0zW3DSkMXdrgv4pA=
+github.com/OntoLedgy/core_ontology v0.0.0-20211227230952-c50024689bde h1:H3/1ZQvEpAf4hRBQeZv9Q0YdUg3cbtcBvemp2iIfCtc=
+github.com/OntoLedgy/core_ontology v0.0.0-20211227230952-c50024689bde/go.mod h1:mCl/PzS9lUMUIzmGzSLz6cs+k5Noal0JYfZV9ovvq10=
 github.com/OntoLedgy/logging_services v0.0.0-20211227212339-f142c5eb1c3d h1:yZQ5urL9PJSfcWgDmDYUR25SWZ3L+k7OOUvGPgI/JXg=
 github.com/OntoLedgy/logging_services v0.0.0-20211227212339-f142c5eb1c3d/go.mod h1:MbUzkVZ69WDD3IgugFouAARtFq/wm02ps6w5WDUoAW8=
 github.com/OntoLedgy/storage_interop_services v0.0.0-20211227224953-a276eeb0b814 h1:Y4sGxhTkm2sWcn++d/R/2tQGv6FfPumSjss7l5KuFrA=
