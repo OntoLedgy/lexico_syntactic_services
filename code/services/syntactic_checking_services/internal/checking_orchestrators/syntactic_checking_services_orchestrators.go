@@ -1,9 +1,9 @@
 package checking_orchestrators
 
 import (
-	"syntactic_checker/code/services/syntactic_checking_services/contract"
-	"syntactic_checker/code/services/syntactic_checking_services/internal/checking_orchestrators/result_reporters"
-	"syntactic_checker/code/services/syntactic_checking_services/internal/checking_orchestrators/result_setters"
+	"github.com/OntoLedgy/syntactic_checker/code/services/syntactic_checking_services/contract"
+	"github.com/OntoLedgy/syntactic_checker/code/services/syntactic_checking_services/internal/checking_orchestrators/result_reporters"
+	"github.com/OntoLedgy/syntactic_checker/code/services/syntactic_checking_services/internal/checking_orchestrators/result_setters"
 )
 
 type SyntacticCheckingServiceOrchestrators struct {

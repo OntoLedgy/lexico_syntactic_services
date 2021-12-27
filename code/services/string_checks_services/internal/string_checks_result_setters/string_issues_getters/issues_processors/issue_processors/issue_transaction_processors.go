@@ -1,13 +1,13 @@
 package issue_processors
 
 import (
-	"logger/standard_global_logger"
-	"string_editor/object_model"
-	"syntactic_checker/code/object_model/identified_strings"
-	"syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
-	"syntactic_checker/code/object_model/issues"
-	"syntactic_checker/code/services/string_check_services/contract"
-	"syntactic_checker/code/services/string_checks_services/internal/check_result_processors"
+	"github.com/OntoLedgy/logging_services/standard_global_logger"
+	"github.com/OntoLedgy/string_editing_services/object_model"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/identified_strings"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/issues"
+	"github.com/OntoLedgy/syntactic_checker/code/services/string_check_services/contract"
+	"github.com/OntoLedgy/syntactic_checker/code/services/string_checks_services/internal/check_result_processors"
 )
 
 //TODO - split to separate type (issue_transaction_processor)

@@ -1,6 +1,6 @@
 package string_checks_result_setters
 
-import "syntactic_checker/code/services/string_checks_services/contract"
+import "github.com/OntoLedgy/syntactic_checker/code/services/string_checks_services/contract"
 
 func Create(string_checks_service contract.IStringChecksServices) *StringChecksResultSetters {
 

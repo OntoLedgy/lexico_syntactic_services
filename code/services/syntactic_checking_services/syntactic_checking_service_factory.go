@@ -1,9 +1,9 @@
 package syntactic_checking_services
 
 import (
-	"syntactic_checker/code/object_model/configurations"
-	"syntactic_checker/code/services/syntactic_checking_services/contract"
-	"syntactic_checker/code/services/syntactic_checking_services/internal"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/configurations"
+	"github.com/OntoLedgy/syntactic_checker/code/services/syntactic_checking_services/contract"
+	"github.com/OntoLedgy/syntactic_checker/code/services/syntactic_checking_services/internal"
 )
 
 type SyntacticCheckingServiceFactory struct{}

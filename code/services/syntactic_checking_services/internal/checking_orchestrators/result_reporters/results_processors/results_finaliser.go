@@ -1,7 +1,7 @@
 package results_processors
 
 import (
-	"syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
 )
 
 //TODO - Add type structure
@@ -71,7 +71,7 @@ func prepare_syntactic_check_fixes(
 			identified_string_fix_slice[0] = identified_string_checks_result.Identified_string.String_identified.String_value
 			identified_string_fix_slice[1] = identified_string_checks_result.String_checks_result.String_checks_fix.String_value_edit_history.Get_marked_string()
 			identified_string_fix_slice[2] = identified_string_checks_result.String_checks_result.String_checks_fix.String_value_edit_history.Get_modified_string()
-			identified_string_fix_slice[3] = identified_string_checks_result.String_checks_result.String_checks_fix.Object_uuid.String()
+			identified_string_fix_slice[3] = identified_string_checks_result.String_checks_result.String_checks_fix.Object_uuid.UUID.String()
 			identified_string_fix_slice[4] = identified_string_checks_result.Identified_string.String_identifier
 
 			fix_transaction_string = append(fix_transaction_string, identified_string_fix_slice)
@@ -94,7 +94,7 @@ func prepare_syntactic_check_issues(
 
 			identified_string_issue_slice := make([]string, 3)
 
-			identified_string_issue_slice[0] = identified_string_issue.String_checks_issue.Object_uuid.String()
+			identified_string_issue_slice[0] = identified_string_issue.String_checks_issue.Object_uuid.UUID.String()
 			identified_string_issue_slice[1] = identified_string_issue.String_checks_issue.Issue_type.Issue_type_uuid
 			identified_string_issue_slice[2] = identified_string_checks_result.Identified_string.String_identifier
 			syntactic_check_issues_set = append(syntactic_check_issues_set, identified_string_issue_slice)
@@ -118,25 +118,25 @@ func prepare_syntactic_checks_issue_parameters(
 		for _, identified_string_issue := range identified_string_checks_result.String_checks_result.String_checks_issues_list.String_checks_issue_results {
 
 			syntactic_check_issue_parameters_set = append_issue_parameter_slice(
-				identified_string_issue.String_checks_issue.Object_uuid.String(),
+				identified_string_issue.String_checks_issue.Object_uuid.UUID.String(),
 				"1",
 				identified_string_checks_result.Identified_string.String_identifier,
 				syntactic_check_issue_parameters_set)
 
 			syntactic_check_issue_parameters_set = append_issue_parameter_slice(
-				identified_string_issue.String_checks_issue.Object_uuid.String(),
+				identified_string_issue.String_checks_issue.Object_uuid.UUID.String(),
 				"2",
 				identified_string_checks_result.Identified_string.String_identified.String_value,
 				syntactic_check_issue_parameters_set)
 
 			syntactic_check_issue_parameters_set = append_issue_parameter_slice(
-				identified_string_issue.String_checks_issue.Object_uuid.String(),
+				identified_string_issue.String_checks_issue.Object_uuid.UUID.String(),
 				"3",
 				identified_string_issue.String_edit_history.Get_marked_string(),
 				syntactic_check_issue_parameters_set)
 
 			syntactic_check_issue_parameters_set = append_issue_parameter_slice(
-				identified_string_issue.String_checks_issue.Object_uuid.String(),
+				identified_string_issue.String_checks_issue.Object_uuid.UUID.String(),
 				"4",
 				identified_string_issue.String_edit_history.Get_modified_string(),
 				syntactic_check_issue_parameters_set)

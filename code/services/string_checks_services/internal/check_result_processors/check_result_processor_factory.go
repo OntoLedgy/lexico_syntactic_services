@@ -1,9 +1,9 @@
 package check_result_processors
 
 import (
-	"string_editor/object_model"
-	"syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
-	"syntactic_checker/code/object_model/issues"
+	"github.com/OntoLedgy/string_editing_services/object_model"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/issues"
 )
 
 func Create(

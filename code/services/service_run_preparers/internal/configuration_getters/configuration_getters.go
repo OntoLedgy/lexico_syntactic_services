@@ -2,9 +2,9 @@ package configuration_getters
 
 import (
 	"encoding/json"
-	storage_json "storage/json"
-	"syntactic_checker/code/object_model"
-	"syntactic_checker/code/object_model/configurations"
+	storage_json "github.com/OntoLedgy/storage_interop_services/json"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/configurations"
 )
 
 //TODO - Stage 3 - replace with configuration_getters management framework

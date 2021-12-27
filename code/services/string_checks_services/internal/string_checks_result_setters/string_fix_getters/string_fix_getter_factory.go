@@ -1,6 +1,6 @@
 package string_fix_getters
 
-import "syntactic_checker/code/object_model/interservice_i_o_objects/service_inputs"
+import "github.com/OntoLedgy/syntactic_checker/code/object_model/interservice_i_o_objects/service_inputs"
 
 type StringFixGetterFactory struct {
 }

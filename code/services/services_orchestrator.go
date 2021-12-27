@@ -2,20 +2,19 @@ package services
 
 import (
 	"fmt"
-	"logger/standard_global_logger"
-	"os"
-	"syntactic_checker/code/services/service_run_preparers"
-	"syntactic_checker/code/services/syntactic_checking_services"
+	"github.com/OntoLedgy/logging_services/standard_global_logger"
+	"github.com/OntoLedgy/syntactic_checker/code/services/service_run_preparers"
+	"github.com/OntoLedgy/syntactic_checker/code/services/syntactic_checking_services"
+	"github.com/urfave/cli"
 )
 
-func Orchestrate_services() {
+func Orchestrate_services(c *cli.Context) {
 
 	fmt.Print(
 		"Starting syntactic checking service\n")
 
 	configuration_file_path :=
-		os.
-			Args[1]
+		c.Args().Get(0)
 
 	service_run_preparer :=
 		new(

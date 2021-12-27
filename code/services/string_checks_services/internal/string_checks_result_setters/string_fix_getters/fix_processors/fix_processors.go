@@ -1,9 +1,9 @@
 package fix_processors
 
 import (
-	string_editor_object_model "string_editor/object_model"
-	"syntactic_checker/code/object_model/interservice_i_o_objects/service_inputs"
-	"syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
+	string_editor_object_model "github.com/OntoLedgy/string_editing_services/object_model"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/interservice_i_o_objects/service_inputs"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
 )
 
 type FixProcessors struct {

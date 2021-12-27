@@ -1,7 +1,7 @@
 package issues
 
 import (
-	"core_foundation/core_object_model"
+	"github.com/OntoLedgy/core_ontology/core_object_model"
 )
 
 type Issues struct {

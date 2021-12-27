@@ -1,10 +1,10 @@
 package issues_processors
 
 import (
-	"syntactic_checker/code/object_model/interservice_i_o_objects/service_inputs"
-	"syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
-	"syntactic_checker/code/object_model/issues"
-	"syntactic_checker/code/services/string_checks_services/internal/string_checks_result_setters/string_issues_getters/issues_processors/issue_processors"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/interservice_i_o_objects/service_inputs"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/issues"
+	"github.com/OntoLedgy/syntactic_checker/code/services/string_checks_services/internal/string_checks_result_setters/string_issues_getters/issues_processors/issue_processors"
 )
 
 type issuesProcessors struct {

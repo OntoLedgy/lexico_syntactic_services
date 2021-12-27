@@ -1,11 +1,11 @@
 package identified_string_checks_processors
 
 import (
-	"syntactic_checker/code/object_model/identified_strings"
-	"syntactic_checker/code/object_model/interservice_i_o_objects/service_inputs"
-	"syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
-	"syntactic_checker/code/object_model/issues"
-	"syntactic_checker/code/services/string_checks_services"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/identified_strings"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/interservice_i_o_objects/service_inputs"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/issues"
+	"github.com/OntoLedgy/syntactic_checker/code/services/string_checks_services"
 )
 
 type identifiedStringChecksProcessor struct {

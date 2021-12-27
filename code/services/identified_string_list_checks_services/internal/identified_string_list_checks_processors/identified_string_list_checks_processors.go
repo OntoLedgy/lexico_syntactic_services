@@ -2,10 +2,10 @@ package identified_string_list_checks_processors
 
 import (
 	//"fmt"
-	"logger/standard_global_logger"
-	"syntactic_checker/code/object_model/identified_strings"
-	"syntactic_checker/code/services/identified_string_list_checks_services/contract"
-	"syntactic_checker/code/services/identified_string_list_checks_services/internal/identified_string_list_checks_processors/identified_string_checks_processors"
+	"github.com/OntoLedgy/logging_services/standard_global_logger"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/identified_strings"
+	"github.com/OntoLedgy/syntactic_checker/code/services/identified_string_list_checks_services/contract"
+	"github.com/OntoLedgy/syntactic_checker/code/services/identified_string_list_checks_services/internal/identified_string_list_checks_processors/identified_string_checks_processors"
 )
 
 type IdentifiedStringListChecksProcessors struct {

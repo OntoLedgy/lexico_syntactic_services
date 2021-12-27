@@ -1,10 +1,10 @@
 package string_checks_result_setters
 
 import (
-	"syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
-	"syntactic_checker/code/services/string_checks_services/contract"
-	"syntactic_checker/code/services/string_checks_services/internal/string_checks_result_setters/string_fix_getters"
-	"syntactic_checker/code/services/string_checks_services/internal/string_checks_result_setters/string_issues_getters"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
+	"github.com/OntoLedgy/syntactic_checker/code/services/string_checks_services/contract"
+	"github.com/OntoLedgy/syntactic_checker/code/services/string_checks_services/internal/string_checks_result_setters/string_fix_getters"
+	"github.com/OntoLedgy/syntactic_checker/code/services/string_checks_services/internal/string_checks_result_setters/string_issues_getters"
 )
 
 type StringChecksResultSetters struct {

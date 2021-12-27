@@ -1,6 +1,6 @@
 package regex_check_result_getter
 
-import "syntactic_checker/code/object_model/identified_strings"
+import "github.com/OntoLedgy/syntactic_checker/code/object_model/identified_strings"
 
 func Create(
 	check_regex string,

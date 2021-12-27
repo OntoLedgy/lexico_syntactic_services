@@ -1,8 +1,8 @@
 package result_reporters
 
 import (
-	"syntactic_checker/code/services/syntactic_checking_services/contract"
-	"syntactic_checker/code/services/syntactic_checking_services/internal/checking_orchestrators/result_reporters/results_processors"
+	"github.com/OntoLedgy/syntactic_checker/code/services/syntactic_checking_services/contract"
+	"github.com/OntoLedgy/syntactic_checker/code/services/syntactic_checking_services/internal/checking_orchestrators/result_reporters/results_processors"
 )
 
 type SyntacticCheckingResultReporters struct {

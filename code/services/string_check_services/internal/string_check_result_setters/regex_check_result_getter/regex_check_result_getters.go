@@ -1,10 +1,10 @@
 package regex_check_result_getter
 
 import (
-	"logger/standard_global_logger"
-	"syntactic_checker/code/object_model/identified_strings"
-	"syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
-	"syntactic_checker/code/services/string_check_services/internal/regex_checkers"
+	"github.com/OntoLedgy/logging_services/standard_global_logger"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/identified_strings"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
+	"github.com/OntoLedgy/syntactic_checker/code/services/string_check_services/internal/regex_checkers"
 )
 
 type RegexCheckResultGetter struct {

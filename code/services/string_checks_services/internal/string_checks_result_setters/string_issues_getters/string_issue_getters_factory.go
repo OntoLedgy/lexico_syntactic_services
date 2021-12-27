@@ -1,7 +1,7 @@
 package string_issues_getters
 
 import (
-	"syntactic_checker/code/object_model/interservice_i_o_objects/service_inputs"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/interservice_i_o_objects/service_inputs"
 )
 
 type StringIssuesGetterFactory struct{}

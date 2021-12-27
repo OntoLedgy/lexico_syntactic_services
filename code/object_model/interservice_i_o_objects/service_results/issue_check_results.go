@@ -1,8 +1,8 @@
 package service_results
 
 import (
-	"string_editor/object_model"
-	"syntactic_checker/code/object_model/issues"
+	"github.com/OntoLedgy/string_editing_services/object_model"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/issues"
 )
 
 type IssueCheckResults struct {

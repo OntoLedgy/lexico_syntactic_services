@@ -1,6 +1,6 @@
 package configurations
 
-import "syntactic_checker/code/object_model/issues"
+import "github.com/OntoLedgy/syntactic_checker/code/object_model/issues"
 
 type CheckConfigurations struct {
 	Checks_required      bool                `json:"csv_checks_required"`

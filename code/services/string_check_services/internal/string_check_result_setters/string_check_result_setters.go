@@ -2,9 +2,9 @@ package string_check_result_setters
 
 import (
 	//"fmt"
-	"logger/standard_global_logger"
-	"syntactic_checker/code/services/string_check_services/contract"
-	"syntactic_checker/code/services/string_check_services/internal/string_check_result_setters/regex_check_result_getter"
+	"github.com/OntoLedgy/logging_services/standard_global_logger"
+	"github.com/OntoLedgy/syntactic_checker/code/services/string_check_services/contract"
+	"github.com/OntoLedgy/syntactic_checker/code/services/string_check_services/internal/string_check_result_setters/regex_check_result_getter"
 )
 
 type StringCheckResultSetters struct {

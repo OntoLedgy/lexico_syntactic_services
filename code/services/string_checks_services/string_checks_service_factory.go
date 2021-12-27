@@ -1,11 +1,11 @@
 package string_checks_services
 
 import (
-	"syntactic_checker/code/object_model/interservice_i_o_objects"
-	"syntactic_checker/code/object_model/interservice_i_o_objects/service_inputs"
-	"syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
-	"syntactic_checker/code/services/string_checks_services/contract"
-	"syntactic_checker/code/services/string_checks_services/internal"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/interservice_i_o_objects"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/interservice_i_o_objects/service_inputs"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
+	"github.com/OntoLedgy/syntactic_checker/code/services/string_checks_services/contract"
+	"github.com/OntoLedgy/syntactic_checker/code/services/string_checks_services/internal"
 )
 
 type StringChecksServiceFactory struct{}

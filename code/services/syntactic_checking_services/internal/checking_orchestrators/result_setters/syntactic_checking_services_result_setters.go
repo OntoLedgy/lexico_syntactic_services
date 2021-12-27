@@ -1,10 +1,10 @@
 package result_setters
 
 import (
-	"syntactic_checker/code/object_model/interservice_i_o_objects/service_inputs"
-	"syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
-	"syntactic_checker/code/services/identified_string_list_checks_services"
-	"syntactic_checker/code/services/syntactic_checking_services/contract"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/interservice_i_o_objects/service_inputs"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
+	"github.com/OntoLedgy/syntactic_checker/code/services/identified_string_list_checks_services"
+	"github.com/OntoLedgy/syntactic_checker/code/services/syntactic_checking_services/contract"
 )
 
 //TODO - Add factory

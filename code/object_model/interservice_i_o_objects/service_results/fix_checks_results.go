@@ -1,8 +1,8 @@
 package service_results
 
 import (
-	"core_foundation/core_object_model"
-	"string_editor/object_model"
+	"github.com/OntoLedgy/core_ontology/core_object_model"
+	"github.com/OntoLedgy/string_editing_services/object_model"
 )
 
 type FixChecksResults struct {

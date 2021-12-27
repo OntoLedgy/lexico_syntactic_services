@@ -1,13 +1,23 @@
 package main
 
 import (
-	"syntactic_checker/code/services"
+	"fmt"
+	"github.com/OntoLedgy/syntactic_checker/code/infrastructure/cli"
 )
 
-//TODO - Stage 2 - add commandline tools
+var (
+	// These fields are populated by govvv
+	Version    string
+	BuildDate  string
+	GitCommit  string
+	GitBranch  string
+	GitState   string
+	GitSummary string
+)
 
 func main() {
 
-	services.Orchestrate_services()
+	fmt.Printf("Starting Syntactic Checker Version %s-%s-%s\n", Version, GitCommit, BuildDate)
+	cli.Initialise()
 
 }

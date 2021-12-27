@@ -1,10 +1,10 @@
 package regex_checkers
 
 import (
-	"database_manager/utils"
+	"github.com/OntoLedgy/storage_interop_services/databases/utils"
+	"github.com/OntoLedgy/string_editing_services/object_model"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
 	"regexp"
-	"string_editor/object_model"
-	"syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
 )
 
 type regexCheckers struct {
@@ -40,7 +40,7 @@ func (
 				"")
 
 		regex_check_result := service_results.RegexCheckResults{
-			check_uuid.String(),
+			check_uuid.UUID.String(),
 			string_value_original_string,
 			regex_match_indices,
 		}

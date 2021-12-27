@@ -1,11 +1,11 @@
 package service_run_preparers
 
 import (
-	"logger/standard_global_logger"
-	"syntactic_checker/code/object_model/configurations"
-	"syntactic_checker/code/object_model/identified_strings"
-	"syntactic_checker/code/services/service_run_preparers/internal/configuration_getters"
-	"syntactic_checker/code/services/service_run_preparers/internal/configuration_getters/identified_string_list_preparers"
+	"github.com/OntoLedgy/logging_services/standard_global_logger"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/configurations"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/identified_strings"
+	"github.com/OntoLedgy/syntactic_checker/code/services/service_run_preparers/internal/configuration_getters"
+	"github.com/OntoLedgy/syntactic_checker/code/services/service_run_preparers/internal/configuration_getters/identified_string_list_preparers"
 )
 
 type ServiceRunPreparers struct {

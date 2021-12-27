@@ -1,7 +1,7 @@
 package service_results
 
 import (
-	"syntactic_checker/code/object_model/identified_strings"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/identified_strings"
 )
 
 type IdentifiedStringChecksResults struct {

@@ -2,10 +2,11 @@ package identified_string_list_preparers
 
 import (
 	//"fmt"
-	"logger/standard_global_logger"
-	"storage/csv"
-	storage_slices "storage/slices"
-	"syntactic_checker/code/object_model/identified_strings"
+	"github.com/OntoLedgy/logging_services/standard_global_logger"
+	storage "github.com/OntoLedgy/storage_interop_services/csv"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/identified_strings"
+
+	storage_slices "github.com/OntoLedgy/storage_interop_services/slices"
 )
 
 type identifiedStringListPreparers struct {

@@ -1,10 +1,10 @@
 package string_editors
 
 import (
-	"logger/standard_global_logger"
+	"github.com/OntoLedgy/logging_services/standard_global_logger"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
 	string_editor_object_model "string_editor/object_model"
-	"syntactic_checker/code/object_model"
-	"syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
 )
 
 //TODO - Stage 3 - replace with String Editor functionality

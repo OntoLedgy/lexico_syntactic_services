@@ -1,7 +1,7 @@
 package checking_orchestrators
 
 import (
-	"syntactic_checker/code/services/syntactic_checking_services/contract"
+	"github.com/OntoLedgy/syntactic_checker/code/services/syntactic_checking_services/contract"
 )
 
 type SyntacticCheckingServiceOrchestratorFactory struct {

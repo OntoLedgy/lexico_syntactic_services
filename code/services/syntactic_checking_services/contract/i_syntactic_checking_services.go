@@ -1,9 +1,9 @@
 package contract
 
 import (
-	"syntactic_checker/code/object_model/configurations"
-	"syntactic_checker/code/object_model/identified_strings"
-	"syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/configurations"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/identified_strings"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
 )
 
 type ISyntacticCheckingServices interface {

@@ -1,7 +1,7 @@
 package string_editors
 
 import (
-	"syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
+	"github.com/OntoLedgy/syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
 )
 
 func Create(

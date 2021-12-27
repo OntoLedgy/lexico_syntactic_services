@@ -1,8 +1,8 @@
 package result_reporters
 
 import (
-	"storage/csv"
-	storage_files "storage/files"
+	"github.com/OntoLedgy/storage_interop_services/csv"
+	storage_files "github.com/OntoLedgy/storage_interop_services/files"
 )
 
 //TODO - Add type structure
