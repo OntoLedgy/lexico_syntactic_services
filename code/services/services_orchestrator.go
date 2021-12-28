@@ -8,13 +8,13 @@ import (
 	"github.com/urfave/cli"
 )
 
-func Orchestrate_services(c *cli.Context) {
+func Orchestrate_services(command_line_argument_context *cli.Context) {
 
 	fmt.Print(
 		"Starting syntactic checking service\n")
 
 	configuration_file_path :=
-		c.Args().Get(0)
+		command_line_argument_context.Args().Get(0)
 
 	service_run_preparer :=
 		new(
