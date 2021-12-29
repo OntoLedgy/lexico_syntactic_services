@@ -1,7 +1,8 @@
 package identified_string_list_preparers
 
 import (
-	storage_slices "github.com/OntoLedgy/storage_interop_services/code/services/in_memory/slices"
+	"github.com/OntoLedgy/storage_interop_services/code/services/documents/csv"
+	"github.com/OntoLedgy/storage_interop_services/code/services/in_memory/slices"
 	//"fmt"
 	"github.com/OntoLedgy/syntactic_checker/code/infrastructure/logging"
 	"github.com/OntoLedgy/syntactic_checker/code/object_model/identified_strings"
@@ -53,18 +54,18 @@ func prepare_identified_string_data(
 	var identified_string_list identified_strings.IdentifiedStringLists
 
 	identified_string_list_raw :=
-		storage.Read_csv_data(
+		csv.Read_csv_data(
 			csv_filename, "")
 
 	logger.Printf(
 		"Preparing extracted data for checks (converting to interface)")
 
 	identified_string_list_interface :=
-		storage_slices.Convert_2d_string_to_interface(
+		slices.Convert_2d_string_to_interface(
 			identified_string_list_raw)
 
 	identified_string_list_with_headers :=
-		storage.Get_csv_with_headers(
+		csv.Get_csv_with_headers(
 			identified_string_list_interface)
 
 	identified_string_list.Identified_string_list =
