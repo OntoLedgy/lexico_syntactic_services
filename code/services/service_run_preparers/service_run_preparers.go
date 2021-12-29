@@ -1,7 +1,7 @@
 package service_run_preparers
 
 import (
-	"github.com/OntoLedgy/logging_services/standard_global_logger"
+	"github.com/OntoLedgy/syntactic_checker/code/infrastructure/logging"
 	"github.com/OntoLedgy/syntactic_checker/code/object_model/configurations"
 	"github.com/OntoLedgy/syntactic_checker/code/object_model/identified_strings"
 	"github.com/OntoLedgy/syntactic_checker/code/services/service_run_preparers/internal/configuration_getters"
@@ -26,9 +26,8 @@ func (
 			get_current_run_configuration(
 				configuration_file_path)
 
-	standard_global_logger.
-		Start_logger(run_configuration.Output_configuration.Output_log_folder_absolute_path,
-			"go_syntactic_checker")
+	logging.Start_logging(run_configuration.Output_configuration.Output_log_folder_absolute_path,
+		"go_syntactic_checker")
 
 	identified_string_list :=
 		service_run_preparer.

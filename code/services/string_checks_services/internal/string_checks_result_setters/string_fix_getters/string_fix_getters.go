@@ -1,11 +1,10 @@
 package string_fix_getters
 
 import (
+	"github.com/OntoLedgy/syntactic_checker/code/infrastructure/logging"
 	"github.com/OntoLedgy/syntactic_checker/code/object_model/interservice_i_o_objects/service_inputs"
 	"github.com/OntoLedgy/syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
 	"github.com/OntoLedgy/syntactic_checker/code/services/string_checks_services/internal/string_checks_result_setters/string_fix_getters/fix_processors"
-	//"fmt"
-	"github.com/OntoLedgy/logging_services/standard_global_logger"
 )
 
 type StringFixGetters struct {
@@ -15,7 +14,7 @@ type StringFixGetters struct {
 
 func (
 	string_fix_getter *StringFixGetters) Get_string_check_fix() service_results.FixChecksResults {
-	logger := standard_global_logger.Global_logger
+	logger := logging.GlobalLogger
 
 	logger.Printf(
 		"\nProcessing fixes for %s...\n",

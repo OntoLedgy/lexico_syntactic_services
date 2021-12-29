@@ -1,7 +1,7 @@
 package internal
 
 import (
-	"github.com/OntoLedgy/logging_services/standard_global_logger"
+	"github.com/OntoLedgy/syntactic_checker/code/infrastructure/logging"
 	"github.com/OntoLedgy/syntactic_checker/code/object_model/identified_strings"
 	"github.com/OntoLedgy/syntactic_checker/code/object_model/interservice_i_o_objects"
 	"github.com/OntoLedgy/syntactic_checker/code/object_model/interservice_i_o_objects/service_inputs"
@@ -16,7 +16,7 @@ type IdentifiedStringListChecksServices struct {
 func (
 	identified_string_list_checks_service *IdentifiedStringListChecksServices) Set_syntactic_checks_results() {
 
-	standard_global_logger.Global_logger.Println(
+	logging.GlobalLogger.Println(
 		"\nRunning identified string list checks service...")
 
 	identified_string_list_checks_processor :=

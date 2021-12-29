@@ -1,11 +1,10 @@
-package testing
+package main
 
 import (
 	"fmt"
 	"runtime"
 	"testing"
 
-	"github.com/OntoLedgy/logging_services/standard_global_logger"
 	"github.com/OntoLedgy/syntactic_checker/code/services/service_run_preparers"
 	"github.com/OntoLedgy/syntactic_checker/code/services/syntactic_checking_services"
 )
@@ -46,8 +45,7 @@ func TestStandard(t *testing.T) {
 	fmt.Print(
 		"Ending syntactic checking service")
 
-	standard_global_logger.
-		End_logger()
+	//logging.End_logger()
 
 	trace()
 

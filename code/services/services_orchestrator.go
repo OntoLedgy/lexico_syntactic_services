@@ -2,7 +2,6 @@ package services
 
 import (
 	"fmt"
-	"github.com/OntoLedgy/logging_services/standard_global_logger"
 	"github.com/OntoLedgy/syntactic_checker/code/services/service_run_preparers"
 	"github.com/OntoLedgy/syntactic_checker/code/services/syntactic_checking_services"
 	"github.com/urfave/cli"
@@ -41,6 +40,5 @@ func Orchestrate_services(command_line_argument_context *cli.Context) {
 	fmt.Print(
 		"Ending syntactic checking service")
 
-	standard_global_logger.
-		End_logger()
+	//standard_global_logger.End_logger()
 }

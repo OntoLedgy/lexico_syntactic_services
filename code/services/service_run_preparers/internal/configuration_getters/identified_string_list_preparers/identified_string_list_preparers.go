@@ -1,9 +1,9 @@
 package identified_string_list_preparers
 
 import (
-	//"fmt"
-	"github.com/OntoLedgy/logging_services/standard_global_logger"
 	storage "github.com/OntoLedgy/storage_interop_services/csv"
+	//"fmt"
+	"github.com/OntoLedgy/syntactic_checker/code/infrastructure/logging"
 	"github.com/OntoLedgy/syntactic_checker/code/object_model/identified_strings"
 
 	storage_slices "github.com/OntoLedgy/storage_interop_services/slices"
@@ -45,10 +45,12 @@ func prepare_identified_string_data(
 	csv_filename string,
 	identity_colunmn_name string,
 	string_value_column_name string) identified_strings.IdentifiedStringLists {
-	logger := standard_global_logger.Global_logger
 
-	standard_global_logger.Global_logger.Printf(
-		"\nReading CSV Data..")
+	logger :=
+		logging.GlobalLogger
+
+	logger.
+		Printf("\nReading CSV Data..")
 
 	var identified_string_list identified_strings.IdentifiedStringLists
 

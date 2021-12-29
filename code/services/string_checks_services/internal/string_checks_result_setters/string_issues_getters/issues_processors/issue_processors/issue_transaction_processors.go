@@ -1,8 +1,8 @@
 package issue_processors
 
 import (
-	"github.com/OntoLedgy/logging_services/standard_global_logger"
 	"github.com/OntoLedgy/string_editing_services/object_model"
+	"github.com/OntoLedgy/syntactic_checker/code/infrastructure/logging"
 	"github.com/OntoLedgy/syntactic_checker/code/object_model/identified_strings"
 	"github.com/OntoLedgy/syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
 	"github.com/OntoLedgy/syntactic_checker/code/object_model/issues"
@@ -28,7 +28,7 @@ func (
 
 	if issues_found {
 
-		standard_global_logger.Global_logger.Printf(
+		logging.GlobalLogger.Printf(
 			"\nprocessing issues results...\n")
 
 		string_check_issue_result :=

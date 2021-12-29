@@ -1,8 +1,7 @@
 package string_check_result_setters
 
 import (
-	//"fmt"
-	"github.com/OntoLedgy/logging_services/standard_global_logger"
+	"github.com/OntoLedgy/syntactic_checker/code/infrastructure/logging"
 	"github.com/OntoLedgy/syntactic_checker/code/services/string_check_services/contract"
 	"github.com/OntoLedgy/syntactic_checker/code/services/string_check_services/internal/string_check_result_setters/regex_check_result_getter"
 )
@@ -44,7 +43,7 @@ func (
 				string_check_result)
 
 	} else {
-		logger := standard_global_logger.Global_logger
+		logger := logging.GlobalLogger
 
 		logger.Printf("running non-regex-re2 checks: %s \n",
 			string_check_parameter.

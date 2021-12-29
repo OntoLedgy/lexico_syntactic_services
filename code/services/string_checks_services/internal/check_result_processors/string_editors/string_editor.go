@@ -1,8 +1,8 @@
 package string_editors
 
 import (
-	"github.com/OntoLedgy/logging_services/standard_global_logger"
 	string_editor_object_model "github.com/OntoLedgy/string_editing_services/object_model"
+	"github.com/OntoLedgy/syntactic_checker/code/infrastructure/logging"
 	"github.com/OntoLedgy/syntactic_checker/code/object_model"
 	"github.com/OntoLedgy/syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
 )
@@ -27,7 +27,7 @@ func (
 
 	string_to_edit = string_edit_history.GetCurrentString()
 
-	standard_global_logger.Global_logger.Printf(
+	logging.GlobalLogger.Printf(
 		"\nString_for_repalcement: %s, replacement_char(s): [%s], replacement_indicies: %v",
 		string_to_edit,
 		string_value_editor.

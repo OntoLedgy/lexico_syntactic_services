@@ -1,10 +1,10 @@
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/OntoLedgy/core_ontology v0.0.0-20211228120730-ce35b73e7297 h1:wpZgMkm/iwDW7O6WyjxM9I5PglFiMRctLVbM7D1Cog0=
 github.com/OntoLedgy/core_ontology v0.0.0-20211228120730-ce35b73e7297/go.mod h1:mCl/PzS9lUMUIzmGzSLz6cs+k5Noal0JYfZV9ovvq10=
-github.com/OntoLedgy/logging_services v0.0.0-20211227212339-f142c5eb1c3d h1:yZQ5urL9PJSfcWgDmDYUR25SWZ3L+k7OOUvGPgI/JXg=
-github.com/OntoLedgy/logging_services v0.0.0-20211227212339-f142c5eb1c3d/go.mod h1:MbUzkVZ69WDD3IgugFouAARtFq/wm02ps6w5WDUoAW8=
-github.com/OntoLedgy/storage_interop_services v0.0.1 h1:YyVZupaQRAHo4HdzzPyvvIAVSZvUHsOxyVs76a4zsP0=
-github.com/OntoLedgy/storage_interop_services v0.0.1/go.mod h1:qTkXy8f/KOScc7XyijinIGemn/fDBS+FJTqRGgaFL+c=
+github.com/OntoLedgy/logging_services v0.0.7 h1:SX6zpju3XovJdgrKpeS8iF9KdbhuI9ULU7ghGEncdYo=
+github.com/OntoLedgy/logging_services v0.0.7/go.mod h1:C3JPhax1uFIpPbzKaWcyoYMsYOVe01StlxBxHuCTmRc=
+github.com/OntoLedgy/storage_interop_services v0.0.6 h1:ZxV9CzOWQcWElw0DJcAatY2e+t/bBaeQisWNG8kjD1U=
+github.com/OntoLedgy/storage_interop_services v0.0.6/go.mod h1:HVrJcErBg914B3k7IzJab/dTC61rb8Em48EczkU2QM0=
 github.com/OntoLedgy/string_editing_services v0.0.1 h1:eZPK2koO4FbPJfnvI5EvovNWv/GeIG8X96YYhF/YCvQ=
 github.com/OntoLedgy/string_editing_services v0.0.1/go.mod h1:i2o3Mxt95ofgrIzaqV/ztcmZX+OZgVYHvJ80pEg5Qlk=
 github.com/TomOnTime/utfutil v0.0.0-20210710122150-437f72b26edf h1:+GdVyvpzTy3UFAS1+hbTqm9Mk0U1Xrocm28s/E2GWz0=

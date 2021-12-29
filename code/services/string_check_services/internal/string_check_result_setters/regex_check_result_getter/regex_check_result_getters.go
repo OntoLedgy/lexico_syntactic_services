@@ -1,7 +1,7 @@
 package regex_check_result_getter
 
 import (
-	"github.com/OntoLedgy/logging_services/standard_global_logger"
+	"github.com/OntoLedgy/syntactic_checker/code/infrastructure/logging"
 	"github.com/OntoLedgy/syntactic_checker/code/object_model/identified_strings"
 	"github.com/OntoLedgy/syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
 	"github.com/OntoLedgy/syntactic_checker/code/services/string_check_services/internal/regex_checkers"
@@ -27,8 +27,7 @@ func (
 		return string_check_result
 
 	} else {
-		standard_global_logger.
-			Global_logger.Printf(
+		logging.GlobalLogger.Printf(
 			"\nWARNING: Identified_string value :[%s] is null\n",
 			regex_checks_result_getter.string_to_check)
 

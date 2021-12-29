@@ -1,7 +1,7 @@
 package internal
 
 import (
-	"github.com/OntoLedgy/logging_services/standard_global_logger"
+	"github.com/OntoLedgy/syntactic_checker/code/infrastructure/logging"
 	"github.com/OntoLedgy/syntactic_checker/code/object_model/configurations"
 	"github.com/OntoLedgy/syntactic_checker/code/object_model/identified_strings"
 	"github.com/OntoLedgy/syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
@@ -15,8 +15,7 @@ type SyntacticCheckingServices struct {
 func (
 	syntactic_checking_service *SyntacticCheckingServices) Run_syntactic_checking_service() {
 
-	standard_global_logger.
-		Global_logger.
+	logging.GlobalLogger.
 		Print(
 			"Starting syntactic checking service")
 
@@ -33,8 +32,9 @@ func (
 	syntactic_checking_service_orchestrator.
 		Orchestrate_syntactic_checking()
 
-	standard_global_logger.Global_logger.Print(
-		"Exiting syntactic checking service")
+	logging.GlobalLogger.
+		Print(
+			"Exiting syntactic checking service")
 }
 
 func (
