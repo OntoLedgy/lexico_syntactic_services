@@ -1,8 +1,7 @@
 package result_reporters
 
 import (
-	"github.com/OntoLedgy/storage_interop_services/csv"
-	storage_files "github.com/OntoLedgy/storage_interop_services/files"
+	storage_files "github.com/OntoLedgy/storage_interop_services/code/services/disk/files"
 )
 
 //TODO - Add type structure
@@ -65,11 +64,10 @@ func write_check_results(
 	output_csv_filename string,
 	output_header []string) {
 
-	storage_files.
-		Delete_file_it_already_exists(
-			output_csv_filename)
+	storage_files.Delete_file_it_already_exists(
+		output_csv_filename)
 
-	storage.
+	storage.storage.
 		Write_slice_with_header_to_csv(
 			issue_transactions,
 			output_header,

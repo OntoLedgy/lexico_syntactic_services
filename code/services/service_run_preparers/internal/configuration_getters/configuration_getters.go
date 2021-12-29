@@ -2,7 +2,7 @@ package configuration_getters
 
 import (
 	"encoding/json"
-	storage_json "github.com/OntoLedgy/storage_interop_services/json"
+	storage_json "github.com/OntoLedgy/storage_interop_services/code/services/documents/json"
 	"github.com/OntoLedgy/syntactic_checker/code/object_model"
 	"github.com/OntoLedgy/syntactic_checker/code/object_model/configurations"
 )
@@ -17,9 +17,8 @@ func (configuraiton_getter *configurationGetters) Get_configuration(
 	var run_configuration configurations.RunConfigurations
 
 	run_configuration_byte_array :=
-		storage_json.
-			Read_json_to_byte_array(
-				configuration_file_path)
+		storage_json.Read_json_to_byte_array(
+			configuration_file_path)
 
 	json.Unmarshal(
 		run_configuration_byte_array,

@@ -1,7 +1,7 @@
 package regex_checkers
 
 import (
-	"github.com/OntoLedgy/storage_interop_services/databases/utils"
+	"github.com/OntoLedgy/storage_interop_services/code/services/databases/utils"
 	"github.com/OntoLedgy/string_editing_services/object_model"
 	"github.com/OntoLedgy/syntactic_checker/code/object_model/interservice_i_o_objects/service_results"
 	"regexp"
