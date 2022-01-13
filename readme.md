@@ -17,14 +17,21 @@ performed within a cell they can cover the entire cell or just a part of
 it. The full check type classification is as follows (this is a partial
 taxonomy illustrating the broad structure):
 
-![](code/object_model/2804908033.png)
+![](documentation/data_models/check_types.png)
 
 ## String Check Patterns
 
-these can be defined as fixed strings, regexs or antlr grammar rules.
+These can be defined as fixed strings, regexs or ANTLR grammar rules.
 
 # Fixes
 
 The syntactic checker can also implement fixes to the checked data.
 
-for doing this, it uses the [string editor services](https://github.com/OntoLedgy/string_editing_services).
+For doing this, it uses the [string editor services](https://github.com/OntoLedgy/string_editing_services).
+
+# Reports
+
+TBD
+
+# Detailed Design
+
