@@ -1,6 +1,6 @@
 # Syntactic Checker
 
-##Introduction
+## Introduction
 
 These services are a component of the go_bCLEARer toolkit. They provide
 syntactic analysis of a set of strings in a dataset (e.g. a column). The
