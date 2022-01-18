@@ -1,13 +1,15 @@
-# Introduction
+# Syntactic Checker
+
+## Introduction
 
 These services are a component of the go_bCLEARer toolkit. They provide
 syntactic analysis of a set of strings in a dataset (e.g. a column). The
 syntactic analysis is one of the first steps in the bCLEARer evolve
 stage for string-based columns.
 
-# Design
+## Conceptual Design
 
-## Syntactic Check Types
+### Syntactic Check Types
 
 The syntactic checker performs a series of checks based on the
 configuration file. These checks can be performed across the entire
@@ -19,19 +21,20 @@ taxonomy illustrating the broad structure):
 
 ![](documentation/data_models/check_types.png)
 
-## String Check Patterns
+### String Check Patterns
 
 These can be defined as fixed strings, regexs or ANTLR grammar rules.
 
-# Fixes
+### Fixes
 
 The syntactic checker can also implement fixes to the checked data.
 
 For doing this, it uses the [string editor services](https://github.com/OntoLedgy/string_editing_services).
 
-# Reports
+### Reports
 
 TBD
 
-# Detailed Design
+## Process Design
 
+TBD
