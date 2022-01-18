@@ -5,7 +5,7 @@ go 1.18
 require (
 	github.com/OntoLedgy/core_ontology v0.0.8
 	github.com/OntoLedgy/logging_services v0.0.7
-	github.com/OntoLedgy/storage_interop_services v0.0.12
+	github.com/OntoLedgy/storage_interop_services v0.0.14
 	github.com/OntoLedgy/string_editing_services v0.0.3
 	github.com/urfave/cli v1.22.5
 )

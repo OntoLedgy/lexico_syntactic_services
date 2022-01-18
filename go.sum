@@ -3,8 +3,8 @@ github.com/OntoLedgy/core_ontology v0.0.8 h1:pgC5JUjNWgB4AWf3WMR+D5PSciBtMidRynI
 github.com/OntoLedgy/core_ontology v0.0.8/go.mod h1:3uR3pdbiFodec/1MLv8lGQcQuVHVH0alidgcCoKGDvU=
 github.com/OntoLedgy/logging_services v0.0.7 h1:SX6zpju3XovJdgrKpeS8iF9KdbhuI9ULU7ghGEncdYo=
 github.com/OntoLedgy/logging_services v0.0.7/go.mod h1:C3JPhax1uFIpPbzKaWcyoYMsYOVe01StlxBxHuCTmRc=
-github.com/OntoLedgy/storage_interop_services v0.0.12 h1:RmFqORU0VUIbE0BC1kUIbNLszXHwVfVVq/OZdfQNRLs=
-github.com/OntoLedgy/storage_interop_services v0.0.12/go.mod h1:HVrJcErBg914B3k7IzJab/dTC61rb8Em48EczkU2QM0=
+github.com/OntoLedgy/storage_interop_services v0.0.14 h1:oDyAbSrSaSWKxpfOcHc3rYNMuFGQdlX7t86Bh2kVpq8=
+github.com/OntoLedgy/storage_interop_services v0.0.14/go.mod h1:MPWmQj8537jwM6T9JdYPLG5TZ/dWmjkglciyjqetgZw=
 github.com/OntoLedgy/string_editing_services v0.0.3 h1:uoxRMuYkkzsD4sFhhRCOqd9XYTdMswWyt0kWNdIuQyE=
 github.com/OntoLedgy/string_editing_services v0.0.3/go.mod h1:i2o3Mxt95ofgrIzaqV/ztcmZX+OZgVYHvJ80pEg5Qlk=
 github.com/TomOnTime/utfutil v0.0.0-20210710122150-437f72b26edf h1:+GdVyvpzTy3UFAS1+hbTqm9Mk0U1Xrocm28s/E2GWz0=
