@@ -1,7 +1,7 @@
 package result_reporters
 
 import (
-	"github.com/OntoLedgy/storage_interop_services/code/services/disk/files"
+	"github.com/OntoLedgy/storage_interop_services/code/services/disk/file_system_service"
 	"github.com/OntoLedgy/storage_interop_services/code/services/documents/csv"
 )
 
@@ -65,7 +65,7 @@ func write_check_results(
 	output_csv_filename string,
 	output_header []string) {
 
-	files.Delete_file_it_already_exists(
+	file_system_service.DeleteFileIfItAlreadyExists(
 		output_csv_filename)
 
 	csv.

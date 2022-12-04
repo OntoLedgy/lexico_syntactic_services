@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/SyntacticChecker.iml" filepath="$PROJECT_DIR$/.idea/SyntacticChecker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/LexcioSyntacticAnalysisServices.iml" filepath="$PROJECT_DIR$/.idea/LexcioSyntacticAnalysisServices.iml" />
     </modules>
   </component>
 </project>

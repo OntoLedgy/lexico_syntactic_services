@@ -1,10 +1,10 @@
 package issues
 
 import (
-	"github.com/OntoLedgy/core_ontology/core_object_model"
+	"github.com/OntoLedgy/core_ontology/code/core/object_model/objects"
 )
 
 type Issues struct {
-	core_object_model.Objects
+	objects.BnogObjects
 	Issue_type IssueTypes
 }
