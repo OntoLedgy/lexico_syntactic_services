@@ -52,10 +52,8 @@ func (
 				Issues)
 
 	string_check_issue.
-		Object_uuid =
-		string_check_issue.
-			Objects.
-			Set_object_uuid()
+		ObjectUuid =
+		string_check_issue.SetObjectUuid()
 
 	string_check_issue.Issue_type = *issue_transaction_processor.issue_type
 
@@ -68,7 +66,7 @@ func (
 	string_edit_history.
 		Create(
 			issue_transaction_processor.
-				string_value.String_value)
+				string_value.StringValue)
 
 	check_result_processor :=
 		check_result_processors.

@@ -57,7 +57,7 @@ func (
 				marked_string)
 
 	string_edit_history.
-		Set_string_changes(
+		SetStringChanges(
 			modified_string,
 			marked_string)
 
@@ -99,11 +99,11 @@ func (
 
 	edit_start_position :=
 		edit_range.
-			Start_position
+			StartPosition
 
 	edit_end_position :=
 		edit_start_position +
-			edit_range.Range_length
+			edit_range.RangeLength
 
 	replacement_length :=
 		edit_end_position -

@@ -10,7 +10,7 @@ func Create(
 	fix_processor := new(FixProcessors)
 
 	fix_processor.
-		string_checks_input =
+		stringChecksInput =
 		string_checks_parameter
 
 	return fix_processor

@@ -6,6 +6,6 @@ import (
 )
 
 type StringChecksInputs struct {
-	String_to_check *identified_strings.Strings
-	Issue_types     []issues.IssueTypes
+	StringToCheck *identified_strings.Strings
+	IssueTypes    []issues.IssueTypes
 }

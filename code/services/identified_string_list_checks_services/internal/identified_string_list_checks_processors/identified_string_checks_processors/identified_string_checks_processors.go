@@ -46,17 +46,17 @@ func (
 				StringChecksInputs)
 
 	string_checks_input.
-		String_to_check = new(identified_strings.Strings)
+		StringToCheck = new(identified_strings.Strings)
 
 	string_checks_input.
-		String_to_check.String_value =
+		StringToCheck.StringValue =
 		identified_string_checks_processor.
 			identified_string.
 			String_identified.
-			String_value
+			StringValue
 
 	string_checks_input.
-		Issue_types =
+		IssueTypes =
 		identified_string_checks_processor.
 			issue_types
 

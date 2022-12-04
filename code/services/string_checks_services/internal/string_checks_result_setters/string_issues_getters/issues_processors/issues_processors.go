@@ -18,7 +18,7 @@ func (
 	in_scope_issue_types :=
 		issues_processor.
 			string_checks_parameter.
-			Issue_types
+			IssueTypes
 
 	issues_processor.
 		iterate_issue_types_and_run_checks(
@@ -53,7 +53,7 @@ func (
 	issue_processor :=
 		issue_processors.
 			Create(
-				issues_processor.string_checks_parameter.String_to_check,
+				issues_processor.string_checks_parameter.StringToCheck,
 				in_scope_issue_type)
 
 	string_check_issue_result :=

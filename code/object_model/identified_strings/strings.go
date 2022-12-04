@@ -1,7 +1,7 @@
 package identified_strings
 
 type Strings struct {
-	String_value string
+	StringValue string
 	//TODO add string encoding list
 	//string_encoding string
 }

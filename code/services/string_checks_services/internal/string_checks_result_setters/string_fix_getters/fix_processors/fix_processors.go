@@ -7,58 +7,57 @@ import (
 )
 
 type FixProcessors struct {
-	string_checks_input service_inputs.StringChecksInputs
-	Fix_check_result    service_results.FixChecksResults
+	stringChecksInput service_inputs.StringChecksInputs
+	FixChecksResults  service_results.FixChecksResults
 }
 
 func (
-	fix_processor *FixProcessors) Set_string_checks_fix() {
+	fixProcessor *FixProcessors) SetStringChecksFix() {
 
-	fix_processor.
-		Fix_check_result.
-		String_value_edit_history =
+	fixProcessor.
+		FixChecksResults.
+		StringValueEditHistory =
 		new(
 			string_editor_object_model.
 				StringEditHistories)
 
-	fix_processor.
-		Fix_check_result.
-		String_value_edit_history.
-		Create(fix_processor.
-			string_checks_input.
-			String_to_check.String_value)
+	fixProcessor.
+		FixChecksResults.
+		StringValueEditHistory.
+		Create(fixProcessor.
+			stringChecksInput.
+			StringToCheck.StringValue)
 
-	fix_processor.Fix_check_result.
-		Object_uuid =
-		fix_processor.Fix_check_result.
-			Objects.
-			Set_object_uuid()
+	fixProcessor.FixChecksResults.
+		ObjectUuid =
+		fixProcessor.FixChecksResults.
+			SetObjectUuid()
 
-	fix_processor.
-		iterate_through_issue_types()
+	fixProcessor.
+		iterateThroughIssueTypes()
 
-	fix_processor.
-		Fix_check_result.
-		String_value_edit_history =
-		fix_processor.
-			Fix_check_result.
-			String_value_edit_history
+	fixProcessor.
+		FixChecksResults.
+		StringValueEditHistory =
+		fixProcessor.
+			FixChecksResults.
+			StringValueEditHistory
 
 }
 
 func (
-	fix_processor *FixProcessors) iterate_through_issue_types() {
+	fixProcessor *FixProcessors) iterateThroughIssueTypes() {
 
-	issue_types :=
-		fix_processor.
-			string_checks_input.
-			Issue_types
+	issueTypes :=
+		fixProcessor.
+			stringChecksInput.
+			IssueTypes
 
-	for _, issue_type := range issue_types {
+	for _, issueType := range issueTypes {
 
-		fix_processor.
-			get_string_check_fix(
-				issue_type)
+		fixProcessor.
+			getStringCheckFix(
+				issueType)
 
 	}
 }

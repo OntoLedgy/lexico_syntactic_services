@@ -18,7 +18,7 @@ func (
 
 	logger.Printf(
 		"\nProcessing fixes for %s...\n",
-		string_fix_getter.string_checks_input.String_to_check)
+		string_fix_getter.string_checks_input.StringToCheck)
 
 	fix_processor :=
 		fix_processors.Create(
@@ -26,12 +26,12 @@ func (
 				string_checks_input)
 
 	fix_processor.
-		Set_string_checks_fix()
+		SetStringChecksFix()
 
 	logger.Printf(
 		"\nFix transaction: %v \n",
-		fix_processor.Fix_check_result)
+		fix_processor.FixChecksResults)
 
-	return fix_processor.Fix_check_result
+	return fix_processor.FixChecksResults
 
 }

@@ -51,6 +51,6 @@ func (
 	} else {
 		check_result_processor.
 			String_edit_history.
-			Set_string_changes("Not Applicable", "Not Applicable")
+			SetStringChanges("Not Applicable", "Not Applicable")
 	}
 }

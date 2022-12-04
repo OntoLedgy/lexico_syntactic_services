@@ -18,7 +18,7 @@ func TestStandard(t *testing.T) {
 		"Starting syntactic checking service\n")
 
 	configuration_file_path :=
-		"D:\\S\\go\\src\\github.com\\OntoLedgy\\syntactic_checker\\testing\\test_data_20190918\\citadel_document_types\\syntactic_checker_configuration.json"
+		"D:\\S\\go\\src\\github.com\\OntoLedgy\\lexico_syntactic_services\\testing\\data\\test_data_20190918\\citadel_document_types\\syntactic_checker_configuration.json"
 
 	service_run_preparer :=
 		new(

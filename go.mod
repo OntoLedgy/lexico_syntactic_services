@@ -7,7 +7,7 @@ require (
 	github.com/OntoLedgy/logging_services v0.0.7
 	github.com/OntoLedgy/ol_common_services v0.0.18
 	github.com/OntoLedgy/storage_interop_services v0.0.31
-	github.com/OntoLedgy/string_editing_services v0.0.9
+	github.com/OntoLedgy/string_editing_services v0.0.11
 	github.com/antlr/antlr4/runtime/Go/antlr/v4 v4.0.0-20221202181307-76fa05c21b12
 	github.com/gorilla/mux v1.8.0
 	github.com/urfave/cli v1.22.10
@@ -24,5 +24,5 @@ require (
 	github.com/spf13/afero v1.9.3 // indirect
 	github.com/sqweek/dialog v0.0.0-20220809060634-e981b270ebbf // indirect
 	golang.org/x/exp v0.0.0-20221126150942-6ab00d035af9 // indirect
-	golang.org/x/text v0.4.0 // indirect
+	golang.org/x/text v0.5.0 // indirect
 )

@@ -7,6 +7,6 @@ import (
 
 type FixChecksResults struct {
 	objects.BnogObjects
-	String_value_edit_history *object_model.StringEditHistories
-	Issue_check_result_list   *IssueChecksResultLists
+	StringValueEditHistory  *object_model.StringEditHistories
+	Issue_check_result_list *IssueChecksResultLists
 }

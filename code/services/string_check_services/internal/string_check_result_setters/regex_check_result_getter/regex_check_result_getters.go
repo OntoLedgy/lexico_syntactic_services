@@ -16,7 +16,7 @@ func (
 	regex_checks_result_getter *RegexCheckResultGetter) Get_regex_check_result() *service_results.StringCheckResults {
 
 	string_value_is_not_empty :=
-		regex_checks_result_getter.string_to_check.String_value != ""
+		regex_checks_result_getter.string_to_check.StringValue != ""
 
 	if string_value_is_not_empty {
 
@@ -46,7 +46,7 @@ func (
 	regex_checker :=
 		regex_checker_factory.
 			Create(
-				regex_checks_result_getter.string_to_check.String_value,
+				regex_checks_result_getter.string_to_check.StringValue,
 				regex_checks_result_getter.check_regex_pattern)
 
 	regex_checker.

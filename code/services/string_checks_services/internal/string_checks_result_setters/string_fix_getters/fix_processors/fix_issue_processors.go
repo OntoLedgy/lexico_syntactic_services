@@ -13,17 +13,17 @@ type StringCheckProcessors struct {
 }
 
 func (
-	fix_processor *FixProcessors) get_string_check_fix(
+	fixProcessor *FixProcessors) getStringCheckFix(
 	issue_type issues.IssueTypes) {
 
 	//TODO - Stage 3 - improve fix generation process (too wet).
 
 	current_string := new(identified_strings.Strings)
 
-	current_string.String_value =
-		fix_processor.
-			Fix_check_result.
-			String_value_edit_history.
+	current_string.StringValue =
+		fixProcessor.
+			FixChecksResults.
+			StringValueEditHistory.
 			GetCurrentString()
 
 	issue_check_result_processor := issue_processors.Create(
@@ -47,17 +47,17 @@ func (
 
 	string_check_input.
 		String_to_check.
-		String_value =
-		fix_processor.
-			Fix_check_result.
-			String_value_edit_history.
+		StringValue =
+		fixProcessor.
+			FixChecksResults.
+			StringValueEditHistory.
 			GetCurrentString()
 
 	string_check_input.
 		In_scope_issue_type =
 		issue_type
 
-	fix_processor.
+	fixProcessor.
 		update_string_edit_history(
 			issue_check_result,
 			issue_type)
@@ -80,7 +80,7 @@ func (
 }
 
 func (
-	fix_processor *FixProcessors) update_string_edit_history(
+	fixProcessor *FixProcessors) update_string_edit_history(
 	issue_check_result *service_results.IssueCheckResults,
 	issue_type issues.IssueTypes) {
 
@@ -92,35 +92,35 @@ func (
 
 	if there_is_a_check_result {
 
-		fix_processor.
-			Fix_check_result.
-			String_value_edit_history =
+		fixProcessor.
+			FixChecksResults.
+			StringValueEditHistory =
 			string_check_result.
 				String_edit_history
 
-		if fix_processor.Fix_check_result.Issue_check_result_list == nil {
-			fix_processor.Fix_check_result.Issue_check_result_list = new(service_results.IssueChecksResultLists)
+		if fixProcessor.FixChecksResults.Issue_check_result_list == nil {
+			fixProcessor.FixChecksResults.Issue_check_result_list = new(service_results.IssueChecksResultLists)
 
 		}
 
-		fix_processor.
-			Fix_check_result.
+		fixProcessor.
+			FixChecksResults.
 			Issue_check_result_list.
 			String_checks_issue_results =
 			append(
-				fix_processor.
-					Fix_check_result.
+				fixProcessor.
+					FixChecksResults.
 					Issue_check_result_list.
 					String_checks_issue_results,
 				string_check_result)
 
-		fix_processor.
-			Fix_check_result.
-			String_value_edit_history.
+		fixProcessor.
+			FixChecksResults.
+			StringValueEditHistory.
 			SetCurrentString(
-				fix_processor.
-					Fix_check_result.String_value_edit_history.
-					Get_modified_string())
+				fixProcessor.
+					FixChecksResults.StringValueEditHistory.
+					GetModifiedString())
 
 	}
 

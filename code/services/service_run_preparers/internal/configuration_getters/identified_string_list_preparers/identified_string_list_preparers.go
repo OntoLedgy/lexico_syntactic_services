@@ -54,7 +54,7 @@ func prepare_identified_string_data(
 	var identified_string_list identified_strings.IdentifiedStringLists
 
 	identified_string_list_raw :=
-		csv.Read_csv_data(
+		csv.ReadCsvToSlice(
 			csv_filename, "")
 
 	logger.Printf(
@@ -89,7 +89,7 @@ func prepare_identified_string_data(
 
 		identified_string_list.
 			Identified_string_list[index].
-			String_identified.String_value =
+			String_identified.StringValue =
 			value[string_value_column_name].(string)
 
 	}
