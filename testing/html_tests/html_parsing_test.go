@@ -12,7 +12,7 @@ func TestIECScrapper(t *testing.T) {
 	// Read the excel file containing the list of class IDs.
 	classIDs := storage_interop_services.ReadExcelFile("E:\\ontologies\\iec\\classes_100.xlsx")
 
-	iecCLassFactory := &data_model_iec.IecClassesFactory{}
+	iecCLassFactory := data_model_iec.NewIecClassesFactory()
 
 	for _, classID := range classIDs {
 
@@ -28,7 +28,7 @@ func TestIECScrapper(t *testing.T) {
 	}
 
 	// 5. Write the IecClasses and IecProperty data structures to an excel file.
-	iecCLassFactory.ReportIecModel()
+	iecCLassFactory.ReportIecModel("E:\\ontologies\\iec\\output.xlsx")
 }
 
 func TestScrapeClass(t *testing.T) {
@@ -42,14 +42,15 @@ func TestScrapeClass(t *testing.T) {
 
 	fmt.Printf("%+v\n", iecClass)
 
-	iecClassFactory.ReportIecModel()
+	iecClassFactory.ReportIecModel("E:\\ontologies\\iec\\output.xlsx")
 }
 
 func TestScrapeProperty(t *testing.T) {
 
 	// Example usage of scrapePropertyPage.
 	url := "https://cdd.iec.ch/cdd/iec61987/iec61987.nsf/PropertiesAllVersions/0112-2---61987%23ABU125"
+	propertyFactory := data_model_iec.NewIecPropertiesFactory()
 
-	property := data_model_iec.NewIecProperty(url)
+	property, _ := propertyFactory.GetIecProperty(url)
 	fmt.Printf("%+v\n", property)
 }

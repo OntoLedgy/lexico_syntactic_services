@@ -24,7 +24,7 @@ type IecClasses struct {
 	ApplicableDocuments   string
 	ClassValueAssignment  string
 	RequisityOfProperties string
-	Superclass            string //TODO make to *IecClasses
+	Superclass            *IecClasses
 	ClassifyingDET        string
 	Properties            []*IecProperty
 
@@ -46,13 +46,15 @@ type IecClasses struct {
 	ChangeRequestID       string
 	VersionHistory        string
 
+	SuperClassUrl string
 	ClassUrl      string
 	PropertyLinks []string
 }
 
-func constructClassURL(baseURL string, classID string) string {
-	// Construct the URL using the base URL and class ID
+func constructClassURL(classID string) string {
 
+	// Construct the URL using the base URL and class ID
+	baseURL := "https://cdd.iec.ch/CDD/IEC61987/iec61987.nsf/Classes/"
 	encodedClassID := strings.ReplaceAll(classID, "/", "-")
 	encodedClassID = strings.ReplaceAll(encodedClassID, "#", "%23")
 
@@ -130,7 +132,8 @@ func (iecClass *IecClasses) scrapeClassPage() *IecClasses {
 		case "Requisity of properties:":
 			iecClass.RequisityOfProperties = strings.TrimSpace(value)
 		case "Superclass:":
-			iecClass.Superclass = strings.TrimSpace(value)
+			iecClass.SuperClassUrl = strings.TrimSpace(value)
+
 		case "Classifying DET:":
 			iecClass.ClassifyingDET = strings.TrimSpace(value)
 
@@ -184,4 +187,32 @@ func (iecClass *IecClasses) scrapeClassPage() *IecClasses {
 	iecClass.PropertyLinks = properties
 
 	return iecClass
+}
+
+func (iecClass *IecClasses) inheritProperties() {
+	if iecClass.Superclass != nil {
+		// Inherit properties from the superclass
+		iecClass.Superclass.inheritProperties()
+
+		// Create a map to store unique properties
+		uniqueProperties := make(map[string]*IecProperty)
+
+		// Add properties from the current class
+		for _, property := range iecClass.Properties {
+			uniqueProperties[property.Code] = property
+		}
+
+		// Add inherited properties from the superclass
+		for _, property := range iecClass.Superclass.Properties {
+			if _, ok := uniqueProperties[property.Code]; !ok {
+				uniqueProperties[property.Code] = property
+			}
+		}
+
+		// Update the Properties slice with the unique properties
+		iecClass.Properties = make([]*IecProperty, 0, len(uniqueProperties))
+		for _, property := range uniqueProperties {
+			iecClass.Properties = append(iecClass.Properties, property)
+		}
+	}
 }

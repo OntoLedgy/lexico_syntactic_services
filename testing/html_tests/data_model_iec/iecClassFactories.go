@@ -5,13 +5,14 @@ import (
 	"github.com/OntoLedgy/syntactic_checker/testing/html_tests/storage_interop_services"
 	"reflect"
 	"strconv"
+	"strings"
 	"sync"
 )
 
 type IecClassesFactory struct {
 	ClassRegister      map[string]*IecClasses
 	PropertiesRegister map[string]*IecProperty
-	mu                 sync.Mutex
+	mu                 sync.RWMutex
 }
 
 func NewIecClassesFactory() *IecClassesFactory {
@@ -21,17 +22,27 @@ func NewIecClassesFactory() *IecClassesFactory {
 	}
 }
 
-func (iecClassFactory *IecClassesFactory) GetIecClass(classID string) (*IecClasses, error) {
-	iecClassFactory.mu.Lock()
-	defer iecClassFactory.mu.Unlock()
+func (iecClassFactory *IecClassesFactory) GetIecClass(
+	classID string) (*IecClasses, error) {
 
+	iecClassFactory.mu.RLock()
+	defer iecClassFactory.mu.RUnlock()
+
+	return iecClassFactory.getIecClass(classID)
+}
+
+func (iecClassFactory *IecClassesFactory) getIecClass(
+	classID string) (*IecClasses, error) {
 	// Check if the IecClass is already loaded in memory
+
 	if iecClass, ok := iecClassFactory.ClassRegister[classID]; ok {
 		return iecClass, nil
 	}
 
 	// If not, load the IecClass by scraping the URL
-	iecClass := iecClassFactory.NewIecClass(classID)
+	iecClass :=
+		iecClassFactory.NewIecClass(
+			classID)
 
 	iecClassFactory.ClassRegister[classID] = iecClass
 
@@ -45,13 +56,12 @@ func (iecClassFactory *IecClassesFactory) GetIecClass(classID string) (*IecClass
 	return iecClass, nil
 }
 
-func (iecClassFactory *IecClassesFactory) NewIecClass(classID string) *IecClasses {
+func (iecClassFactory *IecClassesFactory) NewIecClass(
+	classID string) *IecClasses {
 
 	// 1. Construct the URL using the base URL and class ID.
 
-	baseURL := "https://cdd.iec.ch/CDD/IEC61987/iec61987.nsf/Classes/"
-
-	url := constructClassURL(baseURL, classID)
+	url := constructClassURL(classID)
 	fmt.Printf("reading %s\n", url)
 
 	iecClass := &IecClasses{
@@ -59,6 +69,15 @@ func (iecClassFactory *IecClassesFactory) NewIecClass(classID string) *IecClasse
 
 	// Factory method for creating an IecClasses instance
 	iecClass.scrapeClassPage()
+
+	// Process the superclass
+	if iecClass.SuperClassUrl != "" {
+		superclass, err := iecClassFactory.GetIecClass(iecClass.SuperClassUrl)
+		if err != nil {
+			return nil
+		}
+		iecClass.Superclass = superclass
+	}
 
 	// 3. Identify the list of links to property pages.
 	iecClass.identifyPropertyLinks()
@@ -72,10 +91,12 @@ func (iecClassFactory *IecClassesFactory) NewIecClass(classID string) *IecClasse
 		//propertyURL := constructPropertyURL(propertyURLPrefix, propertyLink)
 
 		// 4.b. Scrape the property web page content and extract the property information.
-		iecProperty := NewIecProperty(propertyLink)
+		iecPropertyFactory := NewIecPropertiesFactory()
+		iecProperty, _ := iecPropertyFactory.GetIecProperty(propertyLink)
 
 		if iecProperty != nil {
 			iecClass.Properties = append(iecClass.Properties, iecProperty)
+			iecClassFactory.PropertiesRegister[iecProperty.PropertyId] = iecProperty
 		}
 	}
 
@@ -86,7 +107,8 @@ func (iecClassFactory *IecClassesFactory) NewIecClass(classID string) *IecClasse
 	return iecClass
 }
 
-func (iecClassFactory *IecClassesFactory) ReportIecModel() {
+func (iecClassFactory *IecClassesFactory) ReportIecModel(
+	fileNameAndPath string) {
 
 	keys := reflect.ValueOf(iecClassFactory.ClassRegister).MapKeys()
 
@@ -102,25 +124,24 @@ func (iecClassFactory *IecClassesFactory) ReportIecModel() {
 		classTableData.Rows = append(classTableData.Rows, flattenedClass)
 	}
 
-	storage_interop_services.WriteTableDataToSheet("Classes", *classTableData, "E:\\ontologies\\iec\\output.xlsx")
+	storage_interop_services.WriteTableDataToSheet("Classes", *classTableData, fileNameAndPath)
 
-	propertyKeys := reflect.ValueOf(iecClassFactory.ClassRegister).MapKeys()
+	propertyKeys := reflect.ValueOf(iecClassFactory.PropertiesRegister).MapKeys()
 
 	propertyTableData := &storage_interop_services.TableData{}
 
-	propertyTableData.Headers, _ = getStructFieldNames(iecClassFactory.ClassRegister[propertyKeys[0].String()])
+	propertyTableData.Headers, _ = getStructFieldNames(iecClassFactory.PropertiesRegister[propertyKeys[0].String()])
 
 	for _, property := range iecClassFactory.PropertiesRegister {
-		flattenedClass, _ := flattenAttributes(property)
-		propertyTableData.Rows = append(propertyTableData.Rows, flattenedClass)
+		flattenedProperty, _ := flattenAttributes(property)
+		propertyTableData.Rows = append(propertyTableData.Rows, flattenedProperty)
 	}
 
-	storage_interop_services.WriteTableDataToSheet("Classes", *propertyTableData, "output.xlsx")
+	storage_interop_services.WriteTableDataToSheet("Properties", *propertyTableData, fileNameAndPath)
 
 }
 
 func getStructFieldNames(obj interface{}) ([]string, error) {
-
 	v := reflect.ValueOf(obj)
 
 	if v.Kind() == reflect.Ptr {
@@ -133,10 +154,17 @@ func getStructFieldNames(obj interface{}) ([]string, error) {
 
 	t := v.Type()
 
-	fieldNames := make([]string, t.NumField())
+	var fieldNames []string
 
 	for i := 0; i < t.NumField(); i++ {
-		fieldNames[i] = t.Field(i).Name
+		fieldType := t.Field(i).Type
+
+		// Skip struct fields
+		if fieldType.Kind() == reflect.Struct || (fieldType.Kind() == reflect.Slice && (fieldType.Elem().Kind() == reflect.Struct || (fieldType.Elem().Kind() == reflect.Ptr && fieldType.Elem().Elem().Kind() == reflect.Struct))) {
+			continue
+		}
+
+		fieldNames = append(fieldNames, t.Field(i).Name)
 	}
 
 	return fieldNames, nil
@@ -154,8 +182,11 @@ func flattenAttributes(obj interface{}) ([]string, error) {
 		return nil, fmt.Errorf("input must be a struct")
 	}
 
+	t := v.Type()
+
 	for i := 0; i < v.NumField(); i++ {
 		field := v.Field(i)
+		fieldType := t.Field(i).Type
 
 		var fieldStr string
 		switch field.Kind() {
@@ -170,14 +201,11 @@ func flattenAttributes(obj interface{}) ([]string, error) {
 		case reflect.Bool:
 			fieldStr = strconv.FormatBool(field.Bool())
 		case reflect.Struct:
-			nested, err := flattenAttributes(field.Interface())
-			if err != nil {
-				return nil, err
-			}
-			flattened = append(flattened, nested...)
 			continue
-
 		case reflect.Ptr:
+			if fieldType.Elem().Kind() == reflect.Struct {
+				continue
+			}
 			if field.IsNil() {
 				fieldStr = ""
 			} else {
@@ -188,7 +216,17 @@ func flattenAttributes(obj interface{}) ([]string, error) {
 				flattened = append(flattened, nested...)
 				continue
 			}
-
+		case reflect.Slice:
+			elem := field.Type().Elem()
+			if elem.Kind() == reflect.String {
+				stringComponent := make([]string, field.Len())
+				for i := 0; i < field.Len(); i++ {
+					stringComponent[i] = field.Index(i).String()
+				}
+				fieldStr = strings.Join(stringComponent, ",")
+			} else {
+				continue
+			}
 		default:
 			return nil, fmt.Errorf("unsupported field type: %v", field.Type())
 		}

@@ -35,15 +35,19 @@ func ReadExcelFile(filePath string) []string {
 	return classIDs
 }
 
-func WriteTableDataToSheet(sheetName string, data TableData, outputPath string) {
+func WriteTableDataToSheet(sheetName string, data TableData, outputPath string) error {
+	var f *excelize.File
+	var err error
 
-	f := excelize.NewFile()
+	// Try to open the existing file
+	f, err = excelize.OpenFile(outputPath)
+	if err != nil {
+		// If the file doesn't exist, create a new one
+		f = excelize.NewFile()
+	}
 
 	// Create a new sheet
-	sheetIndex, _ := f.NewSheet(sheetName)
-
-	// Set the active sheet
-	f.SetActiveSheet(sheetIndex)
+	f.NewSheet(sheetName)
 
 	// Write header row
 	for col, header := range data.Headers {
@@ -62,8 +66,7 @@ func WriteTableDataToSheet(sheetName string, data TableData, outputPath string) 
 	}
 
 	// Save the Excel file
-	f.SaveAs(outputPath)
-
+	return f.SaveAs(outputPath)
 }
 
 func WriteMapToExcel(
