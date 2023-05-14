@@ -1,1 +1,11 @@
 /testing/data/
+/testing/antlr_tests/grammars/parser/go_lexer.go
+/testing/antlr_tests/grammars/parser/go_parser.go
+/testing/antlr_tests/grammars/parser/go_parser_base.go
+/testing/antlr_tests/grammars/parser/GoLexer.interp
+/testing/antlr_tests/grammars/parser/GoLexer.tokens
+/testing/antlr_tests/grammars/parser/GoParser.interp
+/testing/antlr_tests/grammars/parser/GoParser.tokens
+/testing/antlr_tests/grammars/parser/goparser_base_listener.go
+/testing/antlr_tests/grammars/parser/goparser_listener.go
+/testing/html_tests/output.xlsx
