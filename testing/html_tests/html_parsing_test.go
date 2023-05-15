@@ -33,7 +33,7 @@ func TestIECScrapper(t *testing.T) {
 	}
 
 	// 5. Write the IecClasses and IecProperty data structures to an excel file.
-	iecCLassFactory.ReportIecModel("E:\\ontologies\\iec\\output_full.xlsx")
+	iecCLassFactory.ReportIecModel("E:\\ontologies\\iec\\iec_report_full.xlsx")
 }
 
 func TestScrapeClass(t *testing.T) {
