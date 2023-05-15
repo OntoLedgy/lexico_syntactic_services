@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"github.com/OntoLedgy/syntactic_checker/testing/html_tests/storage_interop_services"
 	"reflect"
-	"strconv"
-	"strings"
 	"sync"
 )
 
@@ -59,15 +57,13 @@ func (iecClassFactory *IecClassesFactory) getIecClass(
 func (iecClassFactory *IecClassesFactory) NewIecClass(
 	classID string) *IecClasses {
 
+	iecClass := &IecClasses{}
+
 	// 1. Construct the URL using the base URL and class ID.
-
-	url := constructClassURL(classID)
-	fmt.Printf("reading %s\n", url)
-
-	iecClass := &IecClasses{
-		ClassUrl: url}
+	url := iecClass.GetClassURL(classID)
 
 	// Factory method for creating an IecClasses instance
+	fmt.Printf("reading %s\n", url)
 	iecClass.scrapeClassPage()
 
 	// Process the superclass
@@ -80,7 +76,7 @@ func (iecClassFactory *IecClassesFactory) NewIecClass(
 	}
 
 	// 3. Identify the list of links to property pages.
-	iecClass.identifyPropertyLinks()
+	iecClass.listPropertyLinks()
 
 	fmt.Printf("properties found at %s:\n %s", url, iecClass.PropertyLinks)
 
@@ -104,6 +100,8 @@ func (iecClassFactory *IecClassesFactory) NewIecClass(
 		iecClassFactory.ClassRegister[iecClass.IRDI] = iecClass
 	}
 
+	iecClass.inheritProperties()
+
 	return iecClass
 }
 
@@ -112,17 +110,7 @@ func (iecClassFactory *IecClassesFactory) ReportIecModel(
 
 	keys := reflect.ValueOf(iecClassFactory.ClassRegister).MapKeys()
 
-	classTableData := &storage_interop_services.TableData{}
-
-	classTableData.Headers, _ = getStructFieldNames(iecClassFactory.ClassRegister[keys[0].String()])
-
-	for _, class := range iecClassFactory.ClassRegister {
-		flattenedClass, err := flattenAttributes(class)
-		if err != nil {
-			fmt.Println(err)
-		}
-		classTableData.Rows = append(classTableData.Rows, flattenedClass)
-	}
+	classTableData := convertStructToTable(iecClassFactory, keys)
 
 	storage_interop_services.WriteTableDataToSheet("Classes", *classTableData, fileNameAndPath)
 
@@ -130,10 +118,10 @@ func (iecClassFactory *IecClassesFactory) ReportIecModel(
 
 	propertyTableData := &storage_interop_services.TableData{}
 
-	propertyTableData.Headers, _ = getStructFieldNames(iecClassFactory.PropertiesRegister[propertyKeys[0].String()])
+	propertyTableData.Headers, _ = storage_interop_services.GetStructFieldNames(iecClassFactory.PropertiesRegister[propertyKeys[0].String()])
 
 	for _, property := range iecClassFactory.PropertiesRegister {
-		flattenedProperty, _ := flattenAttributes(property)
+		flattenedProperty, _ := storage_interop_services.FlattenAttributes(property)
 		propertyTableData.Rows = append(propertyTableData.Rows, flattenedProperty)
 	}
 
@@ -141,98 +129,19 @@ func (iecClassFactory *IecClassesFactory) ReportIecModel(
 
 }
 
-func getStructFieldNames(obj interface{}) ([]string, error) {
-	v := reflect.ValueOf(obj)
+func convertStructToTable(
+	iecClassFactory *IecClassesFactory,
+	keys []reflect.Value) *storage_interop_services.TableData {
+	classTableData := &storage_interop_services.TableData{}
 
-	if v.Kind() == reflect.Ptr {
-		v = v.Elem()
-	}
+	classTableData.Headers, _ = storage_interop_services.GetStructFieldNames(iecClassFactory.ClassRegister[keys[0].String()])
 
-	if v.Kind() != reflect.Struct {
-		return nil, fmt.Errorf("input must be a struct or pointer to struct")
-	}
-
-	t := v.Type()
-
-	var fieldNames []string
-
-	for i := 0; i < t.NumField(); i++ {
-		fieldType := t.Field(i).Type
-
-		// Skip struct fields
-		if fieldType.Kind() == reflect.Struct || (fieldType.Kind() == reflect.Slice && (fieldType.Elem().Kind() == reflect.Struct || (fieldType.Elem().Kind() == reflect.Ptr && fieldType.Elem().Elem().Kind() == reflect.Struct))) {
-			continue
+	for _, class := range iecClassFactory.ClassRegister {
+		flattenedClass, err := storage_interop_services.FlattenAttributes(class)
+		if err != nil {
+			fmt.Println(err)
 		}
-
-		fieldNames = append(fieldNames, t.Field(i).Name)
+		classTableData.Rows = append(classTableData.Rows, flattenedClass)
 	}
-
-	return fieldNames, nil
-}
-
-func flattenAttributes(obj interface{}) ([]string, error) {
-	var flattened []string
-	v := reflect.ValueOf(obj)
-
-	if v.Kind() == reflect.Ptr {
-		v = v.Elem()
-	}
-
-	if v.Kind() != reflect.Struct {
-		return nil, fmt.Errorf("input must be a struct")
-	}
-
-	t := v.Type()
-
-	for i := 0; i < v.NumField(); i++ {
-		field := v.Field(i)
-		fieldType := t.Field(i).Type
-
-		var fieldStr string
-		switch field.Kind() {
-		case reflect.String:
-			fieldStr = field.String()
-		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-			fieldStr = strconv.FormatInt(field.Int(), 10)
-		case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
-			fieldStr = strconv.FormatUint(field.Uint(), 10)
-		case reflect.Float32, reflect.Float64:
-			fieldStr = strconv.FormatFloat(field.Float(), 'f', -1, 64)
-		case reflect.Bool:
-			fieldStr = strconv.FormatBool(field.Bool())
-		case reflect.Struct:
-			continue
-		case reflect.Ptr:
-			if fieldType.Elem().Kind() == reflect.Struct {
-				continue
-			}
-			if field.IsNil() {
-				fieldStr = ""
-			} else {
-				nested, err := flattenAttributes(field.Interface())
-				if err != nil {
-					return nil, err
-				}
-				flattened = append(flattened, nested...)
-				continue
-			}
-		case reflect.Slice:
-			elem := field.Type().Elem()
-			if elem.Kind() == reflect.String {
-				stringComponent := make([]string, field.Len())
-				for i := 0; i < field.Len(); i++ {
-					stringComponent[i] = field.Index(i).String()
-				}
-				fieldStr = strings.Join(stringComponent, ",")
-			} else {
-				continue
-			}
-		default:
-			return nil, fmt.Errorf("unsupported field type: %v", field.Type())
-		}
-
-		flattened = append(flattened, fieldStr)
-	}
-
-	return flattened, nil
+	return classTableData
 }

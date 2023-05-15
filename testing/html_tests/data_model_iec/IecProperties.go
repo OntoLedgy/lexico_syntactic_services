@@ -54,7 +54,9 @@ type IecProperty struct {
 	PropertyUrl string
 }
 
-func constructPropertyURL(baseURL string, propertyID string) string {
+func constructPropertyURL(
+	baseURL string,
+	propertyID string) string {
 	// Construct the URL for the property page
 
 	propertyUrlSuffix := strings.ReplaceAll(propertyID, "/", "-")
@@ -168,7 +170,8 @@ func (iecProperty *IecProperty) scrapePropertyPage() {
 
 }
 
-func (iecProperty *IecProperty) scrapeProperty(url string) (*IecProperty, error) {
+func (iecProperty *IecProperty) scrapeProperty(
+	url string) (*IecProperty, error) {
 	property := &IecProperty{PropertyUrl: url}
 
 	// Create a new Colly collector

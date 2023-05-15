@@ -18,19 +18,18 @@ func NewIecPropertiesFactory() *IecPropertiesFactory {
 	}
 }
 
-func (iecPropertiesFactory *IecPropertiesFactory) GetIecProperty(propertyUrl string) (*IecProperty, error) {
+func (iecPropertiesFactory *IecPropertiesFactory) GetIecProperty(
+	propertyUrl string) (*IecProperty, error) {
 
 	propertyID, _ := iecPropertiesFactory.extractPropertyID(propertyUrl)
 
 	iecPropertiesFactory.mu.Lock()
 	defer iecPropertiesFactory.mu.Unlock()
 
-	// Check if the IecClass is already loaded in memory
 	if iecProperty, ok := iecPropertiesFactory.PropertiesRegister[propertyID]; ok {
 		return iecProperty, nil
 	}
 
-	// If not, load the IecClass by scraping the URL
 	iecProperty := iecPropertiesFactory.NewIecProperty(propertyID, propertyUrl)
 
 	iecPropertiesFactory.PropertiesRegister[propertyID] = iecProperty
@@ -38,7 +37,8 @@ func (iecPropertiesFactory *IecPropertiesFactory) GetIecProperty(propertyUrl str
 	return iecProperty, nil
 }
 
-func (iecPropertiesFactory *IecPropertiesFactory) NewIecProperty(propertyID, url string) *IecProperty {
+func (iecPropertiesFactory *IecPropertiesFactory) NewIecProperty(
+	propertyID, url string) *IecProperty {
 
 	property := &IecProperty{
 		PropertyId:  propertyID,
@@ -50,7 +50,8 @@ func (iecPropertiesFactory *IecPropertiesFactory) NewIecProperty(propertyID, url
 	return property
 }
 
-func (iecPropertiesFactory *IecPropertiesFactory) extractPropertyID(propertyLink string) (string, error) {
+func (iecPropertiesFactory *IecPropertiesFactory) extractPropertyID(
+	propertyLink string) (string, error) {
 	parsedUrl, err := url.Parse(propertyLink)
 	if err != nil {
 		return "", err

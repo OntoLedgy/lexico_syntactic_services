@@ -10,7 +10,7 @@ import (
 func TestIECScrapper(t *testing.T) {
 
 	// Read the excel file containing the list of class IDs.
-	classIDs := storage_interop_services.ReadExcelFile("E:\\ontologies\\iec\\classes_100.xlsx")
+	classIDs := storage_interop_services.ReadExcelFile("E:\\ontologies\\iec\\classes.xlsx")
 
 	iecCLassFactory := data_model_iec.NewIecClassesFactory()
 

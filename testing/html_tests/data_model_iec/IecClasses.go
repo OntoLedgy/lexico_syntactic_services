@@ -46,23 +46,28 @@ type IecClasses struct {
 	ChangeRequestID       string
 	VersionHistory        string
 
-	SuperClassUrl string
-	ClassUrl      string
-	PropertyLinks []string
+	SuperClassUrl         string
+	ClassUrl              string
+	PropertyLinks         []string
+	SuperClassPropertyIds []string
 }
 
-func constructClassURL(classID string) string {
+func (iecClass *IecClasses) GetClassURL(classID string) string {
 
-	// Construct the URL using the base URL and class ID
-	baseURL := "https://cdd.iec.ch/CDD/IEC61987/iec61987.nsf/Classes/"
-	encodedClassID := strings.ReplaceAll(classID, "/", "-")
-	encodedClassID = strings.ReplaceAll(encodedClassID, "#", "%23")
+	if iecClass.ClassUrl == "" {
+		// Construct the URL using the base URL and class ID
+		baseURL := "https://cdd.iec.ch/CDD/IEC61987/iec61987.nsf/Classes/"
 
-	return baseURL + encodedClassID
+		encodedClassID := strings.ReplaceAll(classID, "/", "-")
+		encodedClassID = strings.ReplaceAll(encodedClassID, "#", "%23")
 
+		iecClass.ClassUrl = baseURL + encodedClassID
+	}
+
+	return iecClass.ClassUrl
 }
 
-func (iecClass *IecClasses) identifyPropertyLinks() {
+func (iecClass *IecClasses) listPropertyLinks() {
 
 	// Prepare a slice to store property URLs.
 	var propertyURLs []string
@@ -70,7 +75,9 @@ func (iecClass *IecClasses) identifyPropertyLinks() {
 
 	// Iterate through each line and extract the property ID.
 	for _, iecPropertyLink := range iecClass.PropertyLinks {
+
 		iecPropertyLink = strings.TrimSpace(iecPropertyLink)
+
 		if iecPropertyLink == "" {
 			continue
 		}
@@ -190,6 +197,7 @@ func (iecClass *IecClasses) scrapeClassPage() *IecClasses {
 }
 
 func (iecClass *IecClasses) inheritProperties() {
+
 	if iecClass.Superclass != nil {
 		// Inherit properties from the superclass
 		iecClass.Superclass.inheritProperties()
@@ -212,7 +220,7 @@ func (iecClass *IecClasses) inheritProperties() {
 		// Update the Properties slice with the unique properties
 		iecClass.Properties = make([]*IecProperty, 0, len(uniqueProperties))
 		for _, property := range uniqueProperties {
-			iecClass.Properties = append(iecClass.Properties, property)
+			iecClass.SuperClassPropertyIds = append(iecClass.SuperClassPropertyIds, property.PropertyId)
 		}
 	}
 }
