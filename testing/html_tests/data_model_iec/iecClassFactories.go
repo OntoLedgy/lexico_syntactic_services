@@ -63,7 +63,7 @@ func (iecClassFactory *IecClassesFactory) NewIecClass(
 	url := iecClass.GetClassURL(classID)
 
 	// Factory method for creating an IecClasses instance
-	fmt.Printf("reading %s\n", url)
+	fmt.Printf("reading class %s\n", url)
 	iecClass.scrapeClassPage()
 
 	// Process the superclass
