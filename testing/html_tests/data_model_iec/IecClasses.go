@@ -218,9 +218,13 @@ func (iecClass *IecClasses) inheritProperties() {
 		}
 
 		// Update the Properties slice with the unique properties
-		iecClass.Properties = make([]*IecProperty, 0, len(uniqueProperties))
+		iecClass.SuperClassPropertyIds = make([]string, 0, len(uniqueProperties))
+
 		for _, property := range uniqueProperties {
-			iecClass.SuperClassPropertyIds = append(iecClass.SuperClassPropertyIds, property.PropertyId)
+			//fmt.Print("found inherited properties")
+			iecClass.SuperClassPropertyIds = append(
+				iecClass.SuperClassPropertyIds,
+				property.PropertyId)
 		}
 	}
 }

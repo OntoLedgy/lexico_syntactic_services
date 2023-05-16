@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/OntoLedgy/syntactic_checker/testing/html_tests/storage_interop_services"
 	"reflect"
+	"strings"
 	"sync"
 )
 
@@ -33,6 +34,8 @@ func (iecClassFactory *IecClassesFactory) getIecClass(
 	classID string) (*IecClasses, error) {
 	// Check if the IecClass is already loaded in memory
 
+	classID = iecClassFactory.validateAndConvertClassID(classID)
+
 	if iecClass, ok := iecClassFactory.ClassRegister[classID]; ok {
 		return iecClass, nil
 	}
@@ -52,6 +55,15 @@ func (iecClassFactory *IecClassesFactory) getIecClass(
 	}
 
 	return iecClass, nil
+}
+
+func (iecClassFactory *IecClassesFactory) validateAndConvertClassID(
+	classID string) string {
+	// Replace '/' with '-'
+	classID = strings.ReplaceAll(classID, "/", "-")
+	// Replace '#' with '%23'
+	classID = strings.ReplaceAll(classID, "#", "%23")
+	return classID
 }
 
 func (iecClassFactory *IecClassesFactory) NewIecClass(
@@ -108,9 +120,9 @@ func (iecClassFactory *IecClassesFactory) NewIecClass(
 func (iecClassFactory *IecClassesFactory) ReportIecModel(
 	fileNameAndPath string) {
 
-	keys := reflect.ValueOf(iecClassFactory.ClassRegister).MapKeys()
+	classKeys := reflect.ValueOf(iecClassFactory.ClassRegister).MapKeys()
 
-	classTableData := convertStructToTable(iecClassFactory, keys)
+	classTableData := convertStructToTable(iecClassFactory, classKeys)
 
 	storage_interop_services.WriteTableDataToSheet("Classes", *classTableData, fileNameAndPath)
 
@@ -132,16 +144,17 @@ func (iecClassFactory *IecClassesFactory) ReportIecModel(
 func convertStructToTable(
 	iecClassFactory *IecClassesFactory,
 	keys []reflect.Value) *storage_interop_services.TableData {
-	classTableData := &storage_interop_services.TableData{}
 
-	classTableData.Headers, _ = storage_interop_services.GetStructFieldNames(iecClassFactory.ClassRegister[keys[0].String()])
+	tableData := &storage_interop_services.TableData{}
+
+	tableData.Headers, _ = storage_interop_services.GetStructFieldNames(iecClassFactory.ClassRegister[keys[0].String()])
 
 	for _, class := range iecClassFactory.ClassRegister {
 		flattenedClass, err := storage_interop_services.FlattenAttributes(class)
 		if err != nil {
 			fmt.Println(err)
 		}
-		classTableData.Rows = append(classTableData.Rows, flattenedClass)
+		tableData.Rows = append(tableData.Rows, flattenedClass)
 	}
-	return classTableData
+	return tableData
 }

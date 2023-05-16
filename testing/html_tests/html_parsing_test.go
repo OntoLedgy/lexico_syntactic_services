@@ -20,20 +20,14 @@ func TestIECScrapper(t *testing.T) {
 		// 2. Scrape the web page content and extract the table of class information.
 		iecCLassFactory.GetIecClass(classID)
 
-		//iecClass := data_model_iec.NewIecClass(classID)
-
 		if (rowIndex+1)%100 == 0 {
 			iecCLassFactory.ReportIecModel("E:\\ontologies\\iec\\output_" + strconv.Itoa(rowIndex) + ".xlsx")
 		}
 
-		//if iecClass != nil {
-		//	classes = append(classes, iecClass)
-		//}
-
 	}
 
 	// 5. Write the IecClasses and IecProperty data structures to an excel file.
-	iecCLassFactory.ReportIecModel("E:\\ontologies\\iec\\iec_report_full.xlsx")
+	iecCLassFactory.ReportIecModel("D:\\S\\go\\src\\github.com\\OntoLedgy\\lexico_syntactic_services\\testing\\data\\outputs\\html_scrapper\\iec_report_full.xlsx")
 }
 
 func TestScrapeClass(t *testing.T) {
