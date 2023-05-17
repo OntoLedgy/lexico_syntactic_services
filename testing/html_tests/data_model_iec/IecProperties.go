@@ -6,49 +6,54 @@ import (
 	"log"
 	"net/http"
 	"strings"
+	"time"
 )
 
 type IecProperty struct {
-	Code                  string
-	Version               string
-	Revision              string
-	IRDI                  string
-	PreferredName         string
-	SynonymousName        string
-	Symbol                string
-	SynonymousSymbol      string
-	ShortName             string
-	Definition            string
-	Note                  string
-	Remark                string
-	DefinitionSource      string
-	Drawing               string
-	ClassType             string
-	ApplicableDocuments   string
-	ClassValueAssignment  string
-	RequisityOfProperties string
-	Superclass            string
-	HigherLevelClasses    string
-	ClassifyingDET        string
-	Properties            string
-	PropertiesTree        string
-	InheritedProperties   string
-	SuperBlocks           string
-	IsCaseOf              string
-	ImportedProperties    string
-	InstanceSharable      string
-	StatusLevel           string
-	IsDeprecated          string
-	PublishedIn           string
-	PublishedBy           string
-	ProposalDate          string
-	VersionInitiationDate string
-	VersionReleaseDate    string
-	RevisionReleaseDate   string
-	ObsoleteDate          string
-	ResponsibleCommittee  string
-	ChangeRequestID       string
-	VersionHistory        string
+	Code                     string
+	Version                  string
+	Revision                 string
+	IRDI                     string
+	PreferredName            string
+	SynonymousName           string
+	Symbol                   string
+	SynonymousSymbol         string
+	ShortName                string
+	Definition               string
+	Note                     string
+	Remark                   string
+	PrimaryUnit              string
+	AlternativeUnits         string
+	Level                    string
+	DataType                 string //#TODO - chain to pointer to IecClasses
+	Format                   string
+	PropertyConstraint       string
+	DefinitionSource         string
+	ValueSource              string
+	PropertyDataElementType  string
+	Drawing                  string
+	Formula                  string
+	ValueListCode            string
+	ValueList                string
+	DETClass                 string
+	ApplicableClasses        string
+	DefinitionClass          string
+	CodeForUnit              string
+	CodesForAlternativeUnits string
+	CodeForUnitList          string
+	StatusLevel              string
+	IsDeprecated             string
+	PublishedIn              string
+	PublishedBy              string
+	ProposalDate             time.Time
+	VersionInitiationDate    time.Time
+	VersionReleaseDate       time.Time
+	RevisionReleaseDate      time.Time
+	ObsoleteDate             time.Time
+	ResponsibleCommittee     string
+	Conditions               string
+	ChangeRequestID          string
+	VersionHistory           string
 
 	PropertyId  string
 	PropertyUrl string
@@ -66,6 +71,12 @@ func constructPropertyURL(
 }
 
 func (iecProperty *IecProperty) scrapePropertyPage() {
+
+	iecProperty.scrapePropertyGoQuery()
+
+}
+
+func (iecProperty *IecProperty) scrapePropertyGoQuery() {
 
 	resp, err := http.Get(iecProperty.PropertyUrl)
 
@@ -98,7 +109,7 @@ func (iecProperty *IecProperty) scrapePropertyPage() {
 			iecProperty.SynonymousName = value
 		case "Symbol:":
 			iecProperty.Symbol = value
-		case "Synonymous Symbol:":
+		case "Synonymous symbol:":
 			iecProperty.SynonymousSymbol = value
 		case "Short name:":
 			iecProperty.ShortName = value
@@ -108,38 +119,44 @@ func (iecProperty *IecProperty) scrapePropertyPage() {
 			iecProperty.Note = value
 		case "Remark:":
 			iecProperty.Remark = value
+		case "Primary unit:":
+			iecProperty.PrimaryUnit = value
+		case "Alternative units:":
+			iecProperty.AlternativeUnits = value
+		case "Level:":
+			iecProperty.Level = value
+		case "Data type:":
+			iecProperty.DataType = value
+		case "Format:":
+			iecProperty.Format = value
+		case "Property constraint:":
+			iecProperty.PropertyConstraint = value
 		case "Definition source:":
 			iecProperty.DefinitionSource = value
+		case "Value source:":
+			iecProperty.ValueSource = value
+		case "Property data element type:":
+			iecProperty.PropertyDataElementType = value
 		case "Drawing:":
 			iecProperty.Drawing = value
-		case "Class type:":
-			iecProperty.ClassType = value
-		case "Applicable documents:":
-			iecProperty.ApplicableDocuments = value
-		case "Class value assignment:":
-			iecProperty.ClassValueAssignment = value
-		case "Requisity of properties:":
-			iecProperty.RequisityOfProperties = value
-		case "Superclass:":
-			iecProperty.Superclass = value
-		case "Higher level classes:":
-			iecProperty.HigherLevelClasses = value
-		case "Classifying DET:":
-			iecProperty.ClassifyingDET = value
-		case "Properties:":
-			iecProperty.Properties = value
-		case "Properties tree:":
-			iecProperty.PropertiesTree = value
-		case "Inherited properties:":
-			iecProperty.InheritedProperties = value
-		case "SuperBlocks:":
-			iecProperty.SuperBlocks = value
-		case "Is case of:":
-			iecProperty.IsCaseOf = value
-		case "Imported properties:":
-			iecProperty.ImportedProperties = value
-		case "Instance sharable:":
-			iecProperty.InstanceSharable = value
+		case "Formula:":
+			iecProperty.Formula = value
+		case "Value list code:":
+			iecProperty.ValueListCode = value
+		case "Value list:":
+			iecProperty.ValueList = value
+		case "DET class:":
+			iecProperty.DETClass = value
+		case "Applicable classes:":
+			iecProperty.ApplicableClasses = value
+		case "Definition class:":
+			iecProperty.DefinitionClass = value
+		case "Code for unit:":
+			iecProperty.CodeForUnit = value
+		case "Codes for alternative units:":
+			iecProperty.CodesForAlternativeUnits = value
+		case "Code for unit list:":
+			iecProperty.CodeForUnitList = value
 		case "Status level:":
 			iecProperty.StatusLevel = value
 		case "Is deprecated:":
@@ -149,30 +166,28 @@ func (iecProperty *IecProperty) scrapePropertyPage() {
 		case "Published by:":
 			iecProperty.PublishedBy = value
 		case "Proposal date:":
-			iecProperty.ProposalDate = value
+			iecProperty.ProposalDate, _ = time.Parse("2006-01-02", value) // Adjust the date format according to your data
 		case "Version initiation date:":
-			iecProperty.VersionInitiationDate = value
+			iecProperty.VersionInitiationDate, _ = time.Parse("2006-01-02", value) // Adjust the date format according to your data
 		case "Version release date:":
-			iecProperty.VersionReleaseDate = value
+			iecProperty.VersionReleaseDate, _ = time.Parse("2006-01-02", value) // Adjust the date format according to your data
 		case "Revision release date:":
-			iecProperty.RevisionReleaseDate = value
+			iecProperty.RevisionReleaseDate, _ = time.Parse("2006-01-02", value) // Adjust the date format according to your data
 		case "Obsolete date:":
-			iecProperty.ObsoleteDate = value
+			iecProperty.ObsoleteDate, _ = time.Parse("2006-01-02", value) // Adjust the date format according to your data
 		case "Responsible Committee:":
 			iecProperty.ResponsibleCommittee = value
+		case "Conditions:":
+			iecProperty.Conditions = value
 		case "Change request ID:":
 			iecProperty.ChangeRequestID = value
 		case "Version history:":
 			iecProperty.VersionHistory = value
-
 		}
 	})
-
 }
 
-func (iecProperty *IecProperty) scrapeProperty(
-	url string) (*IecProperty, error) {
-	property := &IecProperty{PropertyUrl: url}
+func (iecProperty *IecProperty) scrapePropertyColly() (*IecProperty, error) {
 
 	// Create a new Colly collector
 	c := colly.NewCollector()
@@ -184,92 +199,105 @@ func (iecProperty *IecProperty) scrapeProperty(
 
 		switch label {
 		case "Code:":
-			property.Code = value
+			iecProperty.Code = value
 		case "Version:":
-			property.Version = value
+			iecProperty.Version = value
 		case "Revision:":
-			property.Revision = value
+			iecProperty.Revision = value
 		case "IRDI:":
-			property.IRDI = value
+			iecProperty.IRDI = value
 		case "Preferred name:":
-			property.PreferredName = value
+			iecProperty.PreferredName = value
 		case "Synonymous name:":
-			property.SynonymousName = value
+			iecProperty.SynonymousName = value
 		case "Symbol:":
-			property.Symbol = value
+			iecProperty.Symbol = value
 		case "Synonymous symbol:":
-			property.SynonymousSymbol = value
+			iecProperty.SynonymousSymbol = value
 		case "Short name:":
-			property.ShortName = value
+			iecProperty.ShortName = value
 		case "Definition:":
-			property.Definition = value
+			iecProperty.Definition = value
 		case "Note:":
-			property.Note = value
+			iecProperty.Note = value
 		case "Remark:":
-			property.Remark = value
+			iecProperty.Remark = value
+		case "Primary unit:":
+			iecProperty.PrimaryUnit = value
+		case "Alternative units:":
+			iecProperty.AlternativeUnits = value
+		case "Level:":
+			iecProperty.Level = value
+		case "Data type:":
+			iecProperty.DataType = value
+		case "Format:":
+			iecProperty.Format = value
+		case "Property constraint:":
+			iecProperty.PropertyConstraint = value
 		case "Definition source:":
-			property.DefinitionSource = value
+			iecProperty.DefinitionSource = value
+		case "Value source:":
+			iecProperty.ValueSource = value
+		case "Property data element type:":
+			iecProperty.PropertyDataElementType = value
 		case "Drawing:":
-			property.Drawing = value
-		case "Class type:":
-			property.ClassType = value
-		case "Applicable documents:":
-			property.ApplicableDocuments = value
-		case "Class value assignment:":
-			property.ClassValueAssignment = value
-		case "Requisity of properties:":
-			property.RequisityOfProperties = value
-		case "Superclass:":
-			property.Superclass = value
-		case "Higher level classes:":
-			property.HigherLevelClasses = value
-		case "Classifying DET:":
-			property.ClassifyingDET = value
-		case "Properties:":
-			property.Properties = value
-		case "Properties tree:":
-			property.PropertiesTree = value
-		case "Inherited properties:":
-			property.InheritedProperties = value
-		case "SuperBlocks:":
-			property.SuperBlocks = value
-		case "Is case of:":
-			property.IsCaseOf = value
-		case "Imported properties:":
-			property.ImportedProperties = value
-		case "Instance sharable:":
-			property.InstanceSharable = value
+			iecProperty.Drawing = value
+		case "Formula:":
+			iecProperty.Formula = value
+		case "Value list code:":
+			iecProperty.ValueListCode = value
+		case "Value list:":
+			iecProperty.ValueList = value
+		case "DET class:":
+			iecProperty.DETClass = value
+		case "Applicable classes:":
+			iecProperty.ApplicableClasses = value
+		case "Definition class:":
+			iecProperty.DefinitionClass = value
+		case "Code for unit:":
+			iecProperty.CodeForUnit = value
+		case "Codes for alternative units:":
+			iecProperty.CodesForAlternativeUnits = value
+		case "Code for unit list:":
+			iecProperty.CodeForUnitList = value
 		case "Status level:":
-			property.StatusLevel = value
+			iecProperty.StatusLevel = value
 		case "Is deprecated:":
-			property.IsDeprecated = value
+			iecProperty.IsDeprecated = value
 		case "Published in:":
-			property.PublishedIn = value
+			iecProperty.PublishedIn = value
 		case "Published by:":
-			property.PublishedBy = value
+			iecProperty.PublishedBy = value
 		case "Proposal date:":
-			property.ProposalDate = value
+			t, _ := time.Parse("2006-01-02", value)
+			iecProperty.ProposalDate = t
 		case "Version initiation date:":
-			property.VersionInitiationDate = value
+			t, _ := time.Parse("2006-01-02", value)
+			iecProperty.VersionInitiationDate = t
 		case "Version release date:":
-			property.VersionReleaseDate = value
+			t, _ := time.Parse("2006-01-02", value)
+			iecProperty.VersionReleaseDate = t
 		case "Revision release date:":
-			property.RevisionReleaseDate = value
+			t, _ := time.Parse("2006-01-02", value)
+			iecProperty.RevisionReleaseDate = t
 		case "Obsolete date:":
-			property.ObsoleteDate = value
+			t, _ := time.Parse("2006-01-02", value)
+			iecProperty.ObsoleteDate = t
 		case "Responsible Committee:":
-			property.ResponsibleCommittee = value
+			iecProperty.ResponsibleCommittee = value
+		case "Conditions:":
+			iecProperty.Conditions = value
 		case "Change request ID:":
-			property.ChangeRequestID = value
+			iecProperty.ChangeRequestID = value
 		case "Version history:":
-			property.VersionHistory = value
+			iecProperty.VersionHistory = value
 		}
 	})
 
-	err := c.Visit(url)
+	err := c.Visit(iecProperty.PropertyUrl)
 	if err != nil {
 		return nil, err
 	}
 
-	return property, nil
+	return iecProperty, nil
 }

@@ -1,8 +1,10 @@
 package data_model_iec
 
 import (
+	"fmt"
 	"github.com/OntoLedgy/syntactic_checker/testing/html_tests/html_scrapping_service"
 	"github.com/PuerkitoBio/goquery"
+	"regexp"
 	"strings"
 )
 
@@ -46,22 +48,27 @@ type IecClasses struct {
 	ChangeRequestID       string
 	VersionHistory        string
 
-	SuperClassUrl         string
+	SuperClassCode        string
 	ClassUrl              string
 	PropertyLinks         []string
 	SuperClassPropertyIds []string
 }
 
-func (iecClass *IecClasses) GetClassURL(classID string) string {
+func (iecClass *IecClasses) GetClassURL(classIRDI string) string {
+
+	// If not, load the IecClass by scraping the URL
+	classIDUrlFriendly, err := iecClass.validateAndConvertClassID(
+		classIRDI)
+
+	if err != nil {
+		fmt.Printf("invalid class id %s, %s", classIRDI, err)
+		return ""
+	}
 
 	if iecClass.ClassUrl == "" {
 		// Construct the URL using the base URL and class ID
 		baseURL := "https://cdd.iec.ch/CDD/IEC61987/iec61987.nsf/Classes/"
-
-		encodedClassID := strings.ReplaceAll(classID, "/", "-")
-		encodedClassID = strings.ReplaceAll(encodedClassID, "#", "%23")
-
-		iecClass.ClassUrl = baseURL + encodedClassID
+		iecClass.ClassUrl = baseURL + classIDUrlFriendly
 	}
 
 	return iecClass.ClassUrl
@@ -139,7 +146,7 @@ func (iecClass *IecClasses) scrapeClassPage() *IecClasses {
 		case "Requisity of properties:":
 			iecClass.RequisityOfProperties = strings.TrimSpace(value)
 		case "Superclass:":
-			iecClass.SuperClassUrl = strings.TrimSpace(value)
+			iecClass.SuperClassCode = strings.TrimSpace(value)
 
 		case "Classifying DET:":
 			iecClass.ClassifyingDET = strings.TrimSpace(value)
@@ -196,11 +203,11 @@ func (iecClass *IecClasses) scrapeClassPage() *IecClasses {
 	return iecClass
 }
 
-func (iecClass *IecClasses) inheritProperties() {
+func (iecClass *IecClasses) inheritPropertiesFromSuperClasses() {
 
 	if iecClass.Superclass != nil {
 		// Inherit properties from the superclass
-		iecClass.Superclass.inheritProperties()
+		iecClass.Superclass.inheritPropertiesFromSuperClasses()
 
 		// Create a map to store unique properties
 		uniqueProperties := make(map[string]*IecProperty)
@@ -227,4 +234,29 @@ func (iecClass *IecClasses) inheritProperties() {
 				property.PropertyId)
 		}
 	}
+}
+
+func (iecClass *IecClasses) validateAndConvertClassID(
+	classID string) (string, error) {
+	pattern := `^(\d{4})(/|-)(\d{1})(/|-)(/|-)(/|-)(\d{5})(%23|#)([0-9A-Z]{6})(#([0-9]{3}))?$`
+	re := regexp.MustCompile(pattern)
+
+	if !re.MatchString(classID) {
+		return "", fmt.Errorf("invalid classID format")
+	}
+
+	// Trim the last component of the ID that has a hash
+	parts := strings.Split(classID, "#")
+	if len(parts) > 2 {
+		classID = strings.Join(parts[:2], "#")
+	}
+
+	// Replace / with -
+	classID = strings.ReplaceAll(classID, "/", "-")
+
+	// Replace # with %23
+	classID = strings.ReplaceAll(classID, "#", "%23")
+
+	return classID, nil
+
 }

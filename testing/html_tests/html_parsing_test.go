@@ -15,10 +15,11 @@ func TestIECScrapper(t *testing.T) {
 
 	iecCLassFactory := data_model_iec.NewIecClassesFactory()
 
-	for rowIndex, classID := range classIDs {
+	for rowIndex, classIRDI := range classIDs {
 
 		// 2. Scrape the web page content and extract the table of class information.
-		iecCLassFactory.GetIecClass(classID)
+		iecCLassFactory.GetIecClass(
+			classIRDI)
 
 		if (rowIndex+1)%100 == 0 {
 			iecCLassFactory.ReportIecModel("E:\\ontologies\\iec\\output_" + strconv.Itoa(rowIndex) + ".xlsx")

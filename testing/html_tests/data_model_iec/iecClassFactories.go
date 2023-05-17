@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/OntoLedgy/syntactic_checker/testing/html_tests/storage_interop_services"
 	"reflect"
-	"strings"
 	"sync"
 )
 
@@ -31,21 +30,18 @@ func (iecClassFactory *IecClassesFactory) GetIecClass(
 }
 
 func (iecClassFactory *IecClassesFactory) getIecClass(
-	classID string) (*IecClasses, error) {
+	classIRDI string) (*IecClasses, error) {
 	// Check if the IecClass is already loaded in memory
 
-	classID = iecClassFactory.validateAndConvertClassID(classID)
-
-	if iecClass, ok := iecClassFactory.ClassRegister[classID]; ok {
+	if iecClass, ok := iecClassFactory.ClassRegister[classIRDI]; ok {
 		return iecClass, nil
 	}
 
-	// If not, load the IecClass by scraping the URL
 	iecClass :=
 		iecClassFactory.NewIecClass(
-			classID)
+			classIRDI)
 
-	iecClassFactory.ClassRegister[classID] = iecClass
+	iecClassFactory.ClassRegister[classIRDI] = iecClass
 
 	if iecClass.Properties != nil {
 		for _, property := range iecClass.Properties {
@@ -57,13 +53,16 @@ func (iecClassFactory *IecClassesFactory) getIecClass(
 	return iecClass, nil
 }
 
-func (iecClassFactory *IecClassesFactory) validateAndConvertClassID(
-	classID string) string {
-	// Replace '/' with '-'
-	classID = strings.ReplaceAll(classID, "/", "-")
-	// Replace '#' with '%23'
-	classID = strings.ReplaceAll(classID, "#", "%23")
-	return classID
+func (iecClassFactory *IecClassesFactory) GetIecClassByCode(IecClassCode string) (*IecClasses, error) {
+	iecClassFactory.mu.RLock()
+	defer iecClassFactory.mu.RUnlock()
+
+	class, ok := iecClassFactory.ClassRegister[IecClassCode]
+	if !ok {
+		return nil, fmt.Errorf("class with code %s not found", IecClassCode)
+	}
+
+	return class, nil
 }
 
 func (iecClassFactory *IecClassesFactory) NewIecClass(
@@ -76,11 +75,15 @@ func (iecClassFactory *IecClassesFactory) NewIecClass(
 
 	// Factory method for creating an IecClasses instance
 	fmt.Printf("reading class %s\n", url)
+
 	iecClass.scrapeClassPage()
 
 	// Process the superclass
-	if iecClass.SuperClassUrl != "" {
-		superclass, err := iecClassFactory.GetIecClass(iecClass.SuperClassUrl)
+	if iecClass.SuperClassCode != "" {
+
+		superclass, err :=
+			iecClassFactory.GetIecClass(iecClass.SuperClassCode)
+
 		if err != nil {
 			return nil
 		}
@@ -109,10 +112,10 @@ func (iecClassFactory *IecClassesFactory) NewIecClass(
 	}
 
 	if iecClass != nil {
-		iecClassFactory.ClassRegister[iecClass.IRDI] = iecClass
+		iecClassFactory.ClassRegister[iecClass.Code] = iecClass
 	}
 
-	iecClass.inheritProperties()
+	iecClass.inheritPropertiesFromSuperClasses()
 
 	return iecClass
 }
